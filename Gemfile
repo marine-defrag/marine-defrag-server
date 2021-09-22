@@ -5,7 +5,6 @@ ruby File.read(File.expand_path(".ruby-version", __dir__)).strip
 gem 'active_model_serializers'
 gem 'batch_api'
 gem 'bcrypt', '~> 3.1.7'
-gem 'clockwork'
 gem 'devise'
 gem 'devise_token_auth'
 gem 'factory_girl_rails'
