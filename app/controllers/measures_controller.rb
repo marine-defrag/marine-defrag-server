@@ -33,7 +33,7 @@ class MeasuresController < ApplicationController
     if params[:measure][:updated_at] && DateTime.parse(params[:measure][:updated_at]).to_i != @measure.updated_at.to_i
       return render json: '{"error":"Record outdated"}', status: :unprocessable_entity
     end
-    if @measure.update_attributes!(permitted_attributes(@measure))
+    if @measure.update!(permitted_attributes(@measure))
       set_and_authorize_measure
       render json: serialize(@measure)
     end
