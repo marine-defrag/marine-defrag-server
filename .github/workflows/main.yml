@@ -36,4 +36,4 @@ jobs:
           sudo -u postgres psql -c "CREATE USER runner WITH SUPERUSER PASSWORD 'runner'"
 
       - run: bin/rails db:setup
-      - run: bundle exec rspec
+      - run: bin/rspec
