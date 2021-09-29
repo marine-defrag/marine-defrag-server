@@ -11,7 +11,7 @@ RSpec.describe RecommendationMeasuresController, type: :controller do
   end
 
   describe "Get show" do
-    let(:recommendation_measure) { FactoryGirl.create(:recommendation_measure) }
+    let(:recommendation_measure) { FactoryBot.create(:recommendation_measure) }
     subject { get :show, params: {id: recommendation_measure}, format: :json }
 
     context "when not signed in" do
@@ -33,10 +33,10 @@ RSpec.describe RecommendationMeasuresController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:recommendation) { FactoryGirl.create(:recommendation) }
-      let(:measure) { FactoryGirl.create(:measure) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:recommendation) { FactoryBot.create(:recommendation) }
+      let(:measure) { FactoryBot.create(:measure) }
 
       subject do
         post :create,
@@ -68,7 +68,7 @@ RSpec.describe RecommendationMeasuresController, type: :controller do
   end
 
   describe "PUT update" do
-    let(:recommendation_measure) { FactoryGirl.create(:recommendation_measure) }
+    let(:recommendation_measure) { FactoryBot.create(:recommendation_measure) }
     subject do
       put :update,
         format: :json,
@@ -85,8 +85,8 @@ RSpec.describe RecommendationMeasuresController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
 
       it "will not allow a guest to update a recommendation_measure" do
         sign_in guest
@@ -108,7 +108,7 @@ RSpec.describe RecommendationMeasuresController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:recommendation_measure) { FactoryGirl.create(:recommendation_measure) }
+    let(:recommendation_measure) { FactoryBot.create(:recommendation_measure) }
     subject { delete :destroy, format: :json, params: {id: recommendation_measure} }
 
     context "when not signed in" do
@@ -118,8 +118,8 @@ RSpec.describe RecommendationMeasuresController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
 
       it "will not allow a guest to delete a recommendation_measure" do
         sign_in guest

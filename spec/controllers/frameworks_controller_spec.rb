@@ -1,13 +1,13 @@
 require "rails_helper"
 
 RSpec.describe FrameworksController, type: :controller do
-  let!(:guest) { FactoryGirl.create(:user) }
-  let!(:manager) { FactoryGirl.create(:user, :manager) }
-  let!(:contributor) { FactoryGirl.create(:user, :contributor) }
+  let!(:guest) { FactoryBot.create(:user) }
+  let!(:manager) { FactoryBot.create(:user, :manager) }
+  let!(:contributor) { FactoryBot.create(:user, :contributor) }
 
   describe "index" do
     subject { get :index, format: :json }
-    let!(:framework) { FactoryGirl.create_list(:framework, 3) }
+    let!(:framework) { FactoryBot.create_list(:framework, 3) }
 
     context "when not signed in" do
       it { expect(subject).to be_ok }
@@ -40,7 +40,7 @@ RSpec.describe FrameworksController, type: :controller do
   end
 
   describe "show" do
-    let!(:framework) { FactoryGirl.create(:framework) }
+    let!(:framework) { FactoryBot.create(:framework) }
     subject { get :show, params: {id: framework.id}, format: :json }
 
     context "when not signed in" do

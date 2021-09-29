@@ -4,8 +4,8 @@ require "json"
 RSpec.describe CategoriesController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
-    let!(:category) { FactoryGirl.create(:category) }
-    let!(:draft_category) { FactoryGirl.create(:category, draft: true) }
+    let!(:category) { FactoryBot.create(:category) }
+    let!(:draft_category) { FactoryBot.create(:category, draft: true) }
 
     context "when not signed in" do
       it { expect(subject).to be_ok }
@@ -17,9 +17,9 @@ RSpec.describe CategoriesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "guest will not see draft categories" do
         sign_in guest
@@ -42,8 +42,8 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "Get show" do
-    let(:category) { FactoryGirl.create(:category) }
-    let(:draft_category) { FactoryGirl.create(:category, draft: true) }
+    let(:category) { FactoryBot.create(:category) }
+    let(:draft_category) { FactoryBot.create(:category, draft: true) }
     subject { get :show, params: {id: category}, format: :json }
 
     context "when not signed in" do
@@ -70,9 +70,9 @@ RSpec.describe CategoriesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:taxonomy) { FactoryGirl.create(:taxonomy) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:taxonomy) { FactoryBot.create(:taxonomy) }
 
       subject do
         post :create,
@@ -114,7 +114,7 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "PUT update" do
-    let(:category) { FactoryGirl.create(:category) }
+    let(:category) { FactoryBot.create(:category) }
     subject do
       put :update,
         format: :json,
@@ -129,8 +129,8 @@ RSpec.describe CategoriesController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
 
       it "will not allow a guest to update a category" do
         sign_in guest
@@ -188,7 +188,7 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:category) { FactoryGirl.create(:category) }
+    let(:category) { FactoryBot.create(:category) }
     subject { delete :destroy, format: :json, params: {id: category} }
 
     context "when not signed in" do
@@ -198,8 +198,8 @@ RSpec.describe CategoriesController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
 
       it "will not allow a guest to delete a category" do
         sign_in guest

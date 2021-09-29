@@ -11,7 +11,7 @@ RSpec.describe RecommendationRecommendationsController, type: :controller do
   end
 
   describe "show" do
-    let(:recommendation_recommendation) { FactoryGirl.create(:recommendation_recommendation) }
+    let(:recommendation_recommendation) { FactoryBot.create(:recommendation_recommendation) }
     subject { get :show, params: {id: recommendation_recommendation}, format: :json }
 
     context "when not signed in" do
@@ -33,12 +33,12 @@ RSpec.describe RecommendationRecommendationsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:manager) { FactoryGirl.create(:user, :manager) }
-      let(:admin) { FactoryGirl.create(:user, :admin) }
-      let(:recommendation_1) { FactoryGirl.create(:recommendation) }
-      let(:recommendation_2) { FactoryGirl.create(:recommendation) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:manager) { FactoryBot.create(:user, :manager) }
+      let(:admin) { FactoryBot.create(:user, :admin) }
+      let(:recommendation_1) { FactoryBot.create(:recommendation) }
+      let(:recommendation_2) { FactoryBot.create(:recommendation) }
 
       subject do
         post :create,
@@ -80,7 +80,7 @@ RSpec.describe RecommendationRecommendationsController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:recommendation_recommendation) { FactoryGirl.create(:recommendation_recommendation) }
+    let(:recommendation_recommendation) { FactoryBot.create(:recommendation_recommendation) }
     subject { delete :destroy, format: :json, params: {id: recommendation_recommendation} }
 
     context "when not signed in" do
@@ -90,10 +90,10 @@ RSpec.describe RecommendationRecommendationsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:manager) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:admin) { FactoryGirl.create(:user, :admin) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:manager) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:admin) { FactoryBot.create(:user, :admin) }
 
       it "will not allow a guest to delete a recommendation_recommendation" do
         sign_in guest
@@ -118,7 +118,7 @@ RSpec.describe RecommendationRecommendationsController, type: :controller do
   end
 
   describe "update" do
-    let(:recommendation_recommendation) { FactoryGirl.create(:recommendation_recommendation) }
+    let(:recommendation_recommendation) { FactoryBot.create(:recommendation_recommendation) }
 
     it "doesnt allow updates" do
       expect(put: "recommendation_recommendations/42").not_to be_routable

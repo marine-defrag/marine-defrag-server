@@ -6,8 +6,8 @@ require "json"
 RSpec.describe SdgtargetsController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
-    let!(:sdgtarget) { FactoryGirl.create(:sdgtarget) }
-    let!(:draft_sdgtarget) { FactoryGirl.create(:sdgtarget, draft: true) }
+    let!(:sdgtarget) { FactoryBot.create(:sdgtarget) }
+    let!(:draft_sdgtarget) { FactoryBot.create(:sdgtarget, draft: true) }
 
     context "when not signed in" do
       it { expect(subject).to be_ok }
@@ -19,9 +19,9 @@ RSpec.describe SdgtargetsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "guest will not see draft sdgtargets" do
         sign_in guest
@@ -44,8 +44,8 @@ RSpec.describe SdgtargetsController, type: :controller do
   end
 
   describe "Get show" do
-    let(:sdgtarget) { FactoryGirl.create(:sdgtarget) }
-    let(:draft_sdgtarget) { FactoryGirl.create(:sdgtarget, draft: true) }
+    let(:sdgtarget) { FactoryBot.create(:sdgtarget) }
+    let(:draft_sdgtarget) { FactoryBot.create(:sdgtarget, draft: true) }
     subject { get :show, params: {id: sdgtarget}, format: :json }
 
     context "when not signed in" do
@@ -72,11 +72,11 @@ RSpec.describe SdgtargetsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:recommendation) { FactoryGirl.create(:recommendation) }
-      let(:category) { FactoryGirl.create(:category) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:recommendation) { FactoryBot.create(:recommendation) }
+      let(:category) { FactoryBot.create(:category) }
 
       subject do
         post :create,
@@ -132,7 +132,7 @@ RSpec.describe SdgtargetsController, type: :controller do
   end
 
   describe "PUT update" do
-    let(:sdgtarget) { FactoryGirl.create(:sdgtarget) }
+    let(:sdgtarget) { FactoryBot.create(:sdgtarget) }
     subject do
       put :update,
         format: :json,
@@ -147,9 +147,9 @@ RSpec.describe SdgtargetsController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to update a sdgtarget" do
         sign_in guest
@@ -212,7 +212,7 @@ RSpec.describe SdgtargetsController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:sdgtarget) { FactoryGirl.create(:sdgtarget) }
+    let(:sdgtarget) { FactoryBot.create(:sdgtarget) }
     subject { delete :destroy, format: :json, params: {id: sdgtarget} }
 
     context "when not signed in" do
@@ -222,9 +222,9 @@ RSpec.describe SdgtargetsController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a sdgtarget" do
         sign_in guest

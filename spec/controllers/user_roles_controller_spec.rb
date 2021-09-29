@@ -13,16 +13,16 @@ RSpec.describe UserRolesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:manager_role) { FactoryGirl.create(:role, :manager) }
-      let(:manager) { FactoryGirl.create(:user, roles: [manager_role]) }
-      let(:manager2) { FactoryGirl.create(:user, roles: [manager_role]) }
-      let(:contributor_role) { FactoryGirl.create(:role, :contributor) }
-      let(:contributor) { FactoryGirl.create(:user, roles: [contributor_role]) }
-      let(:contributor2) { FactoryGirl.create(:user, roles: [contributor_role]) }
-      let(:admin_role) { FactoryGirl.create(:role, :admin) }
-      let(:admin) { FactoryGirl.create(:user, roles: [admin_role]) }
-      let(:admin2) { FactoryGirl.create(:user, roles: [admin_role]) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:manager_role) { FactoryBot.create(:role, :manager) }
+      let(:manager) { FactoryBot.create(:user, roles: [manager_role]) }
+      let(:manager2) { FactoryBot.create(:user, roles: [manager_role]) }
+      let(:contributor_role) { FactoryBot.create(:role, :contributor) }
+      let(:contributor) { FactoryBot.create(:user, roles: [contributor_role]) }
+      let(:contributor2) { FactoryBot.create(:user, roles: [contributor_role]) }
+      let(:admin_role) { FactoryBot.create(:role, :admin) }
+      let(:admin) { FactoryBot.create(:user, roles: [admin_role]) }
+      let(:admin2) { FactoryBot.create(:user, roles: [admin_role]) }
 
       it "does not show anything to guest user" do
         sign_in guest
@@ -77,7 +77,7 @@ RSpec.describe UserRolesController, type: :controller do
   end
 
   describe "Get show" do
-    let(:user_role) { FactoryGirl.create(:user_role) }
+    let(:user_role) { FactoryBot.create(:user_role) }
     subject { get :show, params: {id: user_role}, format: :json }
 
     context "when not signed in" do
@@ -87,17 +87,17 @@ RSpec.describe UserRolesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:manager) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:admin) { FactoryGirl.create(:user, :admin) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:manager) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:admin) { FactoryBot.create(:user, :admin) }
 
       subject { get :show, params: {id: contributor.user_roles.first.id}, format: :json }
 
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:manager) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:admin) { FactoryGirl.create(:user, :admin) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:manager) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:admin) { FactoryBot.create(:user, :admin) }
 
       it "shows no user_role for guest" do
         sign_in guest
@@ -132,13 +132,13 @@ RSpec.describe UserRolesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:manager_role) { FactoryGirl.create(:role, :manager) }
-      let(:manager) { FactoryGirl.create(:user, roles: [manager_role]) }
-      let(:contributor_role) { FactoryGirl.create(:role, :contributor) }
-      let(:contributor) { FactoryGirl.create(:user, roles: [contributor_role]) }
-      let(:admin_role) { FactoryGirl.create(:role, :admin) }
-      let(:admin) { FactoryGirl.create(:user, roles: [admin_role]) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:manager_role) { FactoryBot.create(:role, :manager) }
+      let(:manager) { FactoryBot.create(:user, roles: [manager_role]) }
+      let(:contributor_role) { FactoryBot.create(:role, :contributor) }
+      let(:contributor) { FactoryBot.create(:user, roles: [contributor_role]) }
+      let(:admin_role) { FactoryBot.create(:role, :admin) }
+      let(:admin) { FactoryBot.create(:user, roles: [admin_role]) }
 
       subject do
         post :create,
@@ -258,17 +258,17 @@ RSpec.describe UserRolesController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:guest) { FactoryGirl.create(:user) }
-    let(:manager_role) { FactoryGirl.create(:role, :manager) }
-    let(:manager) { FactoryGirl.create(:user, roles: [manager_role]) }
-    let(:manager_role2) { FactoryGirl.create(:role, :manager) }
-    let(:manager2) { FactoryGirl.create(:user, roles: [contributor_role, manager_role2]) }
-    let(:contributor_role) { FactoryGirl.create(:role, :contributor) }
-    let(:contributor_role2) { FactoryGirl.create(:role, :contributor) }
-    let(:contributor) { FactoryGirl.create(:user, roles: [contributor_role]) }
-    let(:contributor2) { FactoryGirl.create(:user, roles: [contributor_role2]) }
-    let(:admin_role) { FactoryGirl.create(:role, :admin) }
-    let(:admin) { FactoryGirl.create(:user, roles: [admin_role, contributor_role]) }
+    let(:guest) { FactoryBot.create(:user) }
+    let(:manager_role) { FactoryBot.create(:role, :manager) }
+    let(:manager) { FactoryBot.create(:user, roles: [manager_role]) }
+    let(:manager_role2) { FactoryBot.create(:role, :manager) }
+    let(:manager2) { FactoryBot.create(:user, roles: [contributor_role, manager_role2]) }
+    let(:contributor_role) { FactoryBot.create(:role, :contributor) }
+    let(:contributor_role2) { FactoryBot.create(:role, :contributor) }
+    let(:contributor) { FactoryBot.create(:user, roles: [contributor_role]) }
+    let(:contributor2) { FactoryBot.create(:user, roles: [contributor_role2]) }
+    let(:admin_role) { FactoryBot.create(:role, :admin) }
+    let(:admin) { FactoryBot.create(:user, roles: [admin_role, contributor_role]) }
 
     subject { delete :destroy, format: :json, params: {id: contributor.user_roles.first} }
 
