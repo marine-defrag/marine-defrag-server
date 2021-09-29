@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Taxonomy, type: :model do
   it { is_expected.to validate_presence_of :title }
@@ -15,7 +15,6 @@ RSpec.describe Taxonomy, type: :model do
   it { is_expected.to have_many(:categories) }
 
   context "Sub-relation validations" do
-
     it "Should update parent_id" do
       taxonomy = FactoryGirl.create(:taxonomy)
       sub_taxonomy = FactoryGirl.create(:taxonomy)
@@ -27,7 +26,7 @@ RSpec.describe Taxonomy, type: :model do
       sub_taxonomy = FactoryGirl.create(:taxonomy)
       taxonomy = FactoryGirl.create(:taxonomy, :sub_taxonomy)
       sub_taxonomy.parent_id = taxonomy.id
-      expect{sub_taxonomy.save!}.to raise_exception(/Parent taxonomy is already a sub-taxonomy./)
+      expect { sub_taxonomy.save! }.to raise_exception(/Parent taxonomy is already a sub-taxonomy./)
     end
   end
 end

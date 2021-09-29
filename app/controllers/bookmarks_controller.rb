@@ -4,7 +4,7 @@ class BookmarksController < ApplicationController
   skip_after_action :verify_authorized, only: [:show]
 
   def forbidden
-    render json: {error: 'Forbidden'}, status: 403
+    render json: {error: "Forbidden"}, status: 403
   end
 
   # GET /bookmarks

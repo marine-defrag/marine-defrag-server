@@ -22,7 +22,7 @@ class IndicatorsController < ApplicationController
 
     if @indicator.save
       render json: serialize(@indicator),
-             status: :created, location: @indicator
+        status: :created, location: @indicator
     else
       render json: @indicator.errors, status: :unprocessable_entity
     end
