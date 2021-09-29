@@ -11,7 +11,7 @@ RSpec.describe SdgtargetRecommendationsController, type: :controller do
   end
 
   describe "Get show" do
-    let(:sdgtarget_recommendation) { FactoryGirl.create(:sdgtarget_recommendation) }
+    let(:sdgtarget_recommendation) { FactoryBot.create(:sdgtarget_recommendation) }
     subject { get :show, params: {id: sdgtarget_recommendation}, format: :json }
 
     context "when not signed in" do
@@ -33,11 +33,11 @@ RSpec.describe SdgtargetRecommendationsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:sdgtarget) { FactoryGirl.create(:sdgtarget) }
-      let(:recommendation) { FactoryGirl.create(:recommendation) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:sdgtarget) { FactoryBot.create(:sdgtarget) }
+      let(:recommendation) { FactoryBot.create(:recommendation) }
 
       subject do
         post :create,
@@ -74,7 +74,7 @@ RSpec.describe SdgtargetRecommendationsController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:sdgtarget_recommendation) { FactoryGirl.create(:sdgtarget_recommendation) }
+    let(:sdgtarget_recommendation) { FactoryBot.create(:sdgtarget_recommendation) }
     subject { delete :destroy, format: :json, params: {id: sdgtarget_recommendation} }
 
     context "when not signed in" do
@@ -84,9 +84,9 @@ RSpec.describe SdgtargetRecommendationsController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a sdgtarget_recommendation" do
         sign_in guest

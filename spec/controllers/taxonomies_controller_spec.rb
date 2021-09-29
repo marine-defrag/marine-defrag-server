@@ -4,7 +4,7 @@ require "json"
 RSpec.describe TaxonomiesController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
-    let!(:taxonomy) { FactoryGirl.create(:taxonomy) }
+    let!(:taxonomy) { FactoryBot.create(:taxonomy) }
 
     context "when not signed in" do
       it { expect(subject).to be_ok }
@@ -17,7 +17,7 @@ RSpec.describe TaxonomiesController, type: :controller do
   end
 
   describe "Get show" do
-    let(:taxonomy) { FactoryGirl.create(:taxonomy) }
+    let(:taxonomy) { FactoryBot.create(:taxonomy) }
     subject { get :show, params: {id: taxonomy}, format: :json }
 
     context "when not signed in" do
@@ -39,10 +39,10 @@ RSpec.describe TaxonomiesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:taxonomy) { FactoryGirl.create(:taxonomy) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:taxonomy) { FactoryBot.create(:taxonomy) }
 
       subject do
         post :create,
@@ -78,7 +78,7 @@ RSpec.describe TaxonomiesController, type: :controller do
   end
 
   describe "PUT update" do
-    let(:taxonomy) { FactoryGirl.create(:taxonomy) }
+    let(:taxonomy) { FactoryBot.create(:taxonomy) }
     subject do
       put :update,
         format: :json,
@@ -93,9 +93,9 @@ RSpec.describe TaxonomiesController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:user) { FactoryBot.create(:user, :manager) }
 
       it "will not allow a guest to update a taxonomy" do
         sign_in guest
@@ -115,7 +115,7 @@ RSpec.describe TaxonomiesController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:taxonomy) { FactoryGirl.create(:taxonomy) }
+    let(:taxonomy) { FactoryBot.create(:taxonomy) }
     subject { delete :destroy, format: :json, params: {id: taxonomy} }
 
     context "when not signed in" do
@@ -125,9 +125,9 @@ RSpec.describe TaxonomiesController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a taxonomy" do
         sign_in guest

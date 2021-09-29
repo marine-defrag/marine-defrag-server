@@ -6,8 +6,8 @@ require "json"
 RSpec.describe MeasuresController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
-    let!(:measure) { FactoryGirl.create(:measure) }
-    let!(:draft_measure) { FactoryGirl.create(:measure, draft: true) }
+    let!(:measure) { FactoryBot.create(:measure) }
+    let!(:draft_measure) { FactoryBot.create(:measure, draft: true) }
 
     context "when not signed in" do
       it { expect(subject).to be_ok }
@@ -19,9 +19,9 @@ RSpec.describe MeasuresController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "guest will not see draft measures" do
         sign_in guest
@@ -43,12 +43,12 @@ RSpec.describe MeasuresController, type: :controller do
     end
 
     context "filters" do
-      let(:category) { FactoryGirl.create(:category) }
-      let(:measure_different_category) { FactoryGirl.create(:measure) }
-      let(:recommendation) { FactoryGirl.create(:recommendation) }
-      let(:measure_different_recommendation) { FactoryGirl.create(:measure) }
-      let(:indicator) { FactoryGirl.create(:indicator) }
-      let(:measure_different_indicator) { FactoryGirl.create(:measure) }
+      let(:category) { FactoryBot.create(:category) }
+      let(:measure_different_category) { FactoryBot.create(:measure) }
+      let(:recommendation) { FactoryBot.create(:recommendation) }
+      let(:measure_different_recommendation) { FactoryBot.create(:measure) }
+      let(:indicator) { FactoryBot.create(:indicator) }
+      let(:measure_different_indicator) { FactoryBot.create(:measure) }
 
       it "filters from category" do
         measure_different_category.categories << category
@@ -77,8 +77,8 @@ RSpec.describe MeasuresController, type: :controller do
   end
 
   describe "Get show" do
-    let(:measure) { FactoryGirl.create(:measure) }
-    let(:draft_measure) { FactoryGirl.create(:measure, draft: true) }
+    let(:measure) { FactoryBot.create(:measure) }
+    let(:draft_measure) { FactoryBot.create(:measure, draft: true) }
     subject { get :show, params: {id: measure}, format: :json }
 
     context "when not signed in" do
@@ -105,11 +105,11 @@ RSpec.describe MeasuresController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:recommendation) { FactoryGirl.create(:recommendation) }
-      let(:category) { FactoryGirl.create(:category) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:recommendation) { FactoryBot.create(:recommendation) }
+      let(:category) { FactoryBot.create(:category) }
 
       subject do
         post :create,
@@ -165,7 +165,7 @@ RSpec.describe MeasuresController, type: :controller do
   end
 
   describe "PUT update" do
-    let(:measure) { FactoryGirl.create(:measure) }
+    let(:measure) { FactoryBot.create(:measure) }
     subject do
       put :update,
         format: :json,
@@ -180,9 +180,9 @@ RSpec.describe MeasuresController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to update a measure" do
         sign_in guest
@@ -245,7 +245,7 @@ RSpec.describe MeasuresController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:measure) { FactoryGirl.create(:measure) }
+    let(:measure) { FactoryBot.create(:measure) }
     subject { delete :destroy, format: :json, params: {id: measure} }
 
     context "when not signed in" do
@@ -255,9 +255,9 @@ RSpec.describe MeasuresController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a measure" do
         sign_in guest

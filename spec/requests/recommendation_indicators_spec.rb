@@ -5,7 +5,7 @@ require "json"
 
 RSpec.describe "recommendation to indicator relationships", type: :request do
   describe "get one recommendation/indicator relationship" do
-    let!(:recommendation_indicator) { FactoryGirl.create(:recommendation_indicator) }
+    let!(:recommendation_indicator) { FactoryBot.create(:recommendation_indicator) }
     it "returns the recommendation/indicator releationship requested" do
       get "/recommendation_indicators/#{recommendation_indicator.id}"
 
@@ -27,13 +27,13 @@ RSpec.describe "recommendation to indicator relationships", type: :request do
   end
 
   describe "get all the recommendation/indicator relationships in descending order" do
-    let(:recommendation_1) { FactoryGirl.create(:recommendation) }
-    let(:recommendation_2) { FactoryGirl.create(:recommendation) }
-    let(:indicator_1) { FactoryGirl.create(:indicator) }
-    let(:indicator_2) { FactoryGirl.create(:indicator) }
-    let!(:recommendation_indicator_1) { FactoryGirl.create(:recommendation_indicator, recommendation_id: recommendation_1.id, indicator_id: indicator_1.id) }
-    let!(:recommendation_indicator_2) { FactoryGirl.create(:recommendation_indicator, recommendation_id: recommendation_1.id, indicator_id: indicator_2.id) }
-    let!(:recommendation_indicator_3) { FactoryGirl.create(:recommendation_indicator, recommendation_id: recommendation_2.id, indicator_id: indicator_2.id) }
+    let(:recommendation_1) { FactoryBot.create(:recommendation) }
+    let(:recommendation_2) { FactoryBot.create(:recommendation) }
+    let(:indicator_1) { FactoryBot.create(:indicator) }
+    let(:indicator_2) { FactoryBot.create(:indicator) }
+    let!(:recommendation_indicator_1) { FactoryBot.create(:recommendation_indicator, recommendation_id: recommendation_1.id, indicator_id: indicator_1.id) }
+    let!(:recommendation_indicator_2) { FactoryBot.create(:recommendation_indicator, recommendation_id: recommendation_1.id, indicator_id: indicator_2.id) }
+    let!(:recommendation_indicator_3) { FactoryBot.create(:recommendation_indicator, recommendation_id: recommendation_2.id, indicator_id: indicator_2.id) }
 
     it "returns all the linkable recommendation/indicators" do
       get "/recommendation_indicators"

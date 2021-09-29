@@ -11,7 +11,7 @@ RSpec.describe UserCategoriesController, type: :controller do
   end
 
   describe "Get show" do
-    let(:user_category) { FactoryGirl.create(:user_category) }
+    let(:user_category) { FactoryBot.create(:user_category) }
     subject { get :show, params: {id: user_category}, format: :json }
 
     context "when not signed in" do
@@ -33,11 +33,11 @@ RSpec.describe UserCategoriesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:manager) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:user) { FactoryGirl.create(:user) }
-      let(:category) { FactoryGirl.create(:category) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:manager) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:user) { FactoryBot.create(:user) }
+      let(:category) { FactoryBot.create(:category) }
 
       subject do
         post :create,
@@ -74,7 +74,7 @@ RSpec.describe UserCategoriesController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:user_category) { FactoryGirl.create(:user_category) }
+    let(:user_category) { FactoryBot.create(:user_category) }
     subject { delete :destroy, format: :json, params: {id: user_category} }
 
     context "when not signed in" do
@@ -84,9 +84,9 @@ RSpec.describe UserCategoriesController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a user_category" do
         sign_in guest

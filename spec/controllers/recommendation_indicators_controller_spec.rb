@@ -11,7 +11,7 @@ RSpec.describe RecommendationIndicatorsController, type: :controller do
   end
 
   describe "show" do
-    let(:recommendation_indicator) { FactoryGirl.create(:recommendation_indicator) }
+    let(:recommendation_indicator) { FactoryBot.create(:recommendation_indicator) }
     subject { get :show, params: {id: recommendation_indicator}, format: :json }
 
     context "when not signed in" do
@@ -33,12 +33,12 @@ RSpec.describe RecommendationIndicatorsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:manager) { FactoryGirl.create(:user, :manager) }
-      let(:admin) { FactoryGirl.create(:user, :admin) }
-      let(:recommendation) { FactoryGirl.create(:recommendation) }
-      let(:indicator) { FactoryGirl.create(:indicator) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:manager) { FactoryBot.create(:user, :manager) }
+      let(:admin) { FactoryBot.create(:user, :admin) }
+      let(:recommendation) { FactoryBot.create(:recommendation) }
+      let(:indicator) { FactoryBot.create(:indicator) }
 
       subject do
         post :create,
@@ -80,7 +80,7 @@ RSpec.describe RecommendationIndicatorsController, type: :controller do
   end
 
   describe "destroy" do
-    let(:recommendation_indicator) { FactoryGirl.create(:recommendation_indicator) }
+    let(:recommendation_indicator) { FactoryBot.create(:recommendation_indicator) }
     subject { delete :destroy, format: :json, params: {id: recommendation_indicator} }
 
     context "when not signed in" do
@@ -90,10 +90,10 @@ RSpec.describe RecommendationIndicatorsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:manager) { FactoryGirl.create(:user, :manager) }
-      let(:admin) { FactoryGirl.create(:user, :admin) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:manager) { FactoryBot.create(:user, :manager) }
+      let(:admin) { FactoryBot.create(:user, :admin) }
 
       it "wont allow a guest to delete a recommendation_indicator" do
         sign_in guest

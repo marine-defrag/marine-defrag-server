@@ -6,8 +6,8 @@ require "json"
 RSpec.describe IndicatorsController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
-    let!(:indicator) { FactoryGirl.create(:indicator) }
-    let!(:draft_indicator) { FactoryGirl.create(:indicator, draft: true) }
+    let!(:indicator) { FactoryBot.create(:indicator) }
+    let!(:draft_indicator) { FactoryBot.create(:indicator, draft: true) }
 
     context "when not signed in" do
       it { expect(subject).to be_ok }
@@ -19,9 +19,9 @@ RSpec.describe IndicatorsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "guest will not see draft indicators" do
         sign_in guest
@@ -43,8 +43,8 @@ RSpec.describe IndicatorsController, type: :controller do
     end
 
     context "filters" do
-      let(:measure) { FactoryGirl.create(:measure) }
-      let(:indicator_different_measure) { FactoryGirl.create(:indicator) }
+      let(:measure) { FactoryBot.create(:measure) }
+      let(:indicator_different_measure) { FactoryBot.create(:indicator) }
 
       it "filters from measures" do
         indicator_different_measure.measures << measure
@@ -57,8 +57,8 @@ RSpec.describe IndicatorsController, type: :controller do
   end
 
   describe "Get show" do
-    let(:indicator) { FactoryGirl.create(:indicator) }
-    let(:draft_indicator) { FactoryGirl.create(:indicator, draft: true) }
+    let(:indicator) { FactoryBot.create(:indicator) }
+    let(:draft_indicator) { FactoryBot.create(:indicator, draft: true) }
     subject { get :show, params: {id: indicator}, format: :json }
 
     context "when not signed in" do
@@ -85,10 +85,10 @@ RSpec.describe IndicatorsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:measure) { FactoryGirl.create(:measure) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:measure) { FactoryBot.create(:measure) }
       subject do
         post :create,
           format: :json,
@@ -132,7 +132,7 @@ RSpec.describe IndicatorsController, type: :controller do
   end
 
   describe "PUT update" do
-    let!(:indicator) { FactoryGirl.create(:indicator) }
+    let!(:indicator) { FactoryBot.create(:indicator) }
     subject do
       put :update,
         format: :json,
@@ -147,9 +147,9 @@ RSpec.describe IndicatorsController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to update a indicator" do
         sign_in guest
@@ -212,7 +212,7 @@ RSpec.describe IndicatorsController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:indicator) { FactoryGirl.create(:indicator) }
+    let(:indicator) { FactoryBot.create(:indicator) }
     subject { delete :destroy, format: :json, params: {id: indicator} }
 
     context "when not signed in" do
@@ -222,9 +222,9 @@ RSpec.describe IndicatorsController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a indicator" do
         sign_in guest
