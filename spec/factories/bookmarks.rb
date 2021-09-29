@@ -3,6 +3,6 @@ FactoryGirl.define do
     association :user
 
     title Faker::Lorem.sentence
-    view {{lorem: Faker::Lorem.sentence}}
+    view { {lorem: Faker::Lorem.sentence} }
   end
 end

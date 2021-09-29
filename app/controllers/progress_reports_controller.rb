@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ProgressReportsController < ApplicationController
   before_action :set_and_authorize_progress_report, only: [:show, :update, :destroy]
 

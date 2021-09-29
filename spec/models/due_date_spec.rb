@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe DueDate, type: :model do
   it { is_expected.to belong_to :indicator }
@@ -15,8 +15,8 @@ RSpec.describe DueDate, type: :model do
   it "due is false if the due date is after today but before today plus DueDate::DUE_NUMBER_OF_DAYS with a report" do
     progress_report = FactoryGirl.create(:progress_report)
     due_date = FactoryGirl.build(:due_date,
-                                 due_date: Date.today + DueDate::DUE_NUMBER_OF_DAYS - 1.day,
-                                 progress_reports: [progress_report])
+      due_date: Date.today + DueDate::DUE_NUMBER_OF_DAYS - 1.day,
+      progress_reports: [progress_report])
     expect(due_date.due).to be_falsey
     expect(due_date.overdue).to be_falsey
   end

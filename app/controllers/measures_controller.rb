@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class MeasuresController < ApplicationController
   before_action :set_and_authorize_measure, only: [:show, :update, :destroy]
 
