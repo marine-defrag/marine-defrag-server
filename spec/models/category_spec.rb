@@ -1,7 +1,6 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Category, type: :model do
-
   it { is_expected.to validate_presence_of :title }
   it { is_expected.to belong_to :taxonomy }
   it { is_expected.to belong_to(:manager).optional }
@@ -28,7 +27,6 @@ RSpec.describe Category, type: :model do
 
       sub_category.parent_id = category.id
       sub_category.save!
-
     end
 
     it "Should not update parent_id if parent is already a sub-category" do
@@ -45,14 +43,14 @@ RSpec.describe Category, type: :model do
       parent_category.save!
 
       sub_category.parent_id = parent_category.id
-      expect{sub_category.save!}.to raise_exception(/Parent category is already a sub-category./)
+      expect { sub_category.save! }.to raise_exception(/Parent category is already a sub-category./)
     end
 
     it "Should not update parent_id with incorrect taxonomy relation" do
       category = FactoryGirl.create(:category, :parent_category)
       sub_category = FactoryGirl.create(:category, :sub_category)
       sub_category.parent_id = category.id
-      expect{sub_category.save!}.to raise_exception(/Validation failed: Parent Taxonomy does not have parent categorys taxonomy as parent./)
+      expect { sub_category.save! }.to raise_exception(/Validation failed: Parent Taxonomy does not have parent categorys taxonomy as parent./)
     end
   end
 end

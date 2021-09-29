@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class SdgtargetsController < ApplicationController
   before_action :set_and_authorize_sdgtarget, only: [:show, :update, :destroy]
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 FactoryGirl.define do
   factory :recommendation do
     title { Faker::Superhero.name }

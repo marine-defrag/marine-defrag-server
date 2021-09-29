@@ -4,15 +4,15 @@ FactoryGirl.define do
     friendly_name { Faker::Lorem.sentence }
 
     trait :admin do
-      name { 'admin' }
+      name { "admin" }
     end
 
     trait :manager do
-      name { 'manager' }
+      name { "manager" }
     end
 
     trait :contributor do
-      name { 'contributor' }
+      name { "contributor" }
     end
   end
 end
