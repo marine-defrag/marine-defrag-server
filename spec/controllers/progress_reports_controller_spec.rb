@@ -6,8 +6,8 @@ require "json"
 RSpec.describe ProgressReportsController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
-    let!(:progress_report) { FactoryGirl.create(:progress_report) }
-    let!(:draft_progress_report) { FactoryGirl.create(:progress_report, draft: true) }
+    let!(:progress_report) { FactoryBot.create(:progress_report) }
+    let!(:draft_progress_report) { FactoryBot.create(:progress_report, draft: true) }
 
     context "when not signed in" do
       it { expect(subject).to be_ok }
@@ -19,9 +19,9 @@ RSpec.describe ProgressReportsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:manager) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:manager) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "guest will not see draft progress_reports" do
         sign_in guest
@@ -44,8 +44,8 @@ RSpec.describe ProgressReportsController, type: :controller do
   end
 
   describe "Get show" do
-    let(:progress_report) { FactoryGirl.create(:progress_report) }
-    let(:draft_progress_report) { FactoryGirl.create(:progress_report, draft: true) }
+    let(:progress_report) { FactoryBot.create(:progress_report) }
+    let(:draft_progress_report) { FactoryBot.create(:progress_report, draft: true) }
     subject { get :show, params: {id: progress_report}, format: :json }
 
     context "when not signed in" do
@@ -74,12 +74,12 @@ RSpec.describe ProgressReportsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:due_date) { FactoryGirl.create(:due_date) }
-      let(:indicator) { FactoryGirl.create(:indicator) }
-      let(:contributor_indicator) { FactoryGirl.create(:indicator, manager: contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:due_date) { FactoryBot.create(:due_date) }
+      let(:indicator) { FactoryBot.create(:indicator) }
+      let(:contributor_indicator) { FactoryBot.create(:indicator, manager: contributor) }
 
       subject(:without_contributor_manager) do
         post :create,
@@ -159,7 +159,7 @@ RSpec.describe ProgressReportsController, type: :controller do
   end
 
   describe "PUT update" do
-    let(:progress_report) { FactoryGirl.create(:progress_report) }
+    let(:progress_report) { FactoryBot.create(:progress_report) }
 
     subject(:without_contributor_manager) do
       put :update,
@@ -175,11 +175,11 @@ RSpec.describe ProgressReportsController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:contributor_indicator) { FactoryGirl.create(:indicator, manager: contributor) }
-      let(:progress_report_with_contributor) { FactoryGirl.create(:progress_report, indicator: contributor_indicator) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:contributor_indicator) { FactoryBot.create(:indicator, manager: contributor) }
+      let(:progress_report_with_contributor) { FactoryBot.create(:progress_report, indicator: contributor_indicator) }
 
       subject(:with_contributor_manager) do
         put :update,
@@ -254,7 +254,7 @@ RSpec.describe ProgressReportsController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:progress_report) { FactoryGirl.create(:progress_report) }
+    let(:progress_report) { FactoryBot.create(:progress_report) }
     subject { delete :destroy, format: :json, params: {id: progress_report} }
 
     context "when not signed in" do
@@ -264,9 +264,9 @@ RSpec.describe ProgressReportsController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a progress_report" do
         sign_in guest

@@ -11,7 +11,7 @@ RSpec.describe MeasureIndicatorsController, type: :controller do
   end
 
   describe "Get show" do
-    let(:measure_indicator) { FactoryGirl.create(:measure_indicator) }
+    let(:measure_indicator) { FactoryBot.create(:measure_indicator) }
     subject { get :show, params: {id: measure_indicator}, format: :json }
 
     context "when not signed in" do
@@ -33,11 +33,11 @@ RSpec.describe MeasureIndicatorsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:measure) { FactoryGirl.create(:measure) }
-      let(:indicator) { FactoryGirl.create(:indicator) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:measure) { FactoryBot.create(:measure) }
+      let(:indicator) { FactoryBot.create(:indicator) }
 
       subject do
         post :create,
@@ -74,7 +74,7 @@ RSpec.describe MeasureIndicatorsController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:measure_indicator) { FactoryGirl.create(:measure_indicator) }
+    let(:measure_indicator) { FactoryBot.create(:measure_indicator) }
     subject { delete :destroy, format: :json, params: {id: measure_indicator} }
 
     context "when not signed in" do
@@ -84,9 +84,9 @@ RSpec.describe MeasureIndicatorsController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a measure_indicator" do
         sign_in guest

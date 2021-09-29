@@ -38,7 +38,7 @@ class Seeds
 
     # Set up taxonomies ########################################################
     #  Sample taxonomy
-    t1 = FactoryGirl.create(
+    t1 = FactoryBot.create(
       :taxonomy,
       framework: fw1,
       title: "Tax 1",
@@ -49,14 +49,14 @@ class Seeds
       priority: 11,
       groups_recommendations_default: 1
     )
-    FactoryGirl.create(
+    FactoryBot.create(
       :framework_taxonomy,
       framework: fw1,
       taxonomy: t1
     )
 
     # Set up categories ########################################################
-    FactoryGirl.create(
+    FactoryBot.create(
       :category,
       taxonomy: t1,
       title: "Cat 1",
@@ -66,7 +66,7 @@ class Seeds
 
   def development_seeds!
     return unless User.count.zero?
-    FactoryGirl.create(:user).tap do |user|
+    FactoryBot.create(:user).tap do |user|
       log "Seed user created: Log in with #{user.email} and password #{user.password}"
       user.roles << Role.find_by(name: "manager")
       user.save!

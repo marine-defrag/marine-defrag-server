@@ -6,7 +6,7 @@ require "json"
 RSpec.describe RolesController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
-    let!(:role) { FactoryGirl.create(:role) }
+    let!(:role) { FactoryBot.create(:role) }
 
     context "when not signed in" do
       it { expect(subject).to be_ok }
@@ -18,10 +18,10 @@ RSpec.describe RolesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:admin) { FactoryGirl.create(:user, :admin) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:admin) { FactoryBot.create(:user, :admin) }
 
       it "guest will see roles" do
         sign_in guest
@@ -50,7 +50,7 @@ RSpec.describe RolesController, type: :controller do
   end
 
   describe "Get show" do
-    let(:role) { FactoryGirl.create(:role) }
+    let(:role) { FactoryBot.create(:role) }
     subject { get :show, params: {id: role}, format: :json }
 
     context "when not signed in" do
@@ -72,10 +72,10 @@ RSpec.describe RolesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:manager) { FactoryGirl.create(:user, :manager) }
-      let(:admin) { FactoryGirl.create(:user, :admin) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:manager) { FactoryBot.create(:user, :manager) }
+      let(:admin) { FactoryBot.create(:user, :admin) }
 
       subject do
         post :create, format: :json, params: {role: {name: "test", friendly_name: "test"}}
@@ -104,7 +104,7 @@ RSpec.describe RolesController, type: :controller do
   end
 
   describe "PUT update" do
-    let(:role) { FactoryGirl.create(:role) }
+    let(:role) { FactoryBot.create(:role) }
     subject do
       put :update,
         format: :json,
@@ -118,10 +118,10 @@ RSpec.describe RolesController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:manager) { FactoryGirl.create(:user, :manager) }
-      let(:admin) { FactoryGirl.create(:user, :admin) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:manager) { FactoryBot.create(:user, :manager) }
+      let(:admin) { FactoryBot.create(:user, :admin) }
 
       it "will not allow a guest to update a measure" do
         sign_in guest
@@ -146,7 +146,7 @@ RSpec.describe RolesController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:role) { FactoryGirl.create(:role) }
+    let(:role) { FactoryBot.create(:role) }
     subject { delete :destroy, format: :json, params: {id: role} }
 
     context "when not signed in" do
@@ -156,10 +156,10 @@ RSpec.describe RolesController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:manager) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:admin) { FactoryGirl.create(:user, :admin) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:manager) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:admin) { FactoryBot.create(:user, :admin) }
 
       it "will not allow a guest to delete a role" do
         sign_in guest

@@ -11,7 +11,7 @@ RSpec.describe RecommendationCategoriesController, type: :controller do
   end
 
   describe "Get show" do
-    let(:recommendation_category) { FactoryGirl.create(:recommendation_category) }
+    let(:recommendation_category) { FactoryBot.create(:recommendation_category) }
     subject { get :show, params: {id: recommendation_category}, format: :json }
 
     context "when not signed in" do
@@ -33,11 +33,11 @@ RSpec.describe RecommendationCategoriesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:recommendation) { FactoryGirl.create(:recommendation) }
-      let(:category) { FactoryGirl.create(:category) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:recommendation) { FactoryBot.create(:recommendation) }
+      let(:category) { FactoryBot.create(:category) }
 
       subject do
         post :create,
@@ -74,7 +74,7 @@ RSpec.describe RecommendationCategoriesController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:recommendation_category) { FactoryGirl.create(:recommendation_category) }
+    let(:recommendation_category) { FactoryBot.create(:recommendation_category) }
     subject { delete :destroy, format: :json, params: {id: recommendation_category} }
 
     context "when not signed in" do
@@ -84,9 +84,9 @@ RSpec.describe RecommendationCategoriesController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a recommendation_category" do
         sign_in guest

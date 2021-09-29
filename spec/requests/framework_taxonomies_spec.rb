@@ -5,7 +5,7 @@ require "json"
 
 RSpec.describe "framework to taxonomy relationships", type: :request do
   describe "get one framework/taxonomy relationship" do
-    let!(:framework_taxonomy) { FactoryGirl.create(:framework_taxonomy) }
+    let!(:framework_taxonomy) { FactoryBot.create(:framework_taxonomy) }
     it "returns the framework/taxonomy releationship requested" do
       get "/framework_taxonomies/#{framework_taxonomy.id}"
 
@@ -27,13 +27,13 @@ RSpec.describe "framework to taxonomy relationships", type: :request do
   end
 
   describe "get all the framework/taxonomy relationships" do
-    let(:framework_1) { FactoryGirl.create(:framework) }
-    let(:framework_2) { FactoryGirl.create(:framework) }
-    let(:taxonomy_1) { FactoryGirl.create(:taxonomy) }
-    let(:taxonomy_2) { FactoryGirl.create(:taxonomy) }
-    let!(:framework_framework_1) { FactoryGirl.create(:framework_taxonomy, framework_id: framework_1.id, taxonomy_id: taxonomy_1.id) }
-    let!(:framework_framework_2) { FactoryGirl.create(:framework_taxonomy, framework_id: framework_1.id, taxonomy_id: taxonomy_2.id) }
-    let!(:framework_framework_3) { FactoryGirl.create(:framework_taxonomy, framework_id: framework_2.id, taxonomy_id: taxonomy_1.id) }
+    let(:framework_1) { FactoryBot.create(:framework) }
+    let(:framework_2) { FactoryBot.create(:framework) }
+    let(:taxonomy_1) { FactoryBot.create(:taxonomy) }
+    let(:taxonomy_2) { FactoryBot.create(:taxonomy) }
+    let!(:framework_framework_1) { FactoryBot.create(:framework_taxonomy, framework_id: framework_1.id, taxonomy_id: taxonomy_1.id) }
+    let!(:framework_framework_2) { FactoryBot.create(:framework_taxonomy, framework_id: framework_1.id, taxonomy_id: taxonomy_2.id) }
+    let!(:framework_framework_3) { FactoryBot.create(:framework_taxonomy, framework_id: framework_2.id, taxonomy_id: taxonomy_1.id) }
 
     it "returns all the linkable framework/taxonomies" do
       get "/framework_taxonomies"

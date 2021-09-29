@@ -4,8 +4,8 @@ require "json"
 RSpec.describe DueDatesController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
-    let!(:due_date) { FactoryGirl.create(:due_date) }
-    let!(:draft_due_date) { FactoryGirl.create(:due_date, draft: true) }
+    let!(:due_date) { FactoryBot.create(:due_date) }
+    let!(:draft_due_date) { FactoryBot.create(:due_date, draft: true) }
 
     context "when not signed in" do
       it "no due dates are shown" do
@@ -15,9 +15,9 @@ RSpec.describe DueDatesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:user) { FactoryBot.create(:user, :manager) }
 
       it "guest will not see any due_dates" do
         sign_in guest
@@ -40,8 +40,8 @@ RSpec.describe DueDatesController, type: :controller do
   end
 
   describe "Get show" do
-    let(:due_date) { FactoryGirl.create(:due_date) }
-    let(:draft_due_date) { FactoryGirl.create(:due_date, draft: true) }
+    let(:due_date) { FactoryBot.create(:due_date) }
+    let(:draft_due_date) { FactoryBot.create(:due_date, draft: true) }
     subject { get :show, params: {id: due_date}, format: :json }
 
     context "when not signed in" do
@@ -63,11 +63,11 @@ RSpec.describe DueDatesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:indicator) { FactoryGirl.create(:indicator) }
-      let(:contributor_indicator) { FactoryGirl.create(:indicator, manager: contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:indicator) { FactoryBot.create(:indicator) }
+      let(:contributor_indicator) { FactoryBot.create(:indicator, manager: contributor) }
 
       subject(:with_contributor) do
         post :create,
@@ -114,7 +114,7 @@ RSpec.describe DueDatesController, type: :controller do
   end
 
   describe "PUT update" do
-    let(:due_date) { FactoryGirl.create(:due_date) }
+    let(:due_date) { FactoryBot.create(:due_date) }
     subject do
       put :update,
         format: :json,
@@ -129,9 +129,9 @@ RSpec.describe DueDatesController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to update a due_date" do
         sign_in guest
@@ -151,7 +151,7 @@ RSpec.describe DueDatesController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:due_date) { FactoryGirl.create(:due_date) }
+    let(:due_date) { FactoryBot.create(:due_date) }
     subject { delete :destroy, format: :json, params: {id: due_date} }
 
     context "when not signed in" do
@@ -161,9 +161,9 @@ RSpec.describe DueDatesController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:user) { FactoryBot.create(:user, :manager) }
 
       it "will not allow a guest to delete a due_date" do
         sign_in guest

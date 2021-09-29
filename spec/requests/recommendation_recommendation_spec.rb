@@ -5,7 +5,7 @@ require "json"
 
 RSpec.describe "recommendation to recommendation relationships", type: :request do
   describe "get one recommendation to recommendation relationship" do
-    let(:recommendation_recommendation) { FactoryGirl.create(:recommendation_recommendation) }
+    let(:recommendation_recommendation) { FactoryBot.create(:recommendation_recommendation) }
     it "returns the recommendation releationship requested" do
       get "/recommendation_recommendations/#{recommendation_recommendation.id}"
 
@@ -27,12 +27,12 @@ RSpec.describe "recommendation to recommendation relationships", type: :request 
   end
 
   describe "get all the recommendation to recommendation relationships" do
-    let(:recommendation_1) { FactoryGirl.create(:recommendation) }
-    let(:recommendation_2) { FactoryGirl.create(:recommendation) }
-    let(:recommendation_3) { FactoryGirl.create(:recommendation) }
-    let!(:recommendation_recommendation_1) { FactoryGirl.create(:recommendation_recommendation, recommendation_id: recommendation_1.id, other_recommendation_id: recommendation_2.id) }
-    let!(:recommendation_recommendation_2) { FactoryGirl.create(:recommendation_recommendation, recommendation_id: recommendation_2.id, other_recommendation_id: recommendation_3.id) }
-    let!(:recommendation_recommendation_3) { FactoryGirl.create(:recommendation_recommendation, recommendation_id: recommendation_1.id, other_recommendation_id: recommendation_3.id) }
+    let(:recommendation_1) { FactoryBot.create(:recommendation) }
+    let(:recommendation_2) { FactoryBot.create(:recommendation) }
+    let(:recommendation_3) { FactoryBot.create(:recommendation) }
+    let!(:recommendation_recommendation_1) { FactoryBot.create(:recommendation_recommendation, recommendation_id: recommendation_1.id, other_recommendation_id: recommendation_2.id) }
+    let!(:recommendation_recommendation_2) { FactoryBot.create(:recommendation_recommendation, recommendation_id: recommendation_2.id, other_recommendation_id: recommendation_3.id) }
+    let!(:recommendation_recommendation_3) { FactoryBot.create(:recommendation_recommendation, recommendation_id: recommendation_1.id, other_recommendation_id: recommendation_3.id) }
 
     it "returns all the linkable recommendations" do
       get "/recommendation_recommendations"

@@ -6,8 +6,8 @@ require "json"
 RSpec.describe RecommendationsController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
-    let!(:recommendation) { FactoryGirl.create(:recommendation) }
-    let!(:draft_recommendation) { FactoryGirl.create(:recommendation, draft: true) }
+    let!(:recommendation) { FactoryBot.create(:recommendation) }
+    let!(:draft_recommendation) { FactoryBot.create(:recommendation, draft: true) }
 
     context "when not signed in" do
       it { expect(subject).to be_ok }
@@ -19,9 +19,9 @@ RSpec.describe RecommendationsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "guest will not see draft recommendations" do
         sign_in guest
@@ -43,10 +43,10 @@ RSpec.describe RecommendationsController, type: :controller do
     end
 
     context "filters" do
-      let(:category) { FactoryGirl.create(:category) }
-      let(:recommendation_different_category) { FactoryGirl.create(:recommendation) }
-      let(:measure) { FactoryGirl.create(:measure) }
-      let(:recommendation_different_measure) { FactoryGirl.create(:recommendation) }
+      let(:category) { FactoryBot.create(:category) }
+      let(:recommendation_different_category) { FactoryBot.create(:recommendation) }
+      let(:measure) { FactoryBot.create(:measure) }
+      let(:recommendation_different_measure) { FactoryBot.create(:recommendation) }
 
       it "filters from category" do
         recommendation_different_category.categories << category
@@ -67,8 +67,8 @@ RSpec.describe RecommendationsController, type: :controller do
   end
 
   describe "Get show" do
-    let(:recommendation) { FactoryGirl.create(:recommendation) }
-    let(:draft_recommendation) { FactoryGirl.create(:recommendation, draft: true) }
+    let(:recommendation) { FactoryBot.create(:recommendation) }
+    let(:draft_recommendation) { FactoryBot.create(:recommendation, draft: true) }
     subject { get :show, params: {id: recommendation}, format: :json }
 
     context "when not signed in" do
@@ -95,10 +95,10 @@ RSpec.describe RecommendationsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
-      let(:category) { FactoryGirl.create(:category) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
+      let(:category) { FactoryBot.create(:category) }
       subject do
         post :create,
           format: :json,
@@ -141,7 +141,7 @@ RSpec.describe RecommendationsController, type: :controller do
   end
 
   describe "PUT update" do
-    let(:recommendation) { FactoryGirl.create(:recommendation) }
+    let(:recommendation) { FactoryBot.create(:recommendation) }
     subject do
       put :update,
         format: :json,
@@ -156,9 +156,9 @@ RSpec.describe RecommendationsController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to update a recommendation" do
         sign_in guest
@@ -221,7 +221,7 @@ RSpec.describe RecommendationsController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:recommendation) { FactoryGirl.create(:recommendation) }
+    let(:recommendation) { FactoryBot.create(:recommendation) }
     subject { delete :destroy, format: :json, params: {id: recommendation} }
 
     context "when not signed in" do
@@ -231,9 +231,9 @@ RSpec.describe RecommendationsController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryGirl.create(:user) }
-      let(:user) { FactoryGirl.create(:user, :manager) }
-      let(:contributor) { FactoryGirl.create(:user, :contributor) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a recommendation" do
         sign_in guest

@@ -16,9 +16,9 @@ RSpec.describe Category, type: :model do
 
   context "Sub-relation validations" do
     it "Should update parent_id with correct taxonomy relation" do
-      category = FactoryGirl.create(:category, :parent_category)
-      sub_category = FactoryGirl.create(:category, :sub_category)
-      taxonomy = FactoryGirl.create(:taxonomy, :sub_taxonomy)
+      category = FactoryBot.create(:category, :parent_category)
+      sub_category = FactoryBot.create(:category, :sub_category)
+      taxonomy = FactoryBot.create(:taxonomy, :sub_taxonomy)
 
       sub_category.taxonomy_id = taxonomy.id
       category.taxonomy_id = taxonomy.parent_id
@@ -30,10 +30,10 @@ RSpec.describe Category, type: :model do
     end
 
     it "Should not update parent_id if parent is already a sub-category" do
-      category = FactoryGirl.create(:category)
-      parent_category = FactoryGirl.create(:category, :parent_category)
-      sub_category = FactoryGirl.create(:category, :sub_category)
-      taxonomy = FactoryGirl.create(:taxonomy, :sub_taxonomy)
+      category = FactoryBot.create(:category)
+      parent_category = FactoryBot.create(:category, :parent_category)
+      sub_category = FactoryBot.create(:category, :sub_category)
+      taxonomy = FactoryBot.create(:taxonomy, :sub_taxonomy)
 
       parent_category.taxonomy_id = taxonomy.id
       category.taxonomy_id = taxonomy.parent_id
@@ -47,8 +47,8 @@ RSpec.describe Category, type: :model do
     end
 
     it "Should not update parent_id with incorrect taxonomy relation" do
-      category = FactoryGirl.create(:category, :parent_category)
-      sub_category = FactoryGirl.create(:category, :sub_category)
+      category = FactoryBot.create(:category, :parent_category)
+      sub_category = FactoryBot.create(:category, :sub_category)
       sub_category.parent_id = category.id
       expect { sub_category.save! }.to raise_exception(/Validation failed: Parent Taxonomy does not have parent categorys taxonomy as parent./)
     end
