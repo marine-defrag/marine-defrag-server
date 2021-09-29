@@ -28,7 +28,6 @@ jobs:
           bundler-cache: true
 
       - name: "Set up PostgreSQL using VM's server"
-        if: ${{ env.DB == 'postgresql' }}
         run: |
           sudo apt-get update
           sudo apt-get install libpq-dev -y
