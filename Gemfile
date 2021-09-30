@@ -11,7 +11,6 @@ gem "devise_token_auth"
 gem "fast_jsonapi", git: "https://github.com/Netflix/fast_jsonapi",
                     branch: "dev"
 gem "foundation-rails"
-gem "fog-aws"
 gem "jquery-rails"
 gem "kaminari"
 gem "oj"
