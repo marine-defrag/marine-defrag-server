@@ -11,8 +11,8 @@ FactoryBot.define do
       name { "manager" }
     end
 
-    trait :analyst do
-      name { "analyst" }
+    trait :contributor do
+      name { "contributor" }
     end
   end
 end

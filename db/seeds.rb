@@ -24,7 +24,6 @@ class Seeds
     # Set up user roles
     Role.new(name: "admin", friendly_name: "Admin").save!
     Role.new(name: "manager", friendly_name: "Manager").save!
-    Role.new(name: "analyst", friendly_name: "Analyst").save!
 
     # set up frameworks ########################################################
     fw1 = Framework.new(
