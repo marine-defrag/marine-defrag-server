@@ -19,7 +19,7 @@ RSpec.describe RecommendationIndicatorsController, type: :controller do
 
       it "returns the recommendation_indicator" do
         json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(recommendation_indicator.id)
+        expect(json.dig("data", "id").to_i).to eq(recommendation_indicator.id)
       end
     end
   end
@@ -34,7 +34,6 @@ RSpec.describe RecommendationIndicatorsController, type: :controller do
 
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:manager) { FactoryBot.create(:user, :manager) }
       let(:admin) { FactoryBot.create(:user, :admin) }
       let(:recommendation) { FactoryBot.create(:recommendation) }
@@ -53,11 +52,6 @@ RSpec.describe RecommendationIndicatorsController, type: :controller do
 
       it "wont allow a guest to create a recommendation_indicator" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "wont allow a contributor to create a recommendation_indicator" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -91,17 +85,11 @@ RSpec.describe RecommendationIndicatorsController, type: :controller do
 
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:manager) { FactoryBot.create(:user, :manager) }
       let(:admin) { FactoryBot.create(:user, :admin) }
 
       it "wont allow a guest to delete a recommendation_indicator" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "wont allow a contributor to delete a recommendation_indicator" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 

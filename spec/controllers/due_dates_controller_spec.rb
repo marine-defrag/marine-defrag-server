@@ -16,19 +16,12 @@ RSpec.describe DueDatesController, type: :controller do
 
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:user) { FactoryBot.create(:user, :manager) }
 
       it "guest will not see any due_dates" do
         sign_in guest
         json = JSON.parse(subject.body)
         expect(json["data"].length).to eq(0)
-      end
-
-      it "contributor will see all due_dates" do
-        sign_in contributor
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(2)
       end
 
       it "manager will see all due_dates" do
@@ -65,22 +58,9 @@ RSpec.describe DueDatesController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:indicator) { FactoryBot.create(:indicator) }
-      let(:contributor_indicator) { FactoryBot.create(:indicator, manager: contributor) }
 
-      subject(:with_contributor) do
-        post :create,
-          format: :json,
-          params: {
-            due_date: {
-              due_date: Time.zone.today.to_s,
-              indicator_id: contributor_indicator.id
-            }
-          }
-      end
-
-      subject(:without_contributor) do
+      subject do
         post :create,
           format: :json,
           params: {
@@ -94,16 +74,6 @@ RSpec.describe DueDatesController, type: :controller do
       it "will not allow a guest to create a due_date" do
         sign_in guest
         expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to create a due_date for a indicator they are not a manager for" do
-        sign_in contributor
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to create a due_date for a indicator they are a manager for" do
-        sign_in contributor
-        expect(with_contributor).to be_forbidden
       end
 
       it "will not allow a manager to create a due_date" do
@@ -131,16 +101,10 @@ RSpec.describe DueDatesController, type: :controller do
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to update a due_date" do
         sign_in guest
         expect(subject).to be_not_found
-      end
-
-      it "will not allow a contributor to update a due_date" do
-        sign_in contributor
-        expect(subject).to be_forbidden
       end
 
       it "will not allow a manager to update a due_date" do
@@ -162,17 +126,11 @@ RSpec.describe DueDatesController, type: :controller do
 
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:user) { FactoryBot.create(:user, :manager) }
 
       it "will not allow a guest to delete a due_date" do
         sign_in guest
         expect(subject).to be_not_found
-      end
-
-      it "will not allow a contributor to delete a due_date" do
-        sign_in contributor
-        expect(subject).to be_forbidden
       end
 
       it "will not allow a manager to delete a due_date" do
