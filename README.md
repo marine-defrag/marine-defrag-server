@@ -4,7 +4,7 @@
 
 This is the source code for the server-side application (the "API") of Marine:DeFRAG.
 
-It is a **Rails 5.0.1 application** and is a thin server that is responsible for:
+It is a **Rails 6.1.4.1 application** and is a thin server that is responsible for:
 * database management and access via an API (Application Programming Interface)
 * user authentication
 * automated email reminders
@@ -26,7 +26,7 @@ The IMPACT OSS project is maintained by the Impact Open Source Software Trust. T
 
 This project requires:
 
-* Ruby 2.3.3, preferably managed using [rbenv][]
+* Ruby 3.0.2, preferably managed using [rbenv][]
 * PhantomJS (in order to use the [poltergeist][] gem)
 * PostgreSQL must be installed and accepting connections
 
@@ -92,11 +92,11 @@ Run `docker-compose up` to create and start a DB and app image, with the app lis
 
 If you already have a database instance and just wish to run the app you will need to build the image:
 
-`docker build . -t "undp-human-rights-national-reporting"`
+`docker build . -t "marine-defrag-server"`
 
 And then run the resulting image:
 
-`docker run undp-human-rights-national-reporting -P -e PGHOST=YOUR_DB_HOST -e PGUSER=YOUR_PG_USER`
+`docker run marine-defrag-server -P -e PGHOST=YOUR_DB_HOST -e PGUSER=YOUR_PG_USER`
 
 ##### Without Docker
 
