@@ -122,9 +122,9 @@ RSpec.describe ProgressReportsController, type: :controller do
           }
       end
 
-      it "will allow a guest to create a progress_report" do
+      it "will not allow a guest to create a progress_report" do
         sign_in guest
-        expect(subject).to be_created
+        expect(subject).to be_forbidden
       end
 
       # This was changed from forbidden in bb687a69339aaa3501f24140907e9a2135ffe4c5 per #154
