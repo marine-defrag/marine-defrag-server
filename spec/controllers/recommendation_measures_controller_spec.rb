@@ -6,7 +6,7 @@ RSpec.describe RecommendationMeasuresController, type: :controller do
     subject { get :index, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
+      it { expect(subject).to be_forbidden }
     end
   end
 
@@ -15,12 +15,7 @@ RSpec.describe RecommendationMeasuresController, type: :controller do
     subject { get :show, params: {id: recommendation_measure}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "shows the recommendation_measure" do
-        json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(recommendation_measure.id)
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 

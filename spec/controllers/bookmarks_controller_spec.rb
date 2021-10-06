@@ -4,7 +4,7 @@ RSpec.describe BookmarksController, type: :controller do
   describe "Get index" do
     let(:bookmark1) { FactoryBot.create(:bookmark) }
     let(:bookmark2) { FactoryBot.create(:bookmark) }
-    let(:user) { FactoryBot.create(:user, bookmarks: [bookmark1]) }
+    let(:user) { FactoryBot.create(:user, :manager, bookmarks: [bookmark1]) }
 
     subject { get :index, format: :json }
 
@@ -13,7 +13,7 @@ RSpec.describe BookmarksController, type: :controller do
     end
 
     context "when signed in" do
-      it "lists bookmars for signed in user" do
+      it "lists bookmarks for signed in user" do
         sign_in user
 
         expect(subject).to have_http_status(200)
@@ -47,7 +47,7 @@ RSpec.describe BookmarksController, type: :controller do
   end
 
   describe "Post create" do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { FactoryBot.create(:user, :manager) }
 
     invalid_params = {
       bookmark: {bookmark_type: 1, title: "test 2"}
@@ -87,7 +87,7 @@ RSpec.describe BookmarksController, type: :controller do
   describe "Put update" do
     let(:bookmark1) { FactoryBot.create(:bookmark) }
     let(:bookmark2) { FactoryBot.create(:bookmark) }
-    let(:user) { FactoryBot.create(:user, bookmarks: [bookmark1]) }
+    let(:user) { FactoryBot.create(:user, :manager, bookmarks: [bookmark1]) }
 
     new_title = "new title"
     new_view = {dolor: "sit amet"}
@@ -130,7 +130,7 @@ RSpec.describe BookmarksController, type: :controller do
   describe "Delete destroy" do
     let(:bookmark1) { FactoryBot.create(:bookmark) }
     let(:bookmark2) { FactoryBot.create(:bookmark) }
-    let(:user) { FactoryBot.create(:user, bookmarks: [bookmark1]) }
+    let(:user) { FactoryBot.create(:user, :manager, bookmarks: [bookmark1]) }
 
     subject { delete :destroy, format: :json, params: {id: bookmark1.id} }
 

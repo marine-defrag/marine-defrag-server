@@ -6,7 +6,7 @@ RSpec.describe SdgtargetIndicatorsController, type: :controller do
     subject { get :index, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
+      it { expect(subject).to be_forbidden }
     end
   end
 
@@ -15,12 +15,7 @@ RSpec.describe SdgtargetIndicatorsController, type: :controller do
     subject { get :show, params: {id: sdgtarget_indicator}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "shows the sdgtarget_indicator" do
-        json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(sdgtarget_indicator.id)
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 

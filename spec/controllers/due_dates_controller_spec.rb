@@ -8,10 +8,7 @@ RSpec.describe DueDatesController, type: :controller do
     let!(:draft_due_date) { FactoryBot.create(:due_date, draft: true) }
 
     context "when not signed in" do
-      it "no due dates are shown" do
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(0)
-      end
+      it { expect(subject).to be_forbidden }
     end
 
     context "when signed in" do
@@ -19,10 +16,9 @@ RSpec.describe DueDatesController, type: :controller do
       let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:user) { FactoryBot.create(:user, :manager) }
 
-      it "guest will not see any due_dates" do
+      it "guest will be forbidden" do
         sign_in guest
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(0)
+        expect(subject).to be_forbidden
       end
 
       it "contributor will see all due_dates" do

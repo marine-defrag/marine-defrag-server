@@ -10,12 +10,7 @@ RSpec.describe ProgressReportsController, type: :controller do
     let!(:draft_progress_report) { FactoryBot.create(:progress_report, draft: true) }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "all published progress_reports (no drafts)" do
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-      end
+      it { expect(subject).to be_forbidden }
     end
 
     context "when signed in" do
@@ -23,10 +18,9 @@ RSpec.describe ProgressReportsController, type: :controller do
       let(:manager) { FactoryBot.create(:user, :manager) }
       let(:contributor) { FactoryBot.create(:user, :contributor) }
 
-      it "guest will not see draft progress_reports" do
+      it "guest will be forbidden" do
         sign_in guest
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
+        expect(subject).to be_forbidden
       end
 
       it "contributor will see draft progress_reports" do
@@ -49,17 +43,7 @@ RSpec.describe ProgressReportsController, type: :controller do
     subject { get :show, params: {id: progress_report}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "shows the progress_report" do
-        json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(progress_report.id)
-      end
-
-      it "will not show draft progress_report" do
-        get :show, params: {id: draft_progress_report}, format: :json
-        expect(response).to be_not_found
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 

@@ -3,6 +3,10 @@ class PagePolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    true
+  end
+
   def create?
     @user.role?("admin")
   end

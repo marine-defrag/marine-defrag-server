@@ -10,12 +10,7 @@ RSpec.describe MeasuresController, type: :controller do
     let!(:draft_measure) { FactoryBot.create(:measure, draft: true) }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "all published measures (no drafts)" do
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-      end
+      it { expect(subject).to be_forbidden }
     end
 
     context "when signed in" do
@@ -23,10 +18,9 @@ RSpec.describe MeasuresController, type: :controller do
       let(:user) { FactoryBot.create(:user, :manager) }
       let(:contributor) { FactoryBot.create(:user, :contributor) }
 
-      it "guest will not see draft measures" do
+      it "guest will be forbidden" do
         sign_in guest
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
+        expect(subject).to be_forbidden
       end
 
       it "contributor will see draft measures" do
@@ -50,28 +44,34 @@ RSpec.describe MeasuresController, type: :controller do
       let(:indicator) { FactoryBot.create(:indicator) }
       let(:measure_different_indicator) { FactoryBot.create(:measure) }
 
-      it "filters from category" do
-        measure_different_category.categories << category
-        subject = get :index, params: {category_id: category.id}, format: :json
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-        expect(json["data"][0]["id"]).to eq(measure_different_category.id.to_s)
-      end
+      context "when signed in" do
+        let(:user) { FactoryBot.create(:user, :manager) }
+        it "filters from category" do
+          sign_in user
+          measure_different_category.categories << category
+          subject = get :index, params: {category_id: category.id}, format: :json
+          json = JSON.parse(subject.body)
+          expect(json["data"].length).to eq(1)
+          expect(json["data"][0]["id"]).to eq(measure_different_category.id.to_s)
+        end
 
-      it "filters from recommendation" do
-        measure_different_recommendation.recommendations << recommendation
-        subject = get :index, params: {recommendation_id: recommendation.id}, format: :json
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-        expect(json["data"][0]["id"]).to eq(measure_different_recommendation.id.to_s)
-      end
+        it "filters from recommendation" do
+          sign_in user
+          measure_different_recommendation.recommendations << recommendation
+          subject = get :index, params: {recommendation_id: recommendation.id}, format: :json
+          json = JSON.parse(subject.body)
+          expect(json["data"].length).to eq(1)
+          expect(json["data"][0]["id"]).to eq(measure_different_recommendation.id.to_s)
+        end
 
-      it "filters from indicator" do
-        measure_different_indicator.indicators << indicator
-        subject = get :index, params: {indicator_id: indicator.id}, format: :json
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-        expect(json["data"][0]["id"]).to eq(measure_different_indicator.id.to_s)
+        it "filters from indicator" do
+          sign_in user
+          measure_different_indicator.indicators << indicator
+          subject = get :index, params: {indicator_id: indicator.id}, format: :json
+          json = JSON.parse(subject.body)
+          expect(json["data"].length).to eq(1)
+          expect(json["data"][0]["id"]).to eq(measure_different_indicator.id.to_s)
+        end
       end
     end
   end
@@ -82,17 +82,7 @@ RSpec.describe MeasuresController, type: :controller do
     subject { get :show, params: {id: measure}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "shows the measure" do
-        json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(measure.id)
-      end
-
-      it "will not show draft measure" do
-        get :show, params: {id: draft_measure}, format: :json
-        expect(response).to be_not_found
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 

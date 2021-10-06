@@ -7,12 +7,7 @@ RSpec.describe TaxonomiesController, type: :controller do
     let!(:taxonomy) { FactoryBot.create(:taxonomy) }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "all published taxonomies" do
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 
@@ -21,12 +16,7 @@ RSpec.describe TaxonomiesController, type: :controller do
     subject { get :show, params: {id: taxonomy}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "shows the taxonomy" do
-        json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(taxonomy.id)
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 

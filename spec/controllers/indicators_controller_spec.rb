@@ -10,12 +10,7 @@ RSpec.describe IndicatorsController, type: :controller do
     let!(:draft_indicator) { FactoryBot.create(:indicator, draft: true) }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "all published indicators (no drafts)" do
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-      end
+      it { expect(subject).to be_forbidden }
     end
 
     context "when signed in" do
@@ -23,10 +18,9 @@ RSpec.describe IndicatorsController, type: :controller do
       let(:user) { FactoryBot.create(:user, :manager) }
       let(:contributor) { FactoryBot.create(:user, :contributor) }
 
-      it "guest will not see draft indicators" do
+      it "guest will be forbidden" do
         sign_in guest
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
+        expect(subject).to be_forbidden
       end
 
       it "contributor will see draft indicators" do
@@ -46,12 +40,17 @@ RSpec.describe IndicatorsController, type: :controller do
       let(:measure) { FactoryBot.create(:measure) }
       let(:indicator_different_measure) { FactoryBot.create(:indicator) }
 
-      it "filters from measures" do
-        indicator_different_measure.measures << measure
-        subject = get :index, params: {measure_id: measure.id}, format: :json
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-        expect(json["data"][0]["id"]).to eq(indicator_different_measure.id.to_s)
+      context "when signed in" do
+        let(:user) { FactoryBot.create(:user, :manager) }
+
+        it "filters from measures" do
+          sign_in user
+          indicator_different_measure.measures << measure
+          subject = get :index, params: {measure_id: measure.id}, format: :json
+          json = JSON.parse(subject.body)
+          expect(json["data"].length).to eq(1)
+          expect(json["data"][0]["id"]).to eq(indicator_different_measure.id.to_s)
+        end
       end
     end
   end
@@ -62,17 +61,7 @@ RSpec.describe IndicatorsController, type: :controller do
     subject { get :show, params: {id: indicator}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "shows the indicator" do
-        json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(indicator.id)
-      end
-
-      it "will not show draft indicator" do
-        get :show, params: {id: draft_indicator}, format: :json
-        expect(response).to be_not_found
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 
