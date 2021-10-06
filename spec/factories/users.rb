@@ -19,4 +19,8 @@ FactoryBot.define do
   trait :contributor do
     roles { [create(:role, :contributor)] }
   end
+
+  trait :analyst do
+    roles { [create(:role, :analyst)] }
+  end
 end
