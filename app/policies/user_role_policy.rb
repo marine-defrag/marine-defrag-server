@@ -6,7 +6,7 @@ class UserRolePolicy < ApplicationPolicy
   end
 
   def show?
-    @user.role?("admin") || @user.role?("manager") || @user.role?("contributor")
+    @user.role?("admin") || @user.role?("manager")
   end
 
   def update?
@@ -15,12 +15,12 @@ class UserRolePolicy < ApplicationPolicy
 
   def create?
     return true if @user.role?("admin")
-    @user.role?("manager") && @record.role_name == "contributor" && !(@record.user.role?("admin") || @record.user.role?("manager"))
+    @user.role?("manager") && !(@record.user.role?("admin") || @record.user.role?("manager"))
   end
 
   def destroy?
     return true if @user.role?("admin")
-    @user.role?("manager") && @record.role_name == "contributor" && !(@record.user.role?("admin") || @record.user.role?("manager"))
+    @user.role?("manager") && !(@record.user.role?("admin") || @record.user.role?("manager"))
   end
 
   def permitted_attributes
@@ -32,7 +32,7 @@ class UserRolePolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      return scope.all if @user.role?("admin") || @user.role?("manager") || @user.role?("contributor")
+      return scope.all if @user.role?("admin") || @user.role?("manager")
       scope.where(user_id: @user.id)
     end
   end

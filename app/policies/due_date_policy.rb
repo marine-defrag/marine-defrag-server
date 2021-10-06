@@ -10,7 +10,7 @@ class DueDatePolicy < ApplicationPolicy
   end
 
   def show?
-    super || @user.role?("contributor")
+    super
   end
 
   def create?
@@ -27,7 +27,7 @@ class DueDatePolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      return scope.all if @user.role?("admin") || @user.role?("manager") || @user.role?("contributor")
+      return scope.all if @user.role?("admin") || @user.role?("manager")
       scope.none
     end
   end
