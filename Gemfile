@@ -46,6 +46,8 @@ group :development, :test do
   gem "brakeman"
   gem "byebug"
   gem "dotenv-rails"
+  gem "factory_bot_rails", "~> 6.0"
+  gem "faker"
   gem "i18n-tasks", "~> 0.9.6"
   gem "rspec-rails"
 end
@@ -54,8 +56,6 @@ group :test do
   gem "capybara"
   gem "connection_pool"
   gem "database_cleaner"
-  gem "factory_bot_rails", "~> 6.0"
-  gem "faker"
   gem "launchy"
   gem "poltergeist"
   gem "pry-rails"
