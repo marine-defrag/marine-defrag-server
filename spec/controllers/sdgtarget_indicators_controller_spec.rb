@@ -19,7 +19,7 @@ RSpec.describe SdgtargetIndicatorsController, type: :controller do
 
       it "shows the sdgtarget_indicator" do
         json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(sdgtarget_indicator.id)
+        expect(json.dig("data", "id").to_i).to eq(sdgtarget_indicator.id)
       end
     end
   end
@@ -35,7 +35,6 @@ RSpec.describe SdgtargetIndicatorsController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:sdgtarget) { FactoryBot.create(:sdgtarget) }
       let(:indicator) { FactoryBot.create(:indicator) }
 
@@ -52,11 +51,6 @@ RSpec.describe SdgtargetIndicatorsController, type: :controller do
 
       it "will not allow a guest to create a sdgtarget_indicator" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to create a sdgtarget_indicator" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -86,15 +80,9 @@ RSpec.describe SdgtargetIndicatorsController, type: :controller do
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a sdgtarget_indicator" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to delete a sdgtarget_indicator" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 

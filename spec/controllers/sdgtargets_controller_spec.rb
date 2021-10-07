@@ -21,18 +21,11 @@ RSpec.describe SdgtargetsController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "guest will not see draft sdgtargets" do
         sign_in guest
         json = JSON.parse(subject.body)
         expect(json["data"].length).to eq(1)
-      end
-
-      it "contributor will see draft sdgtargets" do
-        sign_in contributor
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(2)
       end
 
       it "manager will see draft sdgtargets" do
@@ -53,7 +46,7 @@ RSpec.describe SdgtargetsController, type: :controller do
 
       it "shows the sdgtarget" do
         json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(sdgtarget.id)
+        expect(json.dig("data", "id").to_i).to eq(sdgtarget.id)
       end
 
       it "will not show draft sdgtarget" do
@@ -74,7 +67,6 @@ RSpec.describe SdgtargetsController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:recommendation) { FactoryBot.create(:recommendation) }
       let(:category) { FactoryBot.create(:category) }
 
@@ -103,11 +95,6 @@ RSpec.describe SdgtargetsController, type: :controller do
 
       it "will not allow a guest to create a sdgtarget" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to create a sdgtarget" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -147,17 +134,12 @@ RSpec.describe SdgtargetsController, type: :controller do
     end
 
     context "when user signed in" do
+      let(:admin) { FactoryBot.create(:user, :admin) }
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to update a sdgtarget" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to update a sdgtarget" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -197,7 +179,7 @@ RSpec.describe SdgtargetsController, type: :controller do
 
       it "will return the latest last_modified_user_id", versioning: true do
         expect(PaperTrail).to be_enabled
-        sdgtarget.versions.first.update_column(:whodunnit, contributor.id)
+        sdgtarget.versions.first.update_column(:whodunnit, admin.id)
         sign_in user
         json = JSON.parse(subject.body)
         expect(json["data"]["attributes"]["last_modified_user_id"].to_i).to eq(user.id)
@@ -224,15 +206,9 @@ RSpec.describe SdgtargetsController, type: :controller do
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a sdgtarget" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to delete a sdgtarget" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 

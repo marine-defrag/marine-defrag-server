@@ -21,18 +21,11 @@ RSpec.describe MeasuresController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "guest will not see draft measures" do
         sign_in guest
         json = JSON.parse(subject.body)
         expect(json["data"].length).to eq(1)
-      end
-
-      it "contributor will see draft measures" do
-        sign_in contributor
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(2)
       end
 
       it "manager will see draft measures" do
@@ -86,7 +79,7 @@ RSpec.describe MeasuresController, type: :controller do
 
       it "shows the measure" do
         json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(measure.id)
+        expect(json.dig("data", "id").to_i).to eq(measure.id)
       end
 
       it "will not show draft measure" do
@@ -107,7 +100,6 @@ RSpec.describe MeasuresController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:recommendation) { FactoryBot.create(:recommendation) }
       let(:category) { FactoryBot.create(:category) }
 
@@ -136,11 +128,6 @@ RSpec.describe MeasuresController, type: :controller do
 
       it "will not allow a guest to create a measure" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to create a measure" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -180,17 +167,12 @@ RSpec.describe MeasuresController, type: :controller do
     end
 
     context "when user signed in" do
+      let(:admin) { FactoryBot.create(:user, :admin) }
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to update a measure" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to update a measure" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -230,7 +212,7 @@ RSpec.describe MeasuresController, type: :controller do
 
       it "will return the latest last_modified_user_id", versioning: true do
         expect(PaperTrail).to be_enabled
-        measure.versions.first.update_column(:whodunnit, contributor.id)
+        measure.versions.first.update_column(:whodunnit, admin.id)
         sign_in user
         json = JSON.parse(subject.body)
         expect(json["data"]["attributes"]["last_modified_user_id"].to_i).to eq(user.id)
@@ -257,15 +239,9 @@ RSpec.describe MeasuresController, type: :controller do
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a measure" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to delete a measure" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 

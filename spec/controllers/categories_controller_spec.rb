@@ -19,18 +19,11 @@ RSpec.describe CategoriesController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "guest will not see draft categories" do
         sign_in guest
         json = JSON.parse(subject.body)
         expect(json["data"].length).to eq(1)
-      end
-
-      it "contributor will see draft categories" do
-        sign_in contributor
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(2)
       end
 
       it "manager will see draft categories" do
@@ -51,7 +44,7 @@ RSpec.describe CategoriesController, type: :controller do
 
       it "shows the category" do
         json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(category.id)
+        expect(json.dig("data", "id").to_i).to eq(category.id)
       end
 
       it "will not show draft category" do
