@@ -82,21 +82,6 @@ RSpec.describe ProgressReportsController, type: :controller do
         #      }
       end
 
-      subject(:with_contributor_manager) do
-        post :create,
-          format: :json,
-          params: {
-            progress_report: {
-              indicator_id: contributor_indicator.id,
-              due_date_id: due_date.id,
-              title: "test title",
-              description: "test desc",
-              document_url: "test_url",
-              document_public: true
-            }
-          }
-      end
-
       it "will not allow a guest to create a progress_report" do
         sign_in guest
         expect(subject).to be_forbidden

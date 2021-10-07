@@ -40,12 +40,6 @@ RSpec.describe FrameworksController, type: :controller do
         expect(subject).to be_forbidden
       end
 
-      it "returns the expected framework for contributor" do
-        sign_in contributor
-        json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(framework.id)
-      end
-
       it "returns the expected framework for manager" do
         sign_in manager
         json = JSON.parse(subject.body)
