@@ -19,7 +19,7 @@ gem "pg", "~> 1.2"
 gem "pundit"
 gem "rack-cors", require: "rack/cors"
 gem "rails", "~> 6.0"
-gem "sass-rails", "~> 5.0"
+gem "sass-rails", "~> 6.0"
 gem "secure_headers", ">= 3.0"
 
 group :production, :staging do
@@ -38,7 +38,7 @@ group :development do
   gem "spring"
   gem "standard"
   gem "thin", require: false
-  gem "web-console", "~> 2.0"
+  gem "web-console", "~> 4.1"
 end
 
 group :development, :test do
