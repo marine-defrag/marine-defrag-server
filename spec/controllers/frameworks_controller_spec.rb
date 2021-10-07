@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe FrameworksController, type: :controller do
   let!(:guest) { FactoryBot.create(:user) }
   let!(:manager) { FactoryBot.create(:user, :manager) }
-  let!(:contributor) { FactoryBot.create(:user, :contributor) }
 
   describe "index" do
     subject { get :index, format: :json }
@@ -21,12 +20,6 @@ RSpec.describe FrameworksController, type: :controller do
     context "when signed in" do
       it "returns all frameworks for guest" do
         sign_in guest
-        json = JSON.parse(subject.body)
-        expect(framework_count(json)).to eq(3)
-      end
-
-      it "returns all frameworks for contributor" do
-        sign_in contributor
         json = JSON.parse(subject.body)
         expect(framework_count(json)).to eq(3)
       end
@@ -68,19 +61,13 @@ RSpec.describe FrameworksController, type: :controller do
       it "returns the expected framework for guest" do
         sign_in guest
         json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(framework.id)
-      end
-
-      it "returns the expected framework for contributor" do
-        sign_in contributor
-        json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(framework.id)
+        expect(json.dig("data", "id").to_i).to eq(framework.id)
       end
 
       it "returns the expected framework for manager" do
         sign_in manager
         json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(framework.id)
+        expect(json.dig("data", "id").to_i).to eq(framework.id)
       end
     end
   end

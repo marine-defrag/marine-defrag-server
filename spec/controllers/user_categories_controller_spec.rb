@@ -19,7 +19,7 @@ RSpec.describe UserCategoriesController, type: :controller do
 
       it "shows the user_category" do
         json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(user_category.id)
+        expect(json.dig("data", "id").to_i).to eq(user_category.id)
       end
     end
   end
@@ -35,7 +35,6 @@ RSpec.describe UserCategoriesController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:manager) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:user) { FactoryBot.create(:user) }
       let(:category) { FactoryBot.create(:category) }
 
@@ -52,11 +51,6 @@ RSpec.describe UserCategoriesController, type: :controller do
 
       it "will not allow a guest to create a user_category" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to create a user_category" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -86,15 +80,9 @@ RSpec.describe UserCategoriesController, type: :controller do
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a user_category" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to delete a user_category" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 

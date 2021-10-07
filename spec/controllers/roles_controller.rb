@@ -20,19 +20,12 @@ RSpec.describe RolesController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:admin) { FactoryBot.create(:user, :admin) }
 
       it "guest will see roles" do
         sign_in guest
         json = JSON.parse(subject.body)
         expect(json["data"].length).to eq(1)
-      end
-
-      it "contributor will see roles" do
-        sign_in contributor
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(2)
       end
 
       it "manager will see roles" do
@@ -58,7 +51,7 @@ RSpec.describe RolesController, type: :controller do
 
       it "shows the role" do
         json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(role.id)
+        expect(json.dig("data", "id").to_i).to eq(role.id)
       end
     end
   end
@@ -73,7 +66,6 @@ RSpec.describe RolesController, type: :controller do
 
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:manager) { FactoryBot.create(:user, :manager) }
       let(:admin) { FactoryBot.create(:user, :admin) }
 
@@ -83,11 +75,6 @@ RSpec.describe RolesController, type: :controller do
 
       it "will not allow a guest to create a role" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to create a role" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -119,17 +106,11 @@ RSpec.describe RolesController, type: :controller do
 
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:manager) { FactoryBot.create(:user, :manager) }
       let(:admin) { FactoryBot.create(:user, :admin) }
 
       it "will not allow a guest to update a measure" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to update a role" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -158,16 +139,10 @@ RSpec.describe RolesController, type: :controller do
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:manager) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:admin) { FactoryBot.create(:user, :admin) }
 
       it "will not allow a guest to delete a role" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to delete a role" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 

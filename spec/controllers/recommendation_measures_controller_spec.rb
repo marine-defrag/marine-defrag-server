@@ -19,7 +19,7 @@ RSpec.describe RecommendationMeasuresController, type: :controller do
 
       it "shows the recommendation_measure" do
         json = JSON.parse(subject.body)
-        expect(json["data"]["id"].to_i).to eq(recommendation_measure.id)
+        expect(json.dig("data", "id").to_i).to eq(recommendation_measure.id)
       end
     end
   end
