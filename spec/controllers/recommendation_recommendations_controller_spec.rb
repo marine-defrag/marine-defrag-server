@@ -29,7 +29,6 @@ RSpec.describe RecommendationRecommendationsController, type: :controller do
 
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:manager) { FactoryBot.create(:user, :manager) }
       let(:admin) { FactoryBot.create(:user, :admin) }
       let(:recommendation_1) { FactoryBot.create(:recommendation) }
@@ -48,11 +47,6 @@ RSpec.describe RecommendationRecommendationsController, type: :controller do
 
       it "wont allow a guest to create a recommendation_recommendation" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "wont allow a contributor to create a recommendation_recommendation" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -87,16 +81,10 @@ RSpec.describe RecommendationRecommendationsController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:manager) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:admin) { FactoryBot.create(:user, :admin) }
 
       it "will not allow a guest to delete a recommendation_recommendation" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to delete a recommendation_recommendation" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 

@@ -14,17 +14,10 @@ RSpec.describe CategoriesController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "guest will be forbidden" do
         sign_in guest
         expect(subject).to be_forbidden
-      end
-
-      it "contributor will see draft categories" do
-        sign_in contributor
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(2)
       end
 
       it "manager will see draft categories" do

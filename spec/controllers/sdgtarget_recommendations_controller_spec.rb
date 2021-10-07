@@ -30,7 +30,6 @@ RSpec.describe SdgtargetRecommendationsController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:sdgtarget) { FactoryBot.create(:sdgtarget) }
       let(:recommendation) { FactoryBot.create(:recommendation) }
 
@@ -47,11 +46,6 @@ RSpec.describe SdgtargetRecommendationsController, type: :controller do
 
       it "will not allow a guest to create a sdgtarget_recommendation" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to create a sdgtarget_recommendation" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -81,15 +75,9 @@ RSpec.describe SdgtargetRecommendationsController, type: :controller do
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a sdgtarget_recommendation" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to delete a sdgtarget_recommendation" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 

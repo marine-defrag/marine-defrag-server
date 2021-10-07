@@ -30,7 +30,6 @@ RSpec.describe MeasureIndicatorsController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:measure) { FactoryBot.create(:measure) }
       let(:indicator) { FactoryBot.create(:indicator) }
 
@@ -47,11 +46,6 @@ RSpec.describe MeasureIndicatorsController, type: :controller do
 
       it "will not allow a guest to create a measure_indicator" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to create a measure_indicator" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -81,15 +75,9 @@ RSpec.describe MeasureIndicatorsController, type: :controller do
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a measure_indicator" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to delete a measure_indicator" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 

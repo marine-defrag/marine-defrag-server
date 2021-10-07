@@ -31,7 +31,6 @@ RSpec.describe TaxonomiesController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:taxonomy) { FactoryBot.create(:taxonomy) }
 
       subject do
@@ -52,11 +51,6 @@ RSpec.describe TaxonomiesController, type: :controller do
 
       it "will not allow a guest to create a taxonomy" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to create a taxonomy" do
-        sign_in user
         expect(subject).to be_forbidden
       end
 
@@ -84,16 +78,10 @@ RSpec.describe TaxonomiesController, type: :controller do
 
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
       let(:user) { FactoryBot.create(:user, :manager) }
 
       it "will not allow a guest to update a taxonomy" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to update a taxonomy" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
@@ -117,15 +105,9 @@ RSpec.describe TaxonomiesController, type: :controller do
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:contributor) { FactoryBot.create(:user, :contributor) }
 
       it "will not allow a guest to delete a taxonomy" do
         sign_in guest
-        expect(subject).to be_forbidden
-      end
-
-      it "will not allow a contributor to delete a taxonomy" do
-        sign_in contributor
         expect(subject).to be_forbidden
       end
 
