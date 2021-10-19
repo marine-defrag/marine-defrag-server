@@ -11,6 +11,22 @@ class MeasurePolicy < ApplicationPolicy
           :manager_id]]]
   end
 
+  def index?
+    @user.role?("admin") || @user.role?("manager") || @user.role?("analyst")
+  end
+
+  def show?
+    @user.role?("admin") || @user.role?("manager") || @user.role?("analyst")
+  end
+
+  def create?
+    @user.role?("admin") || @user.role?("manager")
+  end
+
+  def update?
+    @user.role?("admin") || @user.role?("manager")
+  end
+
   class Scope < Scope
     def resolve
       return scope.all if @user.role?("admin") || @user.role?("manager")
