@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_19_075234) do
+ActiveRecord::Schema.define(version: 2021_10_19_075235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,7 +134,26 @@ ActiveRecord::Schema.define(version: 2021_10_19_075234) do
     t.text "indicator_summary"
     t.text "target_date_comment"
     t.integer "last_modified_user_id"
+    t.bigint "measure_types_id"
+    t.bigint "parent_id"
+    t.string "code"
+    t.string "comment"
+    t.string "url"
+    t.datetime "date_start"
+    t.datetime "date_end"
+    t.string "date_comment"
+    t.string "target_comment"
+    t.string "status_comment"
+    t.string "reference_ml"
+    t.string "reference_landbased_ml"
+    t.boolean "has_reference_landbased_ml"
+    t.string "status_lbs_protocol"
+    t.decimal "amount"
+    t.string "amount_comment"
+    t.boolean "private"
     t.index ["draft"], name: "index_measures_on_draft"
+    t.index ["measure_types_id"], name: "index_measures_on_measure_types_id"
+    t.index ["parent_id"], name: "index_measures_on_parent_id"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -337,6 +356,8 @@ ActiveRecord::Schema.define(version: 2021_10_19_075234) do
   add_foreign_key "framework_frameworks", "frameworks", column: "other_framework_id"
   add_foreign_key "framework_taxonomies", "frameworks"
   add_foreign_key "framework_taxonomies", "taxonomies"
+  add_foreign_key "measures", "measure_types", column: "measure_types_id"
+  add_foreign_key "measures", "measures", column: "parent_id"
   add_foreign_key "recommendation_indicators", "indicators"
   add_foreign_key "recommendation_indicators", "recommendations"
   add_foreign_key "recommendation_recommendations", "recommendations"
