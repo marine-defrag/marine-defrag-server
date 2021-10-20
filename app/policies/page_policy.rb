@@ -1,6 +1,10 @@
 class PagePolicy < ApplicationPolicy
   def index?
-    true
+    @user.roles.any?
+  end
+
+  def show?
+    @user.roles.any?
   end
 
   def create?
@@ -26,6 +30,7 @@ class PagePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       return scope.all if @user.role?("admin") || @user.role?("manager")
+
       scope.where(draft: false)
     end
   end

@@ -8,22 +8,16 @@ RSpec.describe CategoriesController, type: :controller do
     let!(:draft_category) { FactoryBot.create(:category, draft: true) }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "all published categories (no drafts)" do
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-      end
+      it { expect(subject).to be_forbidden }
     end
 
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
 
-      it "guest will not see draft categories" do
+      it "guest will be forbidden" do
         sign_in guest
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
+        expect(subject).to be_forbidden
       end
 
       it "manager will see draft categories" do
@@ -40,17 +34,7 @@ RSpec.describe CategoriesController, type: :controller do
     subject { get :show, params: {id: category}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "shows the category" do
-        json = JSON.parse(subject.body)
-        expect(json.dig("data", "id").to_i).to eq(category.id)
-      end
-
-      it "will not show draft category" do
-        get :show, params: {id: draft_category}, format: :json
-        expect(response).to be_not_found
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 

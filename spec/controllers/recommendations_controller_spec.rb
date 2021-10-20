@@ -10,22 +10,16 @@ RSpec.describe RecommendationsController, type: :controller do
     let!(:draft_recommendation) { FactoryBot.create(:recommendation, draft: true) }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "all published recommendations (no drafts)" do
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-      end
+      it { expect(subject).to be_forbidden }
     end
 
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
 
-      it "guest will not see draft recommendations" do
+      it "guest will be forbidden" do
         sign_in guest
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
+        expect(subject).to be_forbidden
       end
 
       it "manager will see draft recommendations" do
@@ -41,20 +35,26 @@ RSpec.describe RecommendationsController, type: :controller do
       let(:measure) { FactoryBot.create(:measure) }
       let(:recommendation_different_measure) { FactoryBot.create(:recommendation) }
 
-      it "filters from category" do
-        recommendation_different_category.categories << category
-        subject = get :index, params: {category_id: category.id}, format: :json
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-        expect(json["data"][0]["id"]).to eq(recommendation_different_category.id.to_s)
-      end
+      context "when signed in" do
+        let(:user) { FactoryBot.create(:user, :manager) }
 
-      it "filters from measure" do
-        recommendation_different_measure.measures << measure
-        subject = get :index, params: {measure_id: measure.id}, format: :json
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-        expect(json["data"][0]["id"]).to eq(recommendation_different_measure.id.to_s)
+        it "filters from category" do
+          sign_in user
+          recommendation_different_category.categories << category
+          subject = get :index, params: {category_id: category.id}, format: :json
+          json = JSON.parse(subject.body)
+          expect(json["data"].length).to eq(1)
+          expect(json["data"][0]["id"]).to eq(recommendation_different_category.id.to_s)
+        end
+
+        it "filters from measure" do
+          sign_in user
+          recommendation_different_measure.measures << measure
+          subject = get :index, params: {measure_id: measure.id}, format: :json
+          json = JSON.parse(subject.body)
+          expect(json["data"].length).to eq(1)
+          expect(json["data"][0]["id"]).to eq(recommendation_different_measure.id.to_s)
+        end
       end
     end
   end
@@ -65,17 +65,7 @@ RSpec.describe RecommendationsController, type: :controller do
     subject { get :show, params: {id: recommendation}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "shows the recommendation" do
-        json = JSON.parse(subject.body)
-        expect(json.dig("data", "id").to_i).to eq(recommendation.id)
-      end
-
-      it "will not show draft recommendation" do
-        get :show, params: {id: draft_recommendation}, format: :json
-        expect(response).to be_not_found
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 
