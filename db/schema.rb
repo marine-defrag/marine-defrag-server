@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_21_075234) do
-
+ActiveRecord::Schema.define(version: 2021_10_21_082642) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,6 +21,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "updated_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "updated_by_id"
     t.integer "parent_id"
     t.date "date"
+    t.integer "created_by_id"
     t.index ["draft"], name: "index_categories_on_draft"
     t.index ["manager_id"], name: "index_categories_on_manager_id"
     t.index ["taxonomy_id"], name: "index_categories_on_taxonomy_id"
@@ -52,6 +53,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.datetime "updated_at", null: false
     t.boolean "draft", default: false
     t.integer "updated_by_id"
+    t.integer "created_by_id"
     t.index ["draft"], name: "index_due_dates_on_draft"
     t.index ["indicator_id"], name: "index_due_dates_on_indicator_id"
   end
@@ -61,6 +63,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "other_framework_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
   end
 
   create_table "framework_taxonomies", force: :cascade do |t|
@@ -68,6 +71,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "taxonomy_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
     t.index ["framework_id"], name: "index_framework_taxonomies_on_framework_id"
     t.index ["taxonomy_id"], name: "index_framework_taxonomies_on_taxonomy_id"
   end
@@ -81,6 +85,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.boolean "has_response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
   end
 
   create_table "indicators", force: :cascade do |t|
@@ -96,6 +101,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.date "end_date"
     t.string "reference"
     t.integer "updated_by_id"
+    t.integer "created_by_id"
     t.index ["created_at"], name: "index_indicators_on_created_at"
     t.index ["draft"], name: "index_indicators_on_draft"
     t.index ["manager_id"], name: "index_indicators_on_manager_id"
@@ -106,6 +112,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
   end
 
   create_table "measure_indicators", force: :cascade do |t|
@@ -113,6 +120,15 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "indicator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
+  end
+
+  create_table "measure_types", force: :cascade do |t|
+    t.string "title", null: false
+    t.boolean "has_target"
+    t.boolean "has_parent"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "measure_types", force: :cascade do |t|
@@ -134,6 +150,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.text "indicator_summary"
     t.text "target_date_comment"
     t.integer "updated_by_id"
+    t.integer "created_by_id"
     t.index ["draft"], name: "index_measures_on_draft"
   end
 
@@ -146,6 +163,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.datetime "updated_at", null: false
     t.integer "order"
     t.integer "updated_by_id"
+    t.integer "created_by_id"
     t.index ["draft"], name: "index_pages_on_draft"
   end
 
@@ -160,6 +178,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "updated_by_id"
+    t.integer "created_by_id"
     t.index ["due_date_id"], name: "index_progress_reports_on_due_date_id"
     t.index ["indicator_id"], name: "index_progress_reports_on_indicator_id"
   end
@@ -169,6 +188,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
   end
 
   create_table "recommendation_indicators", force: :cascade do |t|
@@ -176,6 +196,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "indicator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
     t.index ["indicator_id"], name: "index_recommendation_indicators_on_indicator_id"
     t.index ["recommendation_id"], name: "index_recommendation_indicators_on_recommendation_id"
   end
@@ -185,6 +206,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "measure_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
     t.index ["measure_id"], name: "index_recommendation_measures_on_measure_id"
     t.index ["recommendation_id"], name: "index_recommendation_measures_on_recommendation_id"
   end
@@ -194,6 +216,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "other_recommendation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
   end
 
   create_table "recommendations", force: :cascade do |t|
@@ -207,6 +230,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.text "description"
     t.integer "updated_by_id"
     t.integer "framework_id"
+    t.integer "created_by_id"
     t.index ["draft"], name: "index_recommendations_on_draft"
     t.index ["framework_id"], name: "index_recommendations_on_framework_id"
   end
@@ -216,6 +240,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.string "friendly_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
   end
 
   create_table "sdgtarget_categories", force: :cascade do |t|
@@ -223,6 +248,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
   end
 
   create_table "sdgtarget_indicators", force: :cascade do |t|
@@ -230,6 +256,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "indicator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
     t.index ["indicator_id"], name: "index_sdgtarget_indicators_on_indicator_id"
     t.index ["sdgtarget_id"], name: "index_sdgtarget_indicators_on_sdgtarget_id"
   end
@@ -239,6 +266,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "measure_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
     t.index ["measure_id"], name: "index_sdgtarget_measures_on_measure_id"
     t.index ["sdgtarget_id"], name: "index_sdgtarget_measures_on_sdgtarget_id"
   end
@@ -248,6 +276,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "recommendation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
     t.index ["recommendation_id"], name: "index_sdgtarget_recommendations_on_recommendation_id"
     t.index ["sdgtarget_id"], name: "index_sdgtarget_recommendations_on_sdgtarget_id"
   end
@@ -260,6 +289,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "updated_by_id"
+    t.integer "created_by_id"
     t.index ["draft"], name: "index_sdgtargets_on_draft"
   end
 
@@ -280,6 +310,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "parent_id"
     t.boolean "has_date"
     t.integer "framework_id"
+    t.integer "created_by_id"
     t.index ["framework_id"], name: "index_taxonomies_on_framework_id"
   end
 
@@ -288,6 +319,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "created_by_id"
   end
 
   create_table "user_roles", force: :cascade do |t|
@@ -296,6 +328,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "updated_by_id"
+    t.integer "created_by_id"
     t.index ["role_id"], name: "index_user_roles_on_role_id"
     t.index ["user_id"], name: "index_user_roles_on_user_id"
   end
@@ -319,6 +352,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_075234) do
     t.json "tokens"
     t.integer "updated_by_id"
     t.boolean "allow_password_change", default: true
+    t.integer "created_by_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
