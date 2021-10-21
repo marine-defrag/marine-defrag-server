@@ -4,10 +4,22 @@ require "rails_helper"
 require "json"
 
 RSpec.describe "recommendation to indicator relationships", type: :request do
+  let(:auth_headers) do
+    {
+      "access-token" => token.token,
+      "client" => token.client,
+      "uid" => user.uid
+    }
+  end
+  let(:user) { FactoryBot.create(:user, :admin, password: "password") }
+  let!(:token) { user.create_token }
+
+  before { user.save }
+
   describe "get one recommendation/indicator relationship" do
     let!(:recommendation_indicator) { FactoryBot.create(:recommendation_indicator) }
     it "returns the recommendation/indicator releationship requested" do
-      get "/recommendation_indicators/#{recommendation_indicator.id}"
+      get "/recommendation_indicators/#{recommendation_indicator.id}", headers: auth_headers
 
       expected_json =
         {"data" =>
@@ -36,7 +48,7 @@ RSpec.describe "recommendation to indicator relationships", type: :request do
     let!(:recommendation_indicator_3) { FactoryBot.create(:recommendation_indicator, recommendation_id: recommendation_2.id, indicator_id: indicator_2.id) }
 
     it "returns all the linkable recommendation/indicators" do
-      get "/recommendation_indicators"
+      get "/recommendation_indicators", headers: auth_headers
 
       expected_json =
         {"data" =>

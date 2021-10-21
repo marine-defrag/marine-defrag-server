@@ -6,7 +6,7 @@ class ApplicationPolicy
   end
 
   def index?
-    true
+    @user.roles.any?
   end
 
   def create?
@@ -18,7 +18,7 @@ class ApplicationPolicy
   end
 
   def show?
-    true
+    @user.roles.any?
   end
 
   def destroy?

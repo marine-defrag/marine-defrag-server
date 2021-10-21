@@ -6,7 +6,7 @@ RSpec.describe MeasureIndicatorsController, type: :controller do
     subject { get :index, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
+      it { expect(subject).to be_forbidden }
     end
   end
 
@@ -15,12 +15,7 @@ RSpec.describe MeasureIndicatorsController, type: :controller do
     subject { get :show, params: {id: measure_indicator}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "shows the measure_indicator" do
-        json = JSON.parse(subject.body)
-        expect(json.dig("data", "id").to_i).to eq(measure_indicator.id)
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 

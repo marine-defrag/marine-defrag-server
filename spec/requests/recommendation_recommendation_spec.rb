@@ -4,10 +4,22 @@ require "rails_helper"
 require "json"
 
 RSpec.describe "recommendation to recommendation relationships", type: :request do
+  let(:auth_headers) do
+    {
+      "access-token" => token.token,
+      "client" => token.client,
+      "uid" => user.uid
+    }
+  end
+  let(:user) { FactoryBot.create(:user, :admin, password: "password") }
+  let!(:token) { user.create_token }
+
+  before { user.save }
+
   describe "get one recommendation to recommendation relationship" do
     let(:recommendation_recommendation) { FactoryBot.create(:recommendation_recommendation) }
     it "returns the recommendation releationship requested" do
-      get "/recommendation_recommendations/#{recommendation_recommendation.id}"
+      get "/recommendation_recommendations/#{recommendation_recommendation.id}", headers: auth_headers
 
       expected_json =
         {"data" =>
@@ -35,7 +47,7 @@ RSpec.describe "recommendation to recommendation relationships", type: :request 
     let!(:recommendation_recommendation_3) { FactoryBot.create(:recommendation_recommendation, recommendation_id: recommendation_1.id, other_recommendation_id: recommendation_3.id) }
 
     it "returns all the linkable recommendations" do
-      get "/recommendation_recommendations"
+      get "/recommendation_recommendations", headers: auth_headers
 
       expected_json =
         {"data" =>
