@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 2021_10_19_075235) do
     t.string "status_lbs_protocol"
     t.decimal "amount"
     t.string "amount_comment"
-    t.boolean "private"
+    t.boolean "private", default: true
     t.index ["draft"], name: "index_measures_on_draft"
     t.index ["measure_types_id"], name: "index_measures_on_measure_types_id"
     t.index ["parent_id"], name: "index_measures_on_parent_id"

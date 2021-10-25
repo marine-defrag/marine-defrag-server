@@ -17,7 +17,7 @@ class AddFieldsToMeasures < ActiveRecord::Migration[6.1]
       t.string :status_lbs_protocol
       t.decimal :amount
       t.string :amount_comment
-      t.boolean :private
+      t.boolean :private, default: true
     end
   end
 end
