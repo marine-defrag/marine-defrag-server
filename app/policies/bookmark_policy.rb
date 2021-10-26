@@ -1,10 +1,6 @@
 class BookmarkPolicy < ApplicationPolicy
-  def index?
-    true
-  end
-
   def create?
-    true
+    index?
   end
 
   def edit?

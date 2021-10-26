@@ -10,22 +10,16 @@ RSpec.describe ProgressReportsController, type: :controller do
     let!(:draft_progress_report) { FactoryBot.create(:progress_report, draft: true) }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "all published progress_reports (no drafts)" do
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-      end
+      it { expect(subject).to be_forbidden }
     end
 
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:manager) { FactoryBot.create(:user, :manager) }
 
-      it "guest will not see draft progress_reports" do
+      it "guest will be forbidden" do
         sign_in guest
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
+        expect(subject).to be_forbidden
       end
 
       it "manager will see draft progress_reports" do
@@ -42,17 +36,7 @@ RSpec.describe ProgressReportsController, type: :controller do
     subject { get :show, params: {id: progress_report}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "shows the progress_report" do
-        json = JSON.parse(subject.body)
-        expect(json.dig("data", "id").to_i).to eq(progress_report.id)
-      end
-
-      it "will not show draft progress_report" do
-        get :show, params: {id: draft_progress_report}, format: :json
-        expect(response).to be_not_found
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 
@@ -98,9 +82,9 @@ RSpec.describe ProgressReportsController, type: :controller do
         #      }
       end
 
-      it "will allow a guest to create a progress_report" do
+      it "will not allow a guest to create a progress_report" do
         sign_in guest
-        expect(subject).to be_created
+        expect(subject).to be_forbidden
       end
 
       it "will allow a manager to create a progress_report" do
@@ -112,7 +96,7 @@ RSpec.describe ProgressReportsController, type: :controller do
         expect(PaperTrail).to be_enabled
         sign_in user
         json = JSON.parse(subject.body)
-        expect(json["data"]["attributes"]["last_modified_user_id"].to_i).to eq user.id
+        expect(json["data"]["attributes"]["updated_by_id"].to_i).to eq user.id
       end
 
       it "will return an error if params are incorrect" do
@@ -189,15 +173,15 @@ RSpec.describe ProgressReportsController, type: :controller do
         expect(PaperTrail).to be_enabled
         sign_in user
         json = JSON.parse(subject.body)
-        expect(json["data"]["attributes"]["last_modified_user_id"].to_i).to eq user.id
+        expect(json["data"]["attributes"]["updated_by_id"].to_i).to eq user.id
       end
 
-      it "will return the latest last_modified_user_id", versioning: true do
+      it "will return the latest updated_by", versioning: true do
         expect(PaperTrail).to be_enabled
         progress_report.versions.first.update_column(:whodunnit, admin.id)
         sign_in user
         json = JSON.parse(subject.body)
-        expect(json["data"]["attributes"]["last_modified_user_id"].to_i).to eq(user.id)
+        expect(json["data"]["attributes"]["updated_by_id"].to_i).to eq(user.id)
       end
 
       it "will return an error if params are incorrect" do

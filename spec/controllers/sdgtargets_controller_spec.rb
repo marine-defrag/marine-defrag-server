@@ -10,22 +10,16 @@ RSpec.describe SdgtargetsController, type: :controller do
     let!(:draft_sdgtarget) { FactoryBot.create(:sdgtarget, draft: true) }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "all published sdgtargets (no drafts)" do
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-      end
+      it { expect(subject).to be_forbidden }
     end
 
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
 
-      it "guest will not see draft sdgtargets" do
+      it "guest will be forbidden" do
         sign_in guest
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
+        expect(subject).to be_forbidden
       end
 
       it "manager will see draft sdgtargets" do
@@ -38,21 +32,10 @@ RSpec.describe SdgtargetsController, type: :controller do
 
   describe "Get show" do
     let(:sdgtarget) { FactoryBot.create(:sdgtarget) }
-    let(:draft_sdgtarget) { FactoryBot.create(:sdgtarget, draft: true) }
     subject { get :show, params: {id: sdgtarget}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "shows the sdgtarget" do
-        json = JSON.parse(subject.body)
-        expect(json.dig("data", "id").to_i).to eq(sdgtarget.id)
-      end
-
-      it "will not show draft sdgtarget" do
-        get :show, params: {id: draft_sdgtarget}, format: :json
-        expect(response).to be_not_found
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 
@@ -107,7 +90,7 @@ RSpec.describe SdgtargetsController, type: :controller do
         expect(PaperTrail).to be_enabled
         sign_in user
         json = JSON.parse(subject.body)
-        expect(json["data"]["attributes"]["last_modified_user_id"].to_i).to eq user.id
+        expect(json["data"]["attributes"]["updated_by_id"].to_i).to eq user.id
       end
 
       it "will return an error if params are incorrect" do
@@ -174,15 +157,15 @@ RSpec.describe SdgtargetsController, type: :controller do
         expect(PaperTrail).to be_enabled
         sign_in user
         json = JSON.parse(subject.body)
-        expect(json["data"]["attributes"]["last_modified_user_id"].to_i).to eq user.id
+        expect(json["data"]["attributes"]["updated_by_id"].to_i).to eq user.id
       end
 
-      it "will return the latest last_modified_user_id", versioning: true do
+      it "will return the latest updated_by", versioning: true do
         expect(PaperTrail).to be_enabled
         sdgtarget.versions.first.update_column(:whodunnit, admin.id)
         sign_in user
         json = JSON.parse(subject.body)
-        expect(json["data"]["attributes"]["last_modified_user_id"].to_i).to eq(user.id)
+        expect(json["data"]["attributes"]["updated_by_id"].to_i).to eq(user.id)
       end
 
       it "will return an error if params are incorrect" do

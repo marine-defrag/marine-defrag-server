@@ -4,10 +4,22 @@ require "rails_helper"
 require "json"
 
 RSpec.describe "framework to framework relationships", type: :request do
+  let(:auth_headers) do
+    {
+      "access-token" => token.token,
+      "client" => token.client,
+      "uid" => user.uid
+    }
+  end
+  let(:user) { FactoryBot.create(:user, :admin, password: "password") }
+  let!(:token) { user.create_token }
+
+  before { user.save }
+
   describe "get one framework relationship" do
     let(:framework_framework) { FactoryBot.create(:framework_framework) }
     it "returns the framework releationship requested" do
-      get "/framework_frameworks/#{framework_framework.id}"
+      get "/framework_frameworks/#{framework_framework.id}", headers: auth_headers
 
       expected_json =
         {"data" =>
@@ -35,7 +47,7 @@ RSpec.describe "framework to framework relationships", type: :request do
     let!(:framework_framework_3) { FactoryBot.create(:framework_framework, framework_id: framework_1.id, other_framework_id: framework_3.id) }
 
     it "returns all the linkable frameworks" do
-      get "/framework_frameworks"
+      get "/framework_frameworks", headers: auth_headers
 
       expected_json =
         {"data" =>

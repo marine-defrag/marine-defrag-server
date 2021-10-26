@@ -4,10 +4,21 @@ require "rails_helper"
 require "json"
 
 RSpec.describe "framework to taxonomy relationships", type: :request do
+  let(:auth_headers) do
+    {
+      "access-token" => token.token,
+      "client" => token.client,
+      "uid" => user.uid
+    }
+  end
+  let(:user) { FactoryBot.create(:user, :admin, password: "password") }
+  let!(:token) { user.create_token }
+
+  before { user.save }
   describe "get one framework/taxonomy relationship" do
     let!(:framework_taxonomy) { FactoryBot.create(:framework_taxonomy) }
     it "returns the framework/taxonomy releationship requested" do
-      get "/framework_taxonomies/#{framework_taxonomy.id}"
+      get "/framework_taxonomies/#{framework_taxonomy.id}", headers: auth_headers
 
       expected_json =
         {"data" =>
@@ -36,7 +47,7 @@ RSpec.describe "framework to taxonomy relationships", type: :request do
     let!(:framework_framework_3) { FactoryBot.create(:framework_taxonomy, framework_id: framework_2.id, taxonomy_id: taxonomy_1.id) }
 
     it "returns all the linkable framework/taxonomies" do
-      get "/framework_taxonomies"
+      get "/framework_taxonomies", headers: auth_headers
 
       expected_json =
         {"data" =>
