@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(version: 2021_10_22_075235) do
     t.text "target_date_comment"
     t.integer "updated_by_id"
     t.integer "created_by_id"
-    t.bigint "measure_types_id"
+    t.bigint "measure_type_id"
     t.bigint "parent_id"
     t.string "code"
     t.string "comment"
@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(version: 2021_10_22_075235) do
     t.string "amount_comment"
     t.boolean "private", default: true
     t.index ["draft"], name: "index_measures_on_draft"
-    t.index ["measure_types_id"], name: "index_measures_on_measure_types_id"
+    t.index ["measure_type_id"], name: "index_measures_on_measure_type_id"
     t.index ["parent_id"], name: "index_measures_on_parent_id"
   end
 
@@ -383,7 +383,7 @@ ActiveRecord::Schema.define(version: 2021_10_22_075235) do
   add_foreign_key "framework_frameworks", "frameworks", column: "other_framework_id"
   add_foreign_key "framework_taxonomies", "frameworks"
   add_foreign_key "framework_taxonomies", "taxonomies"
-  add_foreign_key "measures", "measure_types", column: "measure_types_id"
+  add_foreign_key "measures", "measure_types"
   add_foreign_key "measures", "measures", column: "parent_id"
   add_foreign_key "recommendation_indicators", "indicators"
   add_foreign_key "recommendation_indicators", "recommendations"

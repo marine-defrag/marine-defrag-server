@@ -1,7 +1,7 @@
 class AddFieldsToMeasures < ActiveRecord::Migration[6.1]
   def change
     change_table(:measures) do |t|
-      t.belongs_to :measure_types, foreign_key: true
+      t.belongs_to :measure_type, foreign_key: true
       t.belongs_to :parent, foreign_key: {to_table: :measures}
       t.string :code
       t.string :comment
