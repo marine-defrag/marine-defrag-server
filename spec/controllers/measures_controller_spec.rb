@@ -14,25 +14,33 @@ RSpec.describe MeasuresController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryBot.create(:user) }
-      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:admin) { FactoryBot.create(:user, :manager) }
       let(:analyst) { FactoryBot.create(:user, :analyst) }
+      let(:guest) { FactoryBot.create(:user) }
+      let(:manager) { FactoryBot.create(:user, :manager) }
 
       it "guest will be forbidden" do
         sign_in guest
         expect(subject).to be_forbidden
       end
 
-      it "manager will see draft measures" do
-        sign_in user
+      it "admin will see draft measures" do
+        sign_in admin
         json = JSON.parse(subject.body)
         expect(json["data"].length).to eq(2)
       end
 
-      it "analyst will see draft measures" do
+      it "manager will see draft measures" do
+        sign_in manager
+        json = JSON.parse(subject.body)
+        expect(json["data"].length).to eq(2)
+      end
+
+      it "analyst will not see draft measures" do
         sign_in analyst
 
-        expect(subject).to be_ok
+        json = JSON.parse(subject.body)
+        expect(json["data"].length).to eq(1)
       end
     end
 
