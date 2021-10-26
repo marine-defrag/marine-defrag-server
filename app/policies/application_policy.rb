@@ -29,7 +29,7 @@ class ApplicationPolicy
     attr_reader :user, :scope
     def resolve
       return scope.all if @user.role?("admin") || @user.role?("manager")
-      scope.where(draft: false)
+      return scope.where(draft: false) if scope.column_names.include?("draft")
     end
 
     def initialize(user, scope)
