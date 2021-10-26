@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_21_082642) do
+ActiveRecord::Schema.define(version: 2021_10_22_075235) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -131,14 +132,6 @@ ActiveRecord::Schema.define(version: 2021_10_21_082642) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "measure_types", force: :cascade do |t|
-    t.string "title", null: false
-    t.boolean "has_target"
-    t.boolean "has_parent"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "measures", force: :cascade do |t|
     t.text "title", null: false
     t.text "description"
@@ -151,7 +144,26 @@ ActiveRecord::Schema.define(version: 2021_10_21_082642) do
     t.text "target_date_comment"
     t.integer "updated_by_id"
     t.integer "created_by_id"
+    t.bigint "measure_type_id"
+    t.bigint "parent_id"
+    t.string "code"
+    t.string "comment"
+    t.string "url"
+    t.datetime "date_start"
+    t.datetime "date_end"
+    t.string "date_comment"
+    t.string "target_comment"
+    t.string "status_comment"
+    t.string "reference_ml"
+    t.string "reference_landbased_ml"
+    t.boolean "has_reference_landbased_ml"
+    t.string "status_lbs_protocol"
+    t.decimal "amount"
+    t.string "amount_comment"
+    t.boolean "private", default: true
     t.index ["draft"], name: "index_measures_on_draft"
+    t.index ["measure_type_id"], name: "index_measures_on_measure_type_id"
+    t.index ["parent_id"], name: "index_measures_on_parent_id"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -371,6 +383,8 @@ ActiveRecord::Schema.define(version: 2021_10_21_082642) do
   add_foreign_key "framework_frameworks", "frameworks", column: "other_framework_id"
   add_foreign_key "framework_taxonomies", "frameworks"
   add_foreign_key "framework_taxonomies", "taxonomies"
+  add_foreign_key "measures", "measure_types"
+  add_foreign_key "measures", "measures", column: "parent_id"
   add_foreign_key "recommendation_indicators", "indicators"
   add_foreign_key "recommendation_indicators", "recommendations"
   add_foreign_key "recommendation_recommendations", "recommendations"
