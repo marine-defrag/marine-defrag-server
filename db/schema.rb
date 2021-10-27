@@ -126,8 +126,8 @@ ActiveRecord::Schema.define(version: 2021_10_22_075235) do
 
   create_table "measure_types", force: :cascade do |t|
     t.string "title", null: false
-    t.boolean "has_target"
-    t.boolean "has_parent"
+    t.boolean "has_target", default: true
+    t.boolean "has_parent", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
