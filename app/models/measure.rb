@@ -20,7 +20,11 @@ class Measure < VersionedRecord
 
   validates :title, presence: true
   validates :measure_type_id, presence: true
-  validate :different_parent, :parent_id_allowed_by_measure_type
+  validate(
+    :different_parent,
+    :not_own_descendant,
+    :parent_id_allowed_by_measure_type
+  )
 
   private
 
@@ -33,6 +37,13 @@ class Measure < VersionedRecord
   def parent_id_allowed_by_measure_type
     if parent_id && !parent.measure_type&.has_parent
       errors.add(:parent_id, "is not allowed for this measure_type")
+    end
+  end
+
+  def not_own_descendant
+    measure_parent = self
+    while (measure_parent = measure_parent.parent)
+      errors.add(:parent_id, "can't be its own descendant") if measure_parent.id == id
     end
   end
 end
