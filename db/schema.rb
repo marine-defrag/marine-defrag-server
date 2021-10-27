@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_22_075235) do
+ActiveRecord::Schema.define(version: 2021_10_27_060903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actor_types", force: :cascade do |t|
+    t.string "title", null: false
+    t.boolean "has_members", default: false
+    t.boolean "is_active", default: false
+    t.boolean "is_target", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "actors", force: :cascade do |t|
+    t.bigint "actor_type_id", null: false
+    t.string "code", null: false
+    t.string "title", null: false
+    t.text "description"
+    t.text "activity_summary"
+    t.string "url"
+    t.decimal "population"
+    t.decimal "gdp"
+    t.boolean "private", default: true
+    t.boolean "draft", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["actor_type_id"], name: "index_actors_on_actor_type_id"
+  end
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -379,6 +404,7 @@ ActiveRecord::Schema.define(version: 2021_10_22_075235) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "actors", "actor_types"
   add_foreign_key "framework_frameworks", "frameworks"
   add_foreign_key "framework_frameworks", "frameworks", column: "other_framework_id"
   add_foreign_key "framework_taxonomies", "frameworks"
