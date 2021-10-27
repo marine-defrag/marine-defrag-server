@@ -1,4 +1,4 @@
-class ConfigurationPolicy < ApplicationPolicy
+class SystemPolicy < ApplicationPolicy
   def create?
     false
   end

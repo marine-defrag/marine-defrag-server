@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class MeasureTypePolicy < ConfigurationPolicy
+class MeasureTypePolicy < SystemPolicy
 end
