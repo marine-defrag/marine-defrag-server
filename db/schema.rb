@@ -11,14 +11,15 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2021_10_27_060903) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "actor_types", force: :cascade do |t|
     t.string "title", null: false
-    t.boolean "has_members"
-    t.boolean "is_active"
-    t.boolean "is_target"
+    t.boolean "has_members", default: false
+    t.boolean "is_active", default: false
+    t.boolean "is_target", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -150,8 +151,8 @@ ActiveRecord::Schema.define(version: 2021_10_27_060903) do
 
   create_table "measure_types", force: :cascade do |t|
     t.string "title", null: false
-    t.boolean "has_target"
-    t.boolean "has_parent"
+    t.boolean "has_target", default: true
+    t.boolean "has_parent", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
