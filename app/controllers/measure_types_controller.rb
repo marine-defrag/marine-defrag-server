@@ -17,7 +17,6 @@ class MeasureTypesController < ApplicationController
   private
 
   def set_and_authorize_measure_type
-    authorize base_object # ensure appropriate access
     @measure_type = policy_scope(base_object).find(params[:id])
     authorize @measure_type
   end
