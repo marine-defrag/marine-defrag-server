@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_27_060903) do
+ActiveRecord::Schema.define(version: 2021_10_28_060619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -280,56 +280,6 @@ ActiveRecord::Schema.define(version: 2021_10_27_060903) do
     t.integer "created_by_id"
   end
 
-  create_table "sdgtarget_categories", force: :cascade do |t|
-    t.integer "sdgtarget_id"
-    t.integer "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "created_by_id"
-  end
-
-  create_table "sdgtarget_indicators", force: :cascade do |t|
-    t.integer "sdgtarget_id"
-    t.integer "indicator_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "created_by_id"
-    t.index ["indicator_id"], name: "index_sdgtarget_indicators_on_indicator_id"
-    t.index ["sdgtarget_id"], name: "index_sdgtarget_indicators_on_sdgtarget_id"
-  end
-
-  create_table "sdgtarget_measures", force: :cascade do |t|
-    t.integer "sdgtarget_id"
-    t.integer "measure_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "created_by_id"
-    t.index ["measure_id"], name: "index_sdgtarget_measures_on_measure_id"
-    t.index ["sdgtarget_id"], name: "index_sdgtarget_measures_on_sdgtarget_id"
-  end
-
-  create_table "sdgtarget_recommendations", force: :cascade do |t|
-    t.integer "sdgtarget_id"
-    t.integer "recommendation_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "created_by_id"
-    t.index ["recommendation_id"], name: "index_sdgtarget_recommendations_on_recommendation_id"
-    t.index ["sdgtarget_id"], name: "index_sdgtarget_recommendations_on_sdgtarget_id"
-  end
-
-  create_table "sdgtargets", force: :cascade do |t|
-    t.string "reference"
-    t.text "title"
-    t.text "description"
-    t.boolean "draft", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "updated_by_id"
-    t.integer "created_by_id"
-    t.index ["draft"], name: "index_sdgtargets_on_draft"
-  end
-
   create_table "taxonomies", force: :cascade do |t|
     t.text "title", null: false
     t.boolean "tags_measures"
@@ -342,7 +292,6 @@ ActiveRecord::Schema.define(version: 2021_10_27_060903) do
     t.boolean "is_smart"
     t.integer "groups_measures_default"
     t.integer "groups_recommendations_default"
-    t.integer "groups_sdgtargets_default"
     t.integer "updated_by_id"
     t.integer "parent_id"
     t.boolean "has_date"
