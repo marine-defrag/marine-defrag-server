@@ -13,7 +13,7 @@ class SystemPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.all if %w[admin analyst manager].any? { |role| @user.role?(role) }
+      scope
     end
   end
 end
