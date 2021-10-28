@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   layout :layout_by_resource
 
   before_action :authenticate_user!, only: [:create, :update, :destroy], unless: :devise_controller?
+  before_action :authorize_base_object!, only: [:show, :update, :destroy]
   after_action :verify_authorized, except: [:index, :sign_in], unless: :devise_controller?
   after_action :verify_policy_scoped, only: :index, unless: :devise_controller?
 
@@ -24,6 +25,10 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def authorize_base_object!
+    authorize base_object
+  end
 
   def serialize(target, serializer:)
     serializer.new(target).serialized_json
