@@ -11,7 +11,5 @@ module FastApplicationSerializer
     base.attribute :updated_at do |object|
       object.updated_at&.in_time_zone&.iso8601
     end
-
-    # base.attribute :created_by_id
   end
 end
