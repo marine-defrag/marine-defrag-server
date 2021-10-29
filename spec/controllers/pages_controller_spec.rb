@@ -39,7 +39,16 @@ RSpec.describe PagesController, type: :controller do
 
       it "will not show draft page" do
         get :show, params: {id: draft_page}, format: :json
-        expect(response).to be_not_found
+        expect(response).to be_forbidden
+      end
+    end
+
+    context "when signed in" do
+      context "as analyst" do
+        subject { get :show, params: {id: draft_page}, format: :json }
+        before { sign_in FactoryBot.create(:user, :analyst) }
+
+        it { expect(subject).to be_not_found }
       end
     end
   end
