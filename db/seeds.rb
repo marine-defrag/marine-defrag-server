@@ -26,42 +26,113 @@ class Seeds
     Role.new(name: "manager", friendly_name: "Manager").save!
     Role.new(name: "analyst", friendly_name: "Analyst").save!
 
-    # set up frameworks ########################################################
-    fw1 = Framework.new(
-      title: "Framework 1",
-      short_title: "FW1",
-      has_indicators: false,
-      has_measures: true,
-      has_response: true
+    # set up Actor Types ########################################################
+    countries = ActorType.new(
+      title: "Country",
+      is_active: true,
+      is_target: true
     )
-    fw1.save!
+    countries.save!
+
+    orgs = ActorType.new(
+      title: "Organisation",
+      is_active: true,
+      is_target: false
+    )
+    orgs.save!
+
+    classes = ActorType.new(
+      title: "Class",
+      is_active: false,
+      is_target: true,
+      has_members: true
+    )
+    classes.save!
+
+    regions = ActorType.new(
+      title: "Region",
+      is_active: false,
+      is_target: true,
+      has_members: true
+    )
+    regions.save!
+
+    groups = ActorType.new(
+      title: "Group",
+      is_active: true,
+      is_target: false,
+      has_members: true
+    )
+    groups.save!
+
+    intl = MeasureType.new(
+      title: "International ",
+      has_parent: true,
+      has_target: false,
+    )
+    intl.save!
+
+    regionalSeas = MeasureType.new(
+      title: "Regional Seas Conventions ",
+      has_parent: false,
+      has_target: true,
+    )
+    regionalSeas.save!
+
+    regional = MeasureType.new(
+      title: "Regional Strategies",
+      has_parent: false,
+      has_target: false,
+    )
+    regional.save!
+
+    national = MeasureType.new(
+      title: "National Strategies",
+      has_parent: false,
+      has_target: false,
+    )
+    national.save!
+
+    donations = MeasureType.new(
+      title: "Donor activities",
+      has_parent: true,
+      has_target: true,
+    )
+    donations.save!
+
+    initiatives = MeasureType.new(
+      title: "Initiatives",
+      has_parent: true,
+      has_target: true,
+    )
+    donations.save!
 
     # Set up taxonomies ########################################################
     #  Sample taxonomy
-    t1 = FactoryBot.create(
-      :taxonomy,
-      framework: fw1,
-      title: "Tax 1",
-      tags_measures: false,
-      tags_users: false,
-      allow_multiple: false,
-      has_manager: true,
-      priority: 11,
-      groups_recommendations_default: 1
-    )
-    FactoryBot.create(
-      :framework_taxonomy,
-      framework: fw1,
-      taxonomy: t1
-    )
+    # t1 = FactoryBot.create(
+    #   :taxonomy,
+    #   framework: fw1,
+    #   title: "Tax 1",
+    #   tags_measures: false,
+    #   tags_users: false,
+    #   allow_multiple: false,
+    #   has_manager: true,
+    #   priority: 11,
+    #   groups_recommendations_default: 1
+    # )
+    # FactoryBot.create(
+    #   :framework_taxonomy,
+    #   framework: fw1,
+    #   taxonomy: t1
+    # )
 
     # Set up categories ########################################################
-    FactoryBot.create(
-      :category,
-      taxonomy: t1,
-      title: "Cat 1",
-      reference: "1"
-    )
+    # FactoryBot.create(
+    #   :category,
+    #   taxonomy: t1,
+    #   title: "Cat 1",
+    #   reference: "1"
+    # )
   end
 
   def development_seeds!
