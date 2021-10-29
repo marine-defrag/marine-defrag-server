@@ -1,19 +1,18 @@
 # frozen_string_literal: true
+
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'auth'
+  mount_devise_token_auth_for "User", at: "auth"
 
   resources :taxonomies do
     resources :categories
   end
-  get 'static_pages/home'
-  get 's3/sign'
+  get "static_pages/home"
 
+  resources :actors
+  resources :actor_types, only: [:index, :show]
   resources :measure_categories
-  resources :sdgtarget_categories
-  resources :sdgtarget_indicators
-  resources :sdgtarget_measures
-  resources :sdgtarget_recommendations
   resources :measure_indicators
+  resources :measure_types, only: [:index, :show]
   resources :recommendation_categories
   resources :user_categories
   resources :recommendation_measures
@@ -37,7 +36,6 @@ Rails.application.routes.draw do
   resources :user_roles
   resources :roles
   resources :pages
-  resources :sdgtargets
   resources :bookmarks
 
   resources :frameworks, only: [:index, :show]
@@ -47,7 +45,7 @@ Rails.application.routes.draw do
   resources :recommendation_recommendations, except: [:update]
   resources :recommendation_indicators, except: [:update]
 
-  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
-  root to: 'static_pages#home'
+  root to: "static_pages#home"
 end

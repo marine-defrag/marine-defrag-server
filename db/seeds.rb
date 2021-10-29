@@ -22,53 +22,53 @@ class Seeds
 
   def base_seeds!
     # Set up user roles
-    Role.new(name: 'admin', friendly_name: 'Admin').save!
-    Role.new(name: 'manager', friendly_name: 'Manager').save!
-    Role.new(name: 'contributor', friendly_name: 'Contributor').save!
+    Role.new(name: "admin", friendly_name: "Admin").save!
+    Role.new(name: "manager", friendly_name: "Manager").save!
+    Role.new(name: "analyst", friendly_name: "Analyst").save!
 
     # set up frameworks ########################################################
     fw1 = Framework.new(
-        title: 'Framework 1',
-        short_title: 'FW1',
-        has_indicators: false,
-        has_measures: true,
-        has_response: true,
-      )
+      title: "Framework 1",
+      short_title: "FW1",
+      has_indicators: false,
+      has_measures: true,
+      has_response: true
+    )
     fw1.save!
 
     # Set up taxonomies ########################################################
     #  Sample taxonomy
-    t1 = FactoryGirl.create(
-        :taxonomy,
-        framework:fw1,
-        title: 'Tax 1',
-        tags_measures: false,
-        tags_users: false,
-        allow_multiple: false,
-        has_manager: true,
-        priority: 11,
-        groups_recommendations_default: 1
-      )
-    FactoryGirl.create(
+    t1 = FactoryBot.create(
+      :taxonomy,
+      framework: fw1,
+      title: "Tax 1",
+      tags_measures: false,
+      tags_users: false,
+      allow_multiple: false,
+      has_manager: true,
+      priority: 11,
+      groups_recommendations_default: 1
+    )
+    FactoryBot.create(
       :framework_taxonomy,
-      framework:fw1,
-      taxonomy:t1,
+      framework: fw1,
+      taxonomy: t1
     )
 
     # Set up categories ########################################################
-    cat1 = FactoryGirl.create(
-        :category,
-        taxonomy:t1,
-        title:'Cat 1',
-        reference: '1'
-      )
+    FactoryBot.create(
+      :category,
+      taxonomy: t1,
+      title: "Cat 1",
+      reference: "1"
+    )
   end
 
   def development_seeds!
     return unless User.count.zero?
-    FactoryGirl.create(:user).tap do |user|
+    FactoryBot.create(:user).tap do |user|
       log "Seed user created: Log in with #{user.email} and password #{user.password}"
-      user.roles << Role.find_by(name: 'manager')
+      user.roles << Role.find_by(name: "manager")
       user.save!
     end
   end

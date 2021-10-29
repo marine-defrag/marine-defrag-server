@@ -1,5 +1,6 @@
 class DueDatesController < ApplicationController
   before_action :set_and_authorize_due_date, only: [:show, :update, :destroy]
+  skip_before_action :authorize_base_object!
 
   # GET /due_dates
   def index
@@ -29,7 +30,7 @@ class DueDatesController < ApplicationController
 
   # PATCH/PUT /due_dates/1
   def update
-    if @due_date.update_attributes!(permitted_attributes(@due_date))
+    if @due_date.update!(permitted_attributes(@due_date))
       set_and_authorize_due_date
       render json: serialize(@due_date)
     end

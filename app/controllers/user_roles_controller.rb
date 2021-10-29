@@ -1,5 +1,6 @@
 class UserRolesController < ApplicationController
   before_action :set_and_authorize_user_role, only: [:show, :update, :destroy]
+  skip_before_action :authorize_base_object!
 
   # GET /user_roles
   def index
@@ -29,7 +30,7 @@ class UserRolesController < ApplicationController
 
   # PATCH/PUT /user_roles/1
   def update
-    if @user_role.update_attributes!(permitted_attributes(@user_role))
+    if @user_role.update!(permitted_attributes(@user_role))
       render json: serialize(@user_role)
     end
   end
