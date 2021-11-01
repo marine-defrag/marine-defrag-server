@@ -8,7 +8,6 @@ class RenameLastModifiedUserIdToCreatedById < ActiveRecord::Migration[6.1]
     rename_column :pages, :last_modified_user_id, :updated_by_id
     rename_column :progress_reports, :last_modified_user_id, :updated_by_id
     rename_column :recommendations, :last_modified_user_id, :updated_by_id
-    rename_column :sdgtargets, :last_modified_user_id, :updated_by_id
     rename_column :taxonomies, :last_modified_user_id, :updated_by_id
     rename_column :user_roles, :last_modified_user_id, :updated_by_id
     rename_column :users, :last_modified_user_id, :updated_by_id
