@@ -11,6 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2021_10_28_085549) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,7 +44,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["updated_by_id"], name: "index_actors_on_updated_by_id"
   end
 
-  create_table "bookmarks", force: :cascade do |t|
+  create_table "bookmarks", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "title", null: false
     t.json "view", null: false
@@ -54,7 +55,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
-  create_table "categories", force: :cascade do |t|
+  create_table "categories", id: :serial, force: :cascade do |t|
     t.text "title"
     t.string "short_title"
     t.text "description"
@@ -75,7 +76,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["taxonomy_id"], name: "index_categories_on_taxonomy_id"
   end
 
-  create_table "due_dates", force: :cascade do |t|
+  create_table "due_dates", id: :serial, force: :cascade do |t|
     t.integer "indicator_id"
     t.date "due_date"
     t.datetime "created_at", null: false
@@ -87,7 +88,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["indicator_id"], name: "index_due_dates_on_indicator_id"
   end
 
-  create_table "framework_frameworks", force: :cascade do |t|
+  create_table "framework_frameworks", id: :serial, force: :cascade do |t|
     t.integer "framework_id"
     t.integer "other_framework_id"
     t.datetime "created_at", null: false
@@ -95,7 +96,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.integer "created_by_id"
   end
 
-  create_table "framework_taxonomies", force: :cascade do |t|
+  create_table "framework_taxonomies", id: :serial, force: :cascade do |t|
     t.integer "framework_id", null: false
     t.integer "taxonomy_id", null: false
     t.datetime "created_at", null: false
@@ -105,7 +106,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["taxonomy_id"], name: "index_framework_taxonomies_on_taxonomy_id"
   end
 
-  create_table "frameworks", force: :cascade do |t|
+  create_table "frameworks", id: :serial, force: :cascade do |t|
     t.text "title", null: false
     t.string "short_title"
     t.text "description"
@@ -117,7 +118,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.integer "created_by_id"
   end
 
-  create_table "indicators", force: :cascade do |t|
+  create_table "indicators", id: :serial, force: :cascade do |t|
     t.text "title", null: false
     t.text "description"
     t.datetime "created_at", null: false
@@ -136,7 +137,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["manager_id"], name: "index_indicators_on_manager_id"
   end
 
-  create_table "measure_categories", force: :cascade do |t|
+  create_table "measure_categories", id: :serial, force: :cascade do |t|
     t.integer "measure_id"
     t.integer "category_id"
     t.datetime "created_at", null: false
@@ -144,7 +145,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.integer "created_by_id"
   end
 
-  create_table "measure_indicators", force: :cascade do |t|
+  create_table "measure_indicators", id: :serial, force: :cascade do |t|
     t.integer "measure_id"
     t.integer "indicator_id"
     t.datetime "created_at", null: false
@@ -160,7 +161,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "measures", force: :cascade do |t|
+  create_table "measures", id: :serial, force: :cascade do |t|
     t.text "title", null: false
     t.text "description"
     t.text "target_date"
@@ -194,7 +195,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["parent_id"], name: "index_measures_on_parent_id"
   end
 
-  create_table "pages", force: :cascade do |t|
+  create_table "pages", id: :serial, force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.string "menu_title"
@@ -207,7 +208,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["draft"], name: "index_pages_on_draft"
   end
 
-  create_table "progress_reports", force: :cascade do |t|
+  create_table "progress_reports", id: :serial, force: :cascade do |t|
     t.integer "indicator_id"
     t.integer "due_date_id"
     t.text "title"
@@ -223,7 +224,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["indicator_id"], name: "index_progress_reports_on_indicator_id"
   end
 
-  create_table "recommendation_categories", force: :cascade do |t|
+  create_table "recommendation_categories", id: :serial, force: :cascade do |t|
     t.integer "recommendation_id"
     t.integer "category_id"
     t.datetime "created_at", null: false
@@ -231,7 +232,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.integer "created_by_id"
   end
 
-  create_table "recommendation_indicators", force: :cascade do |t|
+  create_table "recommendation_indicators", id: :serial, force: :cascade do |t|
     t.integer "recommendation_id"
     t.integer "indicator_id"
     t.datetime "created_at", null: false
@@ -241,7 +242,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["recommendation_id"], name: "index_recommendation_indicators_on_recommendation_id"
   end
 
-  create_table "recommendation_measures", force: :cascade do |t|
+  create_table "recommendation_measures", id: :serial, force: :cascade do |t|
     t.integer "recommendation_id"
     t.integer "measure_id"
     t.datetime "created_at", null: false
@@ -251,7 +252,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["recommendation_id"], name: "index_recommendation_measures_on_recommendation_id"
   end
 
-  create_table "recommendation_recommendations", force: :cascade do |t|
+  create_table "recommendation_recommendations", id: :serial, force: :cascade do |t|
     t.integer "recommendation_id"
     t.integer "other_recommendation_id"
     t.datetime "created_at", null: false
@@ -259,7 +260,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.integer "created_by_id"
   end
 
-  create_table "recommendations", force: :cascade do |t|
+  create_table "recommendations", id: :serial, force: :cascade do |t|
     t.text "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -275,7 +276,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["framework_id"], name: "index_recommendations_on_framework_id"
   end
 
-  create_table "roles", force: :cascade do |t|
+  create_table "roles", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.string "friendly_name", null: false
     t.datetime "created_at", null: false
@@ -283,7 +284,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.integer "created_by_id"
   end
 
-  create_table "taxonomies", force: :cascade do |t|
+  create_table "taxonomies", id: :serial, force: :cascade do |t|
     t.text "title", null: false
     t.boolean "tags_measures"
     t.datetime "created_at", null: false
@@ -303,7 +304,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["framework_id"], name: "index_taxonomies_on_framework_id"
   end
 
-  create_table "user_categories", force: :cascade do |t|
+  create_table "user_categories", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "category_id"
     t.datetime "created_at", null: false
@@ -311,7 +312,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.integer "created_by_id"
   end
 
-  create_table "user_roles", force: :cascade do |t|
+  create_table "user_roles", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "role_id", null: false
     t.datetime "created_at", null: false
@@ -322,7 +323,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["user_id"], name: "index_user_roles_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -348,7 +349,7 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
 
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
-    t.integer "item_id", null: false
+    t.bigint "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
     t.text "object"
