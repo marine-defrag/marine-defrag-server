@@ -42,9 +42,9 @@ RSpec.describe "actor_type to taxonomy relationships", type: :request do
     let(:actor_type_2) { FactoryBot.create(:actor_type) }
     let(:taxonomy_1) { FactoryBot.create(:taxonomy) }
     let(:taxonomy_2) { FactoryBot.create(:taxonomy) }
-    let!(:actor_type_actor_type_1) { FactoryBot.create(:actor_type_taxonomy, actor_type_id: actor_type_1.id, taxonomy_id: taxonomy_1.id) }
-    let!(:actor_type_actor_type_2) { FactoryBot.create(:actor_type_taxonomy, actor_type_id: actor_type_1.id, taxonomy_id: taxonomy_2.id) }
-    let!(:actor_type_actor_type_3) { FactoryBot.create(:actor_type_taxonomy, actor_type_id: actor_type_2.id, taxonomy_id: taxonomy_1.id) }
+    let!(:actor_type_taxonomy_1) { FactoryBot.create(:actor_type_taxonomy, actor_type_id: actor_type_1.id, taxonomy_id: taxonomy_1.id) }
+    let!(:actor_type_taxonomy_2) { FactoryBot.create(:actor_type_taxonomy, actor_type_id: actor_type_1.id, taxonomy_id: taxonomy_2.id) }
+    let!(:actor_type_taxonomy_3) { FactoryBot.create(:actor_type_taxonomy, actor_type_id: actor_type_2.id, taxonomy_id: taxonomy_1.id) }
 
     it "returns all the linkable actor_type/taxonomies" do
       get "/actor_types_taxonomies", headers: auth_headers
@@ -52,27 +52,27 @@ RSpec.describe "actor_type to taxonomy relationships", type: :request do
       expected_json =
         {"data" =>
           [
-            {"id" => actor_type_actor_type_1.id.to_s,
+            {"id" => actor_type_taxonomy_1.id.to_s,
              "type" => "actor_type_taxonomies",
              "attributes" =>
-              {"created_at" => actor_type_actor_type_1.created_at.in_time_zone.iso8601,
-               "updated_at" => actor_type_actor_type_1.updated_at.in_time_zone.iso8601,
-               "actor_type_id" => actor_type_actor_type_1.actor_type_id,
-               "taxonomy_id" => actor_type_actor_type_1.taxonomy_id}},
-            {"id" => actor_type_actor_type_2.id.to_s,
+              {"created_at" => actor_type_taxonomy_1.created_at.in_time_zone.iso8601,
+               "updated_at" => actor_type_taxonomy_1.updated_at.in_time_zone.iso8601,
+               "actor_type_id" => actor_type_taxonomy_1.actor_type_id,
+               "taxonomy_id" => actor_type_taxonomy_1.taxonomy_id}},
+            {"id" => actor_type_taxonomy_2.id.to_s,
              "type" => "actor_type_taxonomies",
              "attributes" =>
-              {"created_at" => actor_type_actor_type_2.created_at.in_time_zone.iso8601,
-               "updated_at" => actor_type_actor_type_2.updated_at.in_time_zone.iso8601,
-               "actor_type_id" => actor_type_actor_type_2.actor_type_id,
-               "taxonomy_id" => actor_type_actor_type_2.taxonomy_id}},
-            {"id" => actor_type_actor_type_3.id.to_s,
+              {"created_at" => actor_type_taxonomy_2.created_at.in_time_zone.iso8601,
+               "updated_at" => actor_type_taxonomy_2.updated_at.in_time_zone.iso8601,
+               "actor_type_id" => actor_type_taxonomy_2.actor_type_id,
+               "taxonomy_id" => actor_type_taxonomy_2.taxonomy_id}},
+            {"id" => actor_type_taxonomy_3.id.to_s,
              "type" => "actor_type_taxonomies",
              "attributes" =>
-              {"created_at" => actor_type_actor_type_3.created_at.in_time_zone.iso8601,
-               "updated_at" => actor_type_actor_type_3.updated_at.in_time_zone.iso8601,
-               "actor_type_id" => actor_type_actor_type_3.actor_type_id,
-               "taxonomy_id" => actor_type_actor_type_3.taxonomy_id}}
+              {"created_at" => actor_type_taxonomy_3.created_at.in_time_zone.iso8601,
+               "updated_at" => actor_type_taxonomy_3.updated_at.in_time_zone.iso8601,
+               "actor_type_id" => actor_type_taxonomy_3.actor_type_id,
+               "taxonomy_id" => actor_type_taxonomy_3.taxonomy_id}}
           ]}
 
       json = JSON.parse(response.body)
