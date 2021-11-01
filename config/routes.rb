@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :actors
   resources :actortypes, only: [:index, :show]
+  resources :actortype_taxonomies, only: [:index, :show]
   resources :measure_categories
   resources :measure_indicators
   resources :measuretypes, only: [:index, :show]
