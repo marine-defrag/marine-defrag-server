@@ -385,7 +385,6 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webrick (1.7.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -444,7 +443,6 @@ DEPENDENCIES
   unicorn
   unicorn-worker-killer
   web-console (~> 4.1)
-  webrick (~> 1.7)
 
 RUBY VERSION
    ruby 3.0.2p107
