@@ -50,10 +50,14 @@ ActiveRecord::Schema.define(version: 2021_11_02_073220) do
     t.date "date_start"
     t.date "date_end"
     t.decimal "value"
+    t.bigint "created_by_id", null: false
+    t.bigint "updated_by_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["actor_id"], name: "index_actors_measures_on_actor_id"
+    t.index ["created_by_id"], name: "index_actors_measures_on_created_by_id"
     t.index ["measure_id"], name: "index_actors_measures_on_measure_id"
+    t.index ["updated_by_id"], name: "index_actors_measures_on_updated_by_id"
   end
 
   create_table "bookmarks", id: :serial, force: :cascade do |t|
@@ -372,6 +376,8 @@ ActiveRecord::Schema.define(version: 2021_11_02_073220) do
   add_foreign_key "actors", "actor_types"
   add_foreign_key "actors_measures", "actors"
   add_foreign_key "actors_measures", "measures"
+  add_foreign_key "actors_measures", "users", column: "created_by_id"
+  add_foreign_key "actors_measures", "users", column: "updated_by_id"
   add_foreign_key "framework_frameworks", "frameworks"
   add_foreign_key "framework_frameworks", "frameworks", column: "other_framework_id"
   add_foreign_key "framework_taxonomies", "frameworks"

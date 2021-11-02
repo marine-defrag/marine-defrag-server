@@ -1,4 +1,4 @@
-class ActorMeasure < ApplicationRecord
+class ActorMeasure < VersionedRecord
   self.table_name = :actors_measures
 
   belongs_to :actor

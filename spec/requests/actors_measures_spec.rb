@@ -16,7 +16,7 @@ RSpec.describe "actor to measure relationships", type: :request do
 
   before { user.save }
   describe "get one actor/measure relationship" do
-    let!(:actor_measure) { FactoryBot.create(:actor_measure) }
+    let!(:actor_measure) { FactoryBot.create(:actor_measure, created_by: user, updated_by: user) }
     it "returns the actor/measure releationship requested" do
       get "/actors_measures/#{actor_measure.id}", headers: auth_headers
 
@@ -28,10 +28,12 @@ RSpec.describe "actor to measure relationships", type: :request do
             {
               "actor_id" => actor_measure.actor_id,
               "created_at" => actor_measure.created_at.in_time_zone.iso8601,
+              "created_by_id" => user.id,
               "date_end" => "2021-11-02",
               "date_start" => "2021-11-02",
               "measure_id" => actor_measure.measure_id,
               "updated_at" => actor_measure.updated_at.in_time_zone.iso8601,
+              "updated_by_id" => user.id,
               "value" => "3.14"
             }}}
 
@@ -47,9 +49,9 @@ RSpec.describe "actor to measure relationships", type: :request do
     let(:actor_2) { FactoryBot.create(:actor) }
     let(:measure_1) { FactoryBot.create(:measure) }
     let(:measure_2) { FactoryBot.create(:measure) }
-    let!(:actor_measure_1) { FactoryBot.create(:actor_measure, actor_id: actor_1.id, measure_id: measure_1.id) }
-    let!(:actor_measure_2) { FactoryBot.create(:actor_measure, actor_id: actor_1.id, measure_id: measure_2.id) }
-    let!(:actor_measure_3) { FactoryBot.create(:actor_measure, actor_id: actor_2.id, measure_id: measure_1.id) }
+    let!(:actor_measure_1) { FactoryBot.create(:actor_measure, actor: actor_1, measure: measure_1, created_by: user, updated_by: user) }
+    let!(:actor_measure_2) { FactoryBot.create(:actor_measure, actor: actor_1, measure: measure_2, created_by: user, updated_by: user) }
+    let!(:actor_measure_3) { FactoryBot.create(:actor_measure, actor: actor_2, measure: measure_1, created_by: user, updated_by: user) }
 
     it "returns all the linkable actor/taxonomies" do
       get "/actors_measures", headers: auth_headers
@@ -63,10 +65,12 @@ RSpec.describe "actor to measure relationships", type: :request do
               {
                 "actor_id" => actor_measure_1.actor_id,
                 "created_at" => actor_measure_1.created_at.in_time_zone.iso8601,
+                "created_by_id" => user.id,
                 "date_end" => "2021-11-02",
                 "date_start" => "2021-11-02",
                 "measure_id" => actor_measure_1.measure_id,
                 "updated_at" => actor_measure_1.updated_at.in_time_zone.iso8601,
+                "updated_by_id" => user.id,
                 "value" => "3.14"
               }},
             {"id" => actor_measure_2.id.to_s,
@@ -75,10 +79,12 @@ RSpec.describe "actor to measure relationships", type: :request do
               {
                 "actor_id" => actor_measure_2.actor_id,
                 "created_at" => actor_measure_2.created_at.in_time_zone.iso8601,
+                "created_by_id" => user.id,
                 "date_end" => "2021-11-02",
                 "date_start" => "2021-11-02",
                 "measure_id" => actor_measure_2.measure_id,
                 "updated_at" => actor_measure_2.updated_at.in_time_zone.iso8601,
+                "updated_by_id" => user.id,
                 "value" => "3.14"
               }},
             {"id" => actor_measure_3.id.to_s,
@@ -87,10 +93,12 @@ RSpec.describe "actor to measure relationships", type: :request do
               {
                 "actor_id" => actor_measure_3.actor_id,
                 "created_at" => actor_measure_3.created_at.in_time_zone.iso8601,
+                "created_by_id" => user.id,
                 "date_end" => "2021-11-02",
                 "date_start" => "2021-11-02",
                 "measure_id" => actor_measure_3.measure_id,
                 "updated_at" => actor_measure_3.updated_at.in_time_zone.iso8601,
+                "updated_by_id" => user.id,
                 "value" => "3.14"
               }}
           ]}
