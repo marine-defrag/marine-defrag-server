@@ -64,3 +64,5 @@ group :test do
 end
 
 gem "webrick", "~> 1.7"
+
+gem "puma", "~> 5.5"
