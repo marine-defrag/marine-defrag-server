@@ -9,7 +9,7 @@ RSpec.describe BookmarksController, type: :controller do
     subject { get :index, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_unauthorized }
+      it { expect(subject).to be_forbidden }
     end
 
     context "when signed in" do
