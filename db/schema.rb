@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_28_085549) do
+ActiveRecord::Schema.define(version: 2021_11_02_073220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,18 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
     t.index ["actor_type_id"], name: "index_actors_on_actor_type_id"
     t.index ["created_by_id"], name: "index_actors_on_created_by_id"
     t.index ["updated_by_id"], name: "index_actors_on_updated_by_id"
+  end
+
+  create_table "actors_measures", force: :cascade do |t|
+    t.bigint "actor_id", null: false
+    t.bigint "measure_id", null: false
+    t.date "date_start"
+    t.date "date_end"
+    t.decimal "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["actor_id"], name: "index_actors_measures_on_actor_id"
+    t.index ["measure_id"], name: "index_actors_measures_on_measure_id"
   end
 
   create_table "bookmarks", id: :serial, force: :cascade do |t|
@@ -358,6 +370,8 @@ ActiveRecord::Schema.define(version: 2021_10_28_085549) do
   end
 
   add_foreign_key "actors", "actor_types"
+  add_foreign_key "actors_measures", "actors"
+  add_foreign_key "actors_measures", "measures"
   add_foreign_key "framework_frameworks", "frameworks"
   add_foreign_key "framework_frameworks", "frameworks", column: "other_framework_id"
   add_foreign_key "framework_taxonomies", "frameworks"
