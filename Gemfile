@@ -63,4 +63,5 @@ group :test do
   gem "timecop"
 end
 
-gem "webrick", "~> 1.7"
+
+gem "puma", "~> 5.5"
