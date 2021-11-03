@@ -1,16 +1,16 @@
-class ActorsMeasuresController < ApplicationController
-  # GET /actors_measures/:id
+class ActorMeasuresController < ApplicationController
+  # GET /actor_measures/:id
   def show
     @actor_measure = policy_scope(base_object).find(params[:id])
     authorize @actor_measure
     render json: serialize(@actor_measure)
   end
 
-  # GET /actors_measures
+  # GET /actor_measures
   def index
-    @actors_measures = policy_scope(base_object).all
-    authorize @actors_measures
-    render json: serialize(@actors_measures)
+    @actor_measures = policy_scope(base_object).all
+    authorize @actor_measures
+    render json: serialize(@actor_measures)
   end
 
   private

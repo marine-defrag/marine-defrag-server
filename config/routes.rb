@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :actor_types, only: [:index, :show]
   resources :actors
-  resources :actors_measures, only: [:index, :show]
+  resources :actor_measures, only: [:index, :show]
   resources :measure_categories
   resources :measure_indicators
   resources :measure_types, only: [:index, :show]

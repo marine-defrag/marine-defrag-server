@@ -1,7 +1,7 @@
 require "rails_helper"
 require "json"
 
-RSpec.describe ActorsMeasuresController, type: :controller do
+RSpec.describe ActorMeasuresController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
 

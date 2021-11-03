@@ -18,7 +18,7 @@ RSpec.describe "actor to measure relationships", type: :request do
   describe "get one actor/measure relationship" do
     let!(:actor_measure) { FactoryBot.create(:actor_measure, created_by: user, updated_by: user) }
     it "returns the actor/measure releationship requested" do
-      get "/actors_measures/#{actor_measure.id}", headers: auth_headers
+      get "/actor_measures/#{actor_measure.id}", headers: auth_headers
 
       expected_json =
         {"data" =>
@@ -54,7 +54,7 @@ RSpec.describe "actor to measure relationships", type: :request do
     let!(:actor_measure_3) { FactoryBot.create(:actor_measure, actor: actor_2, measure: measure_1, created_by: user, updated_by: user) }
 
     it "returns all the linkable actor/taxonomies" do
-      get "/actors_measures", headers: auth_headers
+      get "/actor_measures", headers: auth_headers
 
       expected_json =
         {"data" =>
