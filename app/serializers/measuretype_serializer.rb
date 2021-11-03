@@ -1,4 +1,4 @@
-class MeasureTypeSerializer
+class MeasuretypeSerializer
   include FastApplicationSerializer
 
   attributes(
@@ -7,5 +7,5 @@ class MeasureTypeSerializer
     :title
   )
 
-  set_type :measure_types
+  set_type :measuretypes
 end

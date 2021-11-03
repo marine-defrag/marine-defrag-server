@@ -13,7 +13,7 @@ class MeasureSerializer
     :draft,
     :has_reference_landbased_ml,
     :indicator_summary,
-    :measure_type_id,
+    :measuretype_id,
     :outcome,
     :parent_id,
     :private,

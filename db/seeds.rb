@@ -65,45 +65,45 @@ class Seeds
     )
     groups.save!
 
-    intl = MeasureType.new(
+    intl = Measuretype.new(
       title: "International ",
       has_parent: true,
-      has_target: false,
+      has_target: false
     )
     intl.save!
 
-    regionalSeas = MeasureType.new(
+    regionalSeas = Measuretype.new(
       title: "Regional Seas Conventions ",
       has_parent: false,
-      has_target: true,
+      has_target: true
     )
     regionalSeas.save!
 
-    regional = MeasureType.new(
+    regional = Measuretype.new(
       title: "Regional Strategies",
       has_parent: false,
-      has_target: false,
+      has_target: false
     )
     regional.save!
 
-    national = MeasureType.new(
+    national = Measuretype.new(
       title: "National Strategies",
       has_parent: false,
-      has_target: false,
+      has_target: false
     )
     national.save!
 
-    donations = MeasureType.new(
+    donations = Measuretype.new(
       title: "Donor activities",
       has_parent: true,
-      has_target: true,
+      has_target: true
     )
     donations.save!
 
-    initiatives = MeasureType.new(
+    initiatives = Measuretype.new(
       title: "Initiatives",
       has_parent: true,
-      has_target: true,
+      has_target: true
     )
     donations.save!
 
