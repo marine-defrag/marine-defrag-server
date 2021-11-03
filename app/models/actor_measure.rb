@@ -1,6 +1,4 @@
 class ActorMeasure < VersionedRecord
-  self.table_name = :actors_measures
-
   belongs_to :actor, required: true
   belongs_to :measure, required: true
 
