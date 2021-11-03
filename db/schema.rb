@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2021_11_02_073220) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -221,7 +220,9 @@ ActiveRecord::Schema.define(version: 2021_11_02_073220) do
     t.integer "order"
     t.integer "updated_by_id"
     t.integer "created_by_id"
+    t.boolean "private", default: true
     t.index ["draft"], name: "index_pages_on_draft"
+    t.index ["private"], name: "index_pages_on_private"
   end
 
   create_table "progress_reports", id: :serial, force: :cascade do |t|

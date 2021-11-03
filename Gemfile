@@ -62,3 +62,6 @@ group :test do
   gem "shoulda-matchers"
   gem "timecop"
 end
+
+
+gem "puma", "~> 5.5"

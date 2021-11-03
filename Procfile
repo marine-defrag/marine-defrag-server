@@ -1,1 +1,1 @@
-web: bin/rails server -p $PORT -e $RAILS_ENV
+web: bin/rails server -u puma -p $PORT -e $RAILS_ENV
