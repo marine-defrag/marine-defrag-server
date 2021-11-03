@@ -27,21 +27,21 @@ class Seeds
     Role.new(name: "analyst", friendly_name: "Analyst").save!
 
     # set up Actor Types ########################################################
-    countries = ActorType.new(
+    countries = Actortype.new(
       title: "Country",
       is_active: true,
       is_target: true
     )
     countries.save!
 
-    orgs = ActorType.new(
+    orgs = Actortype.new(
       title: "Organisation",
       is_active: true,
       is_target: false
     )
     orgs.save!
 
-    classes = ActorType.new(
+    classes = Actortype.new(
       title: "Class",
       is_active: false,
       is_target: true,
@@ -49,7 +49,7 @@ class Seeds
     )
     classes.save!
 
-    regions = ActorType.new(
+    regions = Actortype.new(
       title: "Region",
       is_active: false,
       is_target: true,
@@ -57,7 +57,7 @@ class Seeds
     )
     regions.save!
 
-    groups = ActorType.new(
+    groups = Actortype.new(
       title: "Group",
       is_active: true,
       is_target: false,
@@ -72,12 +72,12 @@ class Seeds
     )
     intl.save!
 
-    regionalSeas = Measuretype.new(
+    regional_seas = Measuretype.new(
       title: "Regional Seas Conventions ",
       has_parent: false,
       has_target: true
     )
-    regionalSeas.save!
+    regional_seas.save!
 
     regional = Measuretype.new(
       title: "Regional Strategies",
@@ -100,7 +100,7 @@ class Seeds
     )
     donations.save!
 
-    initiatives = Measuretype.new(
+    _initiatives = Measuretype.new(
       title: "Initiatives",
       has_parent: true,
       has_target: true
