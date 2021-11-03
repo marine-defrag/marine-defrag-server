@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :actortypes, only: [:index, :show]
   resources :measure_categories
   resources :measure_indicators
+  resources :measuretype_taxonomies, only: [:index, :show]
   resources :measuretypes, only: [:index, :show]
   resources :recommendation_categories
   resources :user_categories
