@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :actor do
-    association(:actortype, :active)
+    association(:actortype, :active, :target)
     activity_summary { Faker::Ancient.primordial }
     code { Faker::Beer.name }
     title { Faker::Creature::Cat.registry }

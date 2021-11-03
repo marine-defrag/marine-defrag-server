@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_03_076220) do
+ActiveRecord::Schema.define(version: 2021_11_03_076221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -212,6 +212,22 @@ ActiveRecord::Schema.define(version: 2021_11_03_076220) do
     t.index ["parent_id"], name: "index_measures_on_parent_id"
   end
 
+  create_table "measures_actors", force: :cascade do |t|
+    t.bigint "actor_id", null: false
+    t.bigint "measure_id", null: false
+    t.date "date_start"
+    t.date "date_end"
+    t.decimal "value"
+    t.bigint "created_by_id", null: false
+    t.bigint "updated_by_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["actor_id"], name: "index_measures_actors_on_actor_id"
+    t.index ["created_by_id"], name: "index_measures_actors_on_created_by_id"
+    t.index ["measure_id"], name: "index_measures_actors_on_measure_id"
+    t.index ["updated_by_id"], name: "index_measures_actors_on_updated_by_id"
+  end
+
   create_table "measuretypes", force: :cascade do |t|
     t.string "title", null: false
     t.boolean "has_target", default: true
@@ -406,6 +422,10 @@ ActiveRecord::Schema.define(version: 2021_11_03_076220) do
   add_foreign_key "framework_taxonomies", "taxonomies"
   add_foreign_key "measures", "measures", column: "parent_id"
   add_foreign_key "measures", "measuretypes"
+  add_foreign_key "measures_actors", "actors"
+  add_foreign_key "measures_actors", "measures"
+  add_foreign_key "measures_actors", "users", column: "created_by_id"
+  add_foreign_key "measures_actors", "users", column: "updated_by_id"
   add_foreign_key "measuretypes_taxonomies", "measuretypes"
   add_foreign_key "measuretypes_taxonomies", "taxonomies"
   add_foreign_key "recommendation_indicators", "indicators"
