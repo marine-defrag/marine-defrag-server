@@ -11,18 +11,18 @@ class Measure < VersionedRecord
   has_many :due_dates, through: :indicators
   has_many :progress_reports, through: :indicators
 
-  belongs_to :measure_type, required: true
+  belongs_to :measuretype, required: true
   belongs_to :parent, class_name: "Measure", required: false
 
   accepts_nested_attributes_for :recommendation_measures
   accepts_nested_attributes_for :measure_categories
 
   validates :title, presence: true
-  validates :measure_type_id, presence: true
+  validates :measuretype_id, presence: true
   validate(
     :different_parent,
     :not_own_descendant,
-    :parent_id_allowed_by_measure_type
+    :parent_id_allowed_by_measuretype
   )
 
   private
@@ -33,9 +33,9 @@ class Measure < VersionedRecord
     end
   end
 
-  def parent_id_allowed_by_measure_type
-    if parent_id && !parent.measure_type&.has_parent
-      errors.add(:parent_id, "is not allowed for this measure_type")
+  def parent_id_allowed_by_measuretype
+    if parent_id && !parent.measuretype&.has_parent
+      errors.add(:parent_id, "is not allowed for this measuretype")
     end
   end
 

@@ -11,14 +11,14 @@ RSpec.describe Measure, type: :model do
   context "parent_id" do
     subject do
       described_class.create(
-        measure_type: FactoryBot.create(:measure_type, :parent_allowed),
+        measuretype: FactoryBot.create(:measuretype, :parent_allowed),
         title: "test"
       )
     end
 
-    it "can be set to a measure with measure_type.has_parent = true" do
+    it "can be set to a measure with :measuretype.has_parent = true" do
       subject.parent_id = described_class.create(
-        measure_type: FactoryBot.create(:measure_type, :parent_allowed),
+        measuretype: FactoryBot.create(:measuretype, :parent_allowed),
         title: "no parent"
       ).id
       expect(subject).to be_valid
@@ -30,18 +30,18 @@ RSpec.describe Measure, type: :model do
       expect(subject.errors[:parent_id]).to(include("can't be the same as id"))
     end
 
-    it "can't be set to a measure with measure_type.has_parent = false" do
+    it "can't be set to a measure with :measuretype.has_parent = false" do
       subject.parent_id = described_class.create(
-        measure_type: FactoryBot.create(:measure_type, :parent_not_allowed),
+        measuretype: FactoryBot.create(:measuretype, :parent_not_allowed),
         title: "no parent"
       ).id
       expect(subject).to be_invalid
-      expect(subject.errors[:parent_id]).to(include("is not allowed for this measure_type"))
+      expect(subject.errors[:parent_id]).to(include("is not allowed for this measuretype"))
     end
 
     it "can't be its own descendant" do
       child = described_class.create(
-        measure_type: FactoryBot.create(:measure_type, :parent_allowed),
+        measuretype: FactoryBot.create(:measuretype, :parent_allowed),
         parent_id: subject.id,
         title: "immediate child"
       )

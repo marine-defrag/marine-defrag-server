@@ -72,7 +72,7 @@ RSpec.describe ActorsController, type: :controller do
     context "when signed in" do
       let(:recommendation) { FactoryBot.create(:recommendation) }
       let(:category) { FactoryBot.create(:category) }
-      let(:actor_type) { FactoryBot.create(:actor_type) }
+      let(:actortype) { FactoryBot.create(:actortype) }
 
       subject do
         post :create,
@@ -82,7 +82,7 @@ RSpec.describe ActorsController, type: :controller do
               code: "test",
               title: "test",
               description: "test",
-              actor_type_id: actor_type.id,
+              actortype_id: actortype.id,
               target_date: "today"
             }
           }

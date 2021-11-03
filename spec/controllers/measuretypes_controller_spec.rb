@@ -1,7 +1,7 @@
 require "rails_helper"
 require "json"
 
-RSpec.describe MeasureTypesController, type: :controller do
+RSpec.describe MeasuretypesController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
 
@@ -31,8 +31,8 @@ RSpec.describe MeasureTypesController, type: :controller do
   end
 
   describe "Get show" do
-    let(:measure_type) { FactoryBot.create(:measure_type) }
-    subject { get :show, params: {id: measure_type}, format: :json }
+    let(:measuretype) { FactoryBot.create(:measuretype) }
+    subject { get :show, params: {id: measuretype}, format: :json }
 
     context "when not signed in" do
       it { expect(subject).to be_forbidden }

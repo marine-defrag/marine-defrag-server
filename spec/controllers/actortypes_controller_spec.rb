@@ -1,7 +1,7 @@
 require "rails_helper"
 require "json"
 
-RSpec.describe ActorTypesController, type: :controller do
+RSpec.describe ActortypesController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
 
@@ -31,8 +31,8 @@ RSpec.describe ActorTypesController, type: :controller do
   end
 
   describe "Get show" do
-    let(:actor_type) { FactoryBot.create(:actor_type) }
-    subject { get :show, params: {id: actor_type}, format: :json }
+    let(:actortype) { FactoryBot.create(:actortype) }
+    subject { get :show, params: {id: actortype}, format: :json }
 
     context "when not signed in" do
       it { expect(subject).to be_forbidden }

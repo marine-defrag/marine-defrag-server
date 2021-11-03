@@ -10,21 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_02_073220) do
+ActiveRecord::Schema.define(version: 2021_11_03_073220) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "actor_types", force: :cascade do |t|
-    t.string "title", null: false
-    t.boolean "has_members", default: false
-    t.boolean "is_active", default: false
-    t.boolean "is_target", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "actors", force: :cascade do |t|
-    t.bigint "actor_type_id", null: false
+    t.bigint "actortype_id", null: false
     t.string "code", null: false
     t.string "title", null: false
     t.text "description"
@@ -38,7 +30,7 @@ ActiveRecord::Schema.define(version: 2021_11_02_073220) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
-    t.index ["actor_type_id"], name: "index_actors_on_actor_type_id"
+    t.index ["actortype_id"], name: "index_actors_on_actortype_id"
     t.index ["created_by_id"], name: "index_actors_on_created_by_id"
     t.index ["updated_by_id"], name: "index_actors_on_updated_by_id"
   end
@@ -57,6 +49,15 @@ ActiveRecord::Schema.define(version: 2021_11_02_073220) do
     t.index ["created_by_id"], name: "index_actors_measures_on_created_by_id"
     t.index ["measure_id"], name: "index_actors_measures_on_measure_id"
     t.index ["updated_by_id"], name: "index_actors_measures_on_updated_by_id"
+  end
+
+  create_table "actortypes", force: :cascade do |t|
+    t.string "title", null: false
+    t.boolean "has_members", default: false
+    t.boolean "is_active", default: false
+    t.boolean "is_target", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "bookmarks", id: :serial, force: :cascade do |t|
@@ -168,14 +169,6 @@ ActiveRecord::Schema.define(version: 2021_11_02_073220) do
     t.integer "created_by_id"
   end
 
-  create_table "measure_types", force: :cascade do |t|
-    t.string "title", null: false
-    t.boolean "has_target", default: true
-    t.boolean "has_parent", default: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "measures", id: :serial, force: :cascade do |t|
     t.text "title", null: false
     t.text "description"
@@ -188,7 +181,7 @@ ActiveRecord::Schema.define(version: 2021_11_02_073220) do
     t.text "target_date_comment"
     t.integer "updated_by_id"
     t.integer "created_by_id"
-    t.bigint "measure_type_id"
+    t.bigint "measuretype_id"
     t.bigint "parent_id"
     t.string "code"
     t.string "comment"
@@ -206,8 +199,16 @@ ActiveRecord::Schema.define(version: 2021_11_02_073220) do
     t.string "amount_comment"
     t.boolean "private", default: true
     t.index ["draft"], name: "index_measures_on_draft"
-    t.index ["measure_type_id"], name: "index_measures_on_measure_type_id"
+    t.index ["measuretype_id"], name: "index_measures_on_measuretype_id"
     t.index ["parent_id"], name: "index_measures_on_parent_id"
+  end
+
+  create_table "measuretypes", force: :cascade do |t|
+    t.string "title", null: false
+    t.boolean "has_target", default: true
+    t.boolean "has_parent", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "pages", id: :serial, force: :cascade do |t|
@@ -374,7 +375,7 @@ ActiveRecord::Schema.define(version: 2021_11_02_073220) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
-  add_foreign_key "actors", "actor_types"
+  add_foreign_key "actors", "actortypes"
   add_foreign_key "actors_measures", "actors"
   add_foreign_key "actors_measures", "measures"
   add_foreign_key "actors_measures", "users", column: "created_by_id"
@@ -383,8 +384,8 @@ ActiveRecord::Schema.define(version: 2021_11_02_073220) do
   add_foreign_key "framework_frameworks", "frameworks", column: "other_framework_id"
   add_foreign_key "framework_taxonomies", "frameworks"
   add_foreign_key "framework_taxonomies", "taxonomies"
-  add_foreign_key "measures", "measure_types"
   add_foreign_key "measures", "measures", column: "parent_id"
+  add_foreign_key "measures", "measuretypes"
   add_foreign_key "recommendation_indicators", "indicators"
   add_foreign_key "recommendation_indicators", "recommendations"
   add_foreign_key "recommendation_recommendations", "recommendations"

@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :actor_type do
+  factory :actortype do
     title { Faker::Creature::Cat.registry }
 
     trait :with_members do
