@@ -60,6 +60,15 @@ ActiveRecord::Schema.define(version: 2021_11_03_073220) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "actortypes_taxonomies", force: :cascade do |t|
+    t.bigint "actortype_id", null: false
+    t.bigint "taxonomy_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["actortype_id"], name: "index_actortypes_taxonomies_on_actortype_id"
+    t.index ["taxonomy_id"], name: "index_actortypes_taxonomies_on_taxonomy_id"
+  end
+
   create_table "bookmarks", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "title", null: false
@@ -380,6 +389,8 @@ ActiveRecord::Schema.define(version: 2021_11_03_073220) do
   add_foreign_key "actors_measures", "measures"
   add_foreign_key "actors_measures", "users", column: "created_by_id"
   add_foreign_key "actors_measures", "users", column: "updated_by_id"
+  add_foreign_key "actortypes_taxonomies", "actortypes"
+  add_foreign_key "actortypes_taxonomies", "taxonomies"
   add_foreign_key "framework_frameworks", "frameworks"
   add_foreign_key "framework_frameworks", "frameworks", column: "other_framework_id"
   add_foreign_key "framework_taxonomies", "frameworks"
