@@ -1,4 +1,4 @@
-class CreateMeasureTypes < ActiveRecord::Migration[6.1]
+class CreateMeasuretypes < ActiveRecord::Migration[6.1]
   def change
     create_table :measure_types do |t|
       t.string :title, null: false
