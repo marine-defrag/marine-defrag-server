@@ -4,7 +4,7 @@ class ActorPolicy < ApplicationPolicy
   def permitted_attributes
     [
       :activity_summary,
-      :actor_type_id,
+      :actortype_id,
       :code,
       :description,
       :draft,

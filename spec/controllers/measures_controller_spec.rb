@@ -110,7 +110,7 @@ RSpec.describe MeasuresController, type: :controller do
     context "when signed in" do
       let(:recommendation) { FactoryBot.create(:recommendation) }
       let(:category) { FactoryBot.create(:category) }
-      let(:measure_type) { FactoryBot.create(:measure_type) }
+      let(:measuretype) { FactoryBot.create(:measuretype) }
 
       subject do
         post :create,
@@ -119,7 +119,7 @@ RSpec.describe MeasuresController, type: :controller do
             measure: {
               title: "test",
               description: "test",
-              measure_type_id: measure_type.id,
+              measuretype_id: measuretype.id,
               target_date: "today"
             }
           }

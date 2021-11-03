@@ -1,4 +1,4 @@
-class ActorTypeSerializer
+class ActortypeSerializer
   include FastApplicationSerializer
 
   attributes(
@@ -8,5 +8,5 @@ class ActorTypeSerializer
     :title
   )
 
-  set_type :actor_types
+  set_type :actortypes
 end

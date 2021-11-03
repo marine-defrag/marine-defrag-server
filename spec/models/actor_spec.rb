@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Actor, type: :model do
   it { is_expected.to validate_presence_of :title }
-  it { is_expected.to belong_to :actor_type }
+  it { is_expected.to belong_to :actortype }
 
   it "is expected to default private to true" do
     expect(subject.private).to eq(true)

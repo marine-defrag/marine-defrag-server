@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :measure do
     title { Faker::Creature::Cat.registry }
     description { Faker::Beer.name }
-    association(:measure_type)
+    association(:measuretype)
     target_date { Faker::Date.forward(days: 450) }
 
     trait :without_recommendation do
