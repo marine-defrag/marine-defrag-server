@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_03_070810) do
+ActiveRecord::Schema.define(version: 2021_11_03_075455) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,15 @@ ActiveRecord::Schema.define(version: 2021_11_03_070810) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "measuretypes_taxonomies", force: :cascade do |t|
+    t.bigint "measuretype_id", null: false
+    t.bigint "taxonomy_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["measuretype_id"], name: "index_measuretypes_taxonomies_on_measuretype_id"
+    t.index ["taxonomy_id"], name: "index_measuretypes_taxonomies_on_taxonomy_id"
+  end
+
   create_table "pages", id: :serial, force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -377,6 +386,8 @@ ActiveRecord::Schema.define(version: 2021_11_03_070810) do
   add_foreign_key "framework_taxonomies", "taxonomies"
   add_foreign_key "measures", "measures", column: "parent_id"
   add_foreign_key "measures", "measuretypes"
+  add_foreign_key "measuretypes_taxonomies", "measuretypes"
+  add_foreign_key "measuretypes_taxonomies", "taxonomies"
   add_foreign_key "recommendation_indicators", "indicators"
   add_foreign_key "recommendation_indicators", "recommendations"
   add_foreign_key "recommendation_recommendations", "recommendations"
