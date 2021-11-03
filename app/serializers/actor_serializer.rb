@@ -3,7 +3,7 @@ class ActorSerializer
 
   attributes(
     :activity_summary,
-    :actor_type_id,
+    :actortype_id,
     :code,
     :description,
     :draft,

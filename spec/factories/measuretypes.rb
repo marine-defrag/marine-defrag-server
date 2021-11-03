@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :measure_type do
+  factory :measuretype do
     title { Faker::Creature::Cat.registry }
 
     trait :parent_allowed do
