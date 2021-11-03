@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def authorize_base_object!
-    authorize base_object
+    authorize(base_object) if defined?(base_object)
   end
 
   def serialize(target, serializer:)

@@ -15,9 +15,12 @@ class Seeds
   private
 
   def run_env_seeds!
-    send("#{Rails.env}_seeds!")
-  rescue NameError
-    log "Seeds for #{Rails.env} not defined, skipping.", level: :warn
+    seeder = "#{Rails.env}_seeds!"
+    if defined?(seeder)
+      send(seeder)
+    else
+      log "Seeds for #{Rails.env} not defined, skipping.", level: :warn
+    end
   end
 
   def base_seeds!
@@ -137,6 +140,7 @@ class Seeds
 
   def development_seeds!
     return unless User.count.zero?
+
     FactoryBot.create(:user).tap do |user|
       log "Seed user created: Log in with #{user.email} and password #{user.password}"
       user.roles << Role.find_by(name: "manager")
