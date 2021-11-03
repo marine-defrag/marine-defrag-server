@@ -8,9 +8,10 @@ Rails.application.routes.draw do
   end
   get "static_pages/home"
 
+  resources :actor_measures, only: [:index, :show]
   resources :actors
-  resources :actortypes, only: [:index, :show]
   resources :actortype_taxonomies, only: [:index, :show]
+  resources :actortypes, only: [:index, :show]
   resources :measure_categories
   resources :measure_indicators
   resources :measuretype_taxonomies, only: [:index, :show]

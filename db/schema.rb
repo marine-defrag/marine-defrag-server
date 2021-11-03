@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_03_075455) do
+ActiveRecord::Schema.define(version: 2021_11_03_076220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,22 @@ ActiveRecord::Schema.define(version: 2021_11_03_075455) do
     t.index ["actortype_id"], name: "index_actors_on_actortype_id"
     t.index ["created_by_id"], name: "index_actors_on_created_by_id"
     t.index ["updated_by_id"], name: "index_actors_on_updated_by_id"
+  end
+
+  create_table "actors_measures", force: :cascade do |t|
+    t.bigint "actor_id", null: false
+    t.bigint "measure_id", null: false
+    t.date "date_start"
+    t.date "date_end"
+    t.decimal "value"
+    t.bigint "created_by_id", null: false
+    t.bigint "updated_by_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["actor_id"], name: "index_actors_measures_on_actor_id"
+    t.index ["created_by_id"], name: "index_actors_measures_on_created_by_id"
+    t.index ["measure_id"], name: "index_actors_measures_on_measure_id"
+    t.index ["updated_by_id"], name: "index_actors_measures_on_updated_by_id"
   end
 
   create_table "actortypes", force: :cascade do |t|
@@ -378,6 +394,10 @@ ActiveRecord::Schema.define(version: 2021_11_03_075455) do
   end
 
   add_foreign_key "actors", "actortypes"
+  add_foreign_key "actors_measures", "actors"
+  add_foreign_key "actors_measures", "measures"
+  add_foreign_key "actors_measures", "users", column: "created_by_id"
+  add_foreign_key "actors_measures", "users", column: "updated_by_id"
   add_foreign_key "actortypes_taxonomies", "actortypes"
   add_foreign_key "actortypes_taxonomies", "taxonomies"
   add_foreign_key "framework_frameworks", "frameworks"
