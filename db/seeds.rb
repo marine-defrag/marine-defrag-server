@@ -16,7 +16,7 @@ class Seeds
 
   def run_env_seeds!
     seeder = "#{Rails.env}_seeds!"
-    if defined?(seeder)
+    if respond_to?(seeder.to_sym, true)
       send(seeder)
     else
       log "Seeds for #{Rails.env} not defined, skipping.", level: :warn
