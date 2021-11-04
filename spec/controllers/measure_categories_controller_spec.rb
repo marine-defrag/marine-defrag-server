@@ -2,6 +2,12 @@ require "rails_helper"
 require "json"
 
 RSpec.describe MeasureCategoriesController, type: :controller do
+  let(:category) { FactoryBot.create(:category) }
+  let(:measure) { FactoryBot.create(:measure) }
+  let!(:measuretype_taxonomy) do
+    FactoryBot.create(:measuretype_taxonomy, measuretype: measure.measuretype, taxonomy: category.taxonomy)
+  end
+
   describe "Get index" do
     subject { get :index, format: :json }
 
@@ -11,7 +17,7 @@ RSpec.describe MeasureCategoriesController, type: :controller do
   end
 
   describe "Get show" do
-    let(:measure_category) { FactoryBot.create(:measure_category) }
+    let(:measure_category) { FactoryBot.create(:measure_category, category: category, measure: measure) }
     subject { get :show, params: {id: measure_category}, format: :json }
 
     context "when not signed in" do
@@ -30,8 +36,6 @@ RSpec.describe MeasureCategoriesController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:measure) { FactoryBot.create(:measure) }
-      let(:category) { FactoryBot.create(:category) }
 
       subject do
         post :create,
@@ -63,7 +67,7 @@ RSpec.describe MeasureCategoriesController, type: :controller do
   end
 
   describe "Delete destroy" do
-    let(:measure_category) { FactoryBot.create(:measure_category) }
+    let(:measure_category) { FactoryBot.create(:measure_category, category: category, measure: measure) }
     subject { delete :destroy, format: :json, params: {id: measure_category} }
 
     context "when not signed in" do

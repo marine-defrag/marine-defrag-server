@@ -2,22 +2,29 @@
 
 class MeasureCategoryPolicy < ApplicationPolicy
   def permitted_attributes
-    [:measure_id,
+    [
       :category_id,
-      measure_attributes: [:title, :description, :target_date, :draft],
-      category_attributes: [:id, :title, :short_title, :description, :url,
-        :taxonomy_id,
+      :measure_id,
+      measure_attributes: [
+        :description,
         :draft,
-        :manager_id]]
+        :target_date,
+        :title
+      ],
+      category_attributes: [
+        :description,
+        :draft,
+        :id,
+        :manager_id,
+        :short_title,
+        :taxonomy_id,
+        :title,
+        :url
+      ]
+    ]
   end
 
   def update?
     false
-  end
-
-  class Scope < Scope
-    def resolve
-      scope.all
-    end
   end
 end
