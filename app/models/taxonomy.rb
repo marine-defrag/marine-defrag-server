@@ -7,6 +7,9 @@ class Taxonomy < VersionedRecord
   has_many :frameworks, through: :framework_taxonomies
   belongs_to :framework, optional: true
 
+  has_many :measuretype_taxonomies
+  has_many :measuretypes, through: :measuretype_taxonomies
+
   validates :title, presence: true
 
   validates :allow_multiple, inclusion: [true, false]
