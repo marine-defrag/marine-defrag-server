@@ -13,7 +13,6 @@ class Taxonomy < VersionedRecord
   validates :title, presence: true
 
   validates :allow_multiple, inclusion: [true, false]
-  validates :tags_measures, inclusion: [true, false]
 
   validate :sub_relation
 
