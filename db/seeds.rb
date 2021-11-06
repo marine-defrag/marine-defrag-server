@@ -114,6 +114,10 @@ class Seeds
     initiatives.save!
 
     # Set up taxonomies ########################################################
+    Taxonomy.destroy_all
+    MeasuretypeTaxonomy.destroy_all
+    ActortypeTaxonomy.destroy_all
+    Category.destroy_all
     # Convention status taxonomy - applies to int. and reg. seas conventions
     convstatus = Taxonomy.create!(
       title: "Convention status",
