@@ -55,6 +55,9 @@ RSpec.describe MeasuresController, type: :controller do
       context "when signed in" do
         it "filters from category" do
           sign_in manager
+          FactoryBot.create(:measuretype_taxonomy,
+            measuretype: measure_different_category.measuretype,
+            taxonomy: category.taxonomy)
           measure_different_category.categories << category
           subject = get :index, params: {category_id: category.id}, format: :json
           json = JSON.parse(subject.body)
