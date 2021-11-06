@@ -113,442 +113,364 @@ class Seeds
 
     # Set up taxonomies ########################################################
     # Convention status taxonomy - applies to int. and reg. seas conventions
-    convstatus = FactoryBot.create(
-      :taxonomy,
+    convstatus = Taxonomy.create!(
       title: "Convention status",
       allow_multiple: true,
     )
-    FactoryBot.create(
-      :measuretype_taxonomy,
+    MeasuretypeTaxonomy.create!(
       taxonomy: convstatus,
       measuretype: intl
     )
-    FactoryBot.create(
-      :measuretype_taxonomy,
+    MeasuretypeTaxonomy.create!(
       taxonomy: convstatus,
       measuretype: regional_seas
     )
     # Admin. type taxonomy - applies to reg. seas conventions
-    admintype = FactoryBot.create(
-      :taxonomy,
+    admintype = Taxonomy.create!(
       title: "Administration type",
       allow_multiple: true,
     )
-    FactoryBot.create(
-      :measuretype_taxonomy,
+    MeasuretypeTaxonomy.create!(
       taxonomy: admintype,
       measuretype: regional_seas
     )
     # Strategy type taxonomy - applies to nat. and reg. strategies
-    strategytype = FactoryBot.create(
-      :taxonomy,
+    strategytype = Taxonomy.create!(
       title: "Strategy type",
       allow_multiple: true,
     )
-    FactoryBot.create(
-      :measuretype_taxonomy,
+    MeasuretypeTaxonomy.create!(
       taxonomy: strategytype,
       measuretype: regional
     )
-    FactoryBot.create(
-      :measuretype_taxonomy,
+    MeasuretypeTaxonomy.create!(
       taxonomy: strategytype,
       measuretype: national
     )
     # Initiative type taxonomy - applies to initiatives
-    initiativetype = FactoryBot.create(
-      :taxonomy,
+    initiativetype = Taxonomy.create!(
       title: "Initiative type",
       allow_multiple: true,
     )
-    FactoryBot.create(
-      :measuretype_taxonomy,
+    MeasuretypeTaxonomy.create!(
       taxonomy: initiativetype,
       measuretype: initiatives
     )
 
     # Group type taxonomy - applies to groups
-    grouptype = FactoryBot.create(
-      :taxonomy,
+    grouptype = Taxonomy.create!(
       title: "Type of group",
       allow_multiple: false,
     )
-    FactoryBot.create(
-      :actortype_taxonomy,
+    ActortypeTaxonomy.create!(
       taxonomy: grouptype,
       actortype: groups
     )
 
     # Org sector taxonomy - applies to orgs
-    orgsector = FactoryBot.create(
-      :taxonomy,
+    orgsector = Taxonomy.create!(
       title: "Sector",
       allow_multiple: false,
     )
-    FactoryBot.create(
-      :actortype_taxonomy,
+    ActortypeTaxonomy.create!(
       taxonomy: orgsector,
       actortype: orgs
     )
 
     # Org type taxonomy - applies to orgs, child of org sector
     # TODO: link parent
-    orgtype = FactoryBot.create(
-      :taxonomy,
+    orgtype = Taxonomy.create!(
       title: "Type of organisation",
       allow_multiple: false,
     )
-    FactoryBot.create(
-      :actortype_taxonomy,
+    ActortypeTaxonomy.create!(
       taxonomy: orgtype,
       actortype: orgs
     )
     # class type taxonomy - applies to classes
-    classtype = FactoryBot.create(
-      :taxonomy,
+    classtype = Taxonomy.create!(
       title: "Type of country classification",
       allow_multiple: false,
     )
-    FactoryBot.create(
-      :actortype_taxonomy,
+    ActortypeTaxonomy.create!(
       taxonomy: classtype,
       actortype: classes
     )
     # country status taxonomy - applies to countries
-    countrystatus = FactoryBot.create(
-      :taxonomy,
+    countrystatus = Taxonomy.create!(
       title: "Country status",
       allow_multiple: false,
     )
-    FactoryBot.create(
-      :actortype_taxonomy,
+    ActortypeTaxonomy.create!(
       taxonomy: countrystatus,
       actortype: countries
     )
 
     # Set up categories ########################################################
     # Convention status taxonomy
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: convstatus,
       title: "Signed"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: convstatus,
       title: "Adopted"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: convstatus,
       title: "In force"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: convstatus,
       title: "Reaffirmed"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: convstatus,
       title: "Concluded"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: convstatus,
       title: "Established"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: convstatus,
       title: "Launched"
     )
     # Admin. type taxonomy
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: admintype,
       title: "Established and administered independently",
       short_title: "Independent"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: admintype,
       title: "Established under UN Environment, administered independently",
       short_title: "UN established"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: admintype,
       title: "UN Environment-administered",
       short_title: "UN-administered"
     )
     # Strategy type taxonomy
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: strategytype,
       title: "Plastic / marine litter strategy",
       short_title: "Plastic/ML"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: strategytype,
       title: "Extendend Producer Responsibility policy",
       short_title: "EPR"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: strategytype,
       title: "Strategy on microplastics",
       short_title: "Microplastics"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: strategytype,
       title: "Strategy on single-use plastics",
       short_title: "Single-use"
     )
     # Initiative type taxonomy
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Alliance"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Association"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Campaign"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Coalition"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Commitment"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Community"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Conference"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Forum"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "High-level panel"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Initiative"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Knowledge centre"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Movement"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Multi-donor fund"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Network"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Other"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Partnership"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: initiativetype,
       title: "Platform"
     )
 
     # Group type taxonomy
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: grouptype,
       title: "Intergovernmental"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: grouptype,
       title: "Mixed"
     )
     # Org sector taxonomy
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgsector,
       title: "Civil society"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgsector,
       title: "Private sector"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgsector,
       title: "Science & research"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgsector,
       title: "Public sector"
     )
     # Org type taxonomy
     # TODO: link with Science & R.
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgtype,
       title: "Academia"
     )
     # TODO: link with Science & R.
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgtype,
       title: "Think tank"
     )
     # TODO: link with Civil Society
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgtype,
       title: "Foundation"
     )
     # TODO: link with Civil Society
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgtype,
       title: "Fund"
     )
     # TODO: link with Civil S.
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgtype,
       title: "Non-Governmental Organisation",
       short_title: "NGO"
     )
     # TODO: link with Civil S.
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgtype,
       title: "Other civil society"
     )
     # TODO: link with Private S.
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgtype,
       title: "Consultancy"
     )
     # TODO: link with Private S.
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgtype,
       title: "Finance & investment"
     )
     # TODO: link with Private S.
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgtype,
       title: "Manufacturing & retail"
     )
     # TODO: link with Private S.
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgtype,
       title: "Recycling & disposal"
     )
     # TODO: link with Private S.
-    FactoryBot.create(
-      :category,
+    Category.create!(,
       taxonomy: orgtype,
       title: "Social business"
     )
     # TODO: link with Private S.
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: orgtype,
       title: "Other private sector"
     )
 
     # class type taxonomy
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: classtype,
       title: "Development (Natural Earth)",
       short_title: "Development"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: classtype,
       title: "Income (World Bank)",
       short_title: "Income"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: classtype,
       title: "Operational lending (World Bank)",
       short_title: "Lending"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: classtype,
       title: "Official development assistance",
       short_title: "ODA"
     )
     # country status taxonomy
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: countrystatus,
       title: "Country"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: countrystatus,
       title: "Dependency"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: countrystatus,
       title: "Disputed"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: countrystatus,
       title: "Indeterminate"
     )
-    FactoryBot.create(
-      :category,
+    Category.create!(
       taxonomy: countrystatus,
       title: "Sovereign country"
     )
@@ -556,12 +478,6 @@ class Seeds
 
   def development_seeds!
     return unless User.count.zero?
-
-    FactoryBot.create(:user).tap do |user|
-      log "Seed user created: Log in with #{user.email} and password #{user.password}"
-      user.roles << Role.find_by(name: "manager")
-      user.save!
-    end
   end
 
   def log(msg, level: :info)
