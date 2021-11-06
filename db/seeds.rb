@@ -30,86 +30,88 @@ class Seeds
     # Role.new(name: "manager", friendly_name: "Manager").save!
     # Role.new(name: "analyst", friendly_name: "Analyst").save!
     #
-    # # set up Actor Types ########################################################
-    # countries = Actortype.new(
-    #   title: "Country",
-    #   is_active: true,
-    #   is_target: true
-    # )
-    # countries.save!
-    #
-    # orgs = Actortype.new(
-    #   title: "Organisation",
-    #   is_active: true,
-    #   is_target: false
-    # )
-    # orgs.save!
-    #
-    # classes = Actortype.new(
-    #   title: "Class",
-    #   is_active: false,
-    #   is_target: true,
-    #   has_members: true
-    # )
-    # classes.save!
-    #
-    # regions = Actortype.new(
-    #   title: "Region",
-    #   is_active: false,
-    #   is_target: true,
-    #   has_members: true
-    # )
-    # regions.save!
-    #
-    # groups = Actortype.new(
-    #   title: "Group",
-    #   is_active: true,
-    #   is_target: false,
-    #   has_members: true
-    # )
-    # groups.save!
-    #
-    # intl = Measuretype.new(
-    #   title: "International ",
-    #   has_parent: true,
-    #   has_target: false
-    # )
-    # intl.save!
-    #
-    # regional_seas = Measuretype.new(
-    #   title: "Regional Seas Conventions ",
-    #   has_parent: false,
-    #   has_target: true
-    # )
-    # regional_seas.save!
-    #
-    # regional = Measuretype.new(
-    #   title: "Regional Strategies",
-    #   has_parent: false,
-    #   has_target: false
-    # )
-    # regional.save!
-    #
-    # national = Measuretype.new(
-    #   title: "National Strategies",
-    #   has_parent: false,
-    #   has_target: false
-    # )
-    # national.save!
-    #
-    # donations = Measuretype.new(
-    #   title: "Donor activities",
-    #   has_parent: true,
-    #   has_target: true
-    # )
-    # donations.save!
-    #
-    # initiatives = Measuretype.new(
-    #   title: "Initiatives",
-    #   has_parent: true,
-    #   has_target: true
-    # )
-    # initiatives.save!
+    # set up Actor Types #######################################################
+    Actortype.destroy_all
+    countries = Actortype.new(
+      title: "Country",
+      is_active: true,
+      is_target: true
+    )
+    countries.save!
+
+    orgs = Actortype.new(
+      title: "Organisation",
+      is_active: true,
+      is_target: false
+    )
+    orgs.save!
+
+    classes = Actortype.new(
+      title: "Class",
+      is_active: false,
+      is_target: true,
+      has_members: true
+    )
+    classes.save!
+
+    regions = Actortype.new(
+      title: "Region",
+      is_active: false,
+      is_target: true,
+      has_members: true
+    )
+    regions.save!
+
+    groups = Actortype.new(
+      title: "Group",
+      is_active: true,
+      is_target: false,
+      has_members: true
+    )
+    groups.save!
+
+    Measuretype.destroy_all
+    intl = Measuretype.new(
+      title: "International ",
+      has_parent: true,
+      has_target: false
+    )
+    intl.save!
+
+    regional_seas = Measuretype.new(
+      title: "Regional Seas Conventions ",
+      has_parent: false,
+      has_target: true
+    )
+    regional_seas.save!
+
+    regional = Measuretype.new(
+      title: "Regional Strategies",
+      has_parent: false,
+      has_target: false
+    )
+    regional.save!
+
+    national = Measuretype.new(
+      title: "National Strategies",
+      has_parent: false,
+      has_target: false
+    )
+    national.save!
+
+    donations = Measuretype.new(
+      title: "Donor activities",
+      has_parent: true,
+      has_target: true
+    )
+    donations.save!
+
+    initiatives = Measuretype.new(
+      title: "Initiatives",
+      has_parent: true,
+      has_target: true
+    )
+    initiatives.save!
 
     # Set up taxonomies ########################################################
     # Convention status taxonomy - applies to int. and reg. seas conventions
