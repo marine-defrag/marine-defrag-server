@@ -422,7 +422,7 @@ class Seeds
       title: "Recycling & disposal"
     )
     # TODO: link with Private S.
-    Category.create!(,
+    Category.create!(
       taxonomy: orgtype,
       title: "Social business"
     )
