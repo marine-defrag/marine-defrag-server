@@ -100,12 +100,12 @@ class Seeds
     )
     donations.save!
 
-    _initiatives = Measuretype.new(
+    initiatives = Measuretype.new(
       title: "Initiatives",
       has_parent: true,
       has_target: true
     )
-    donations.save!
+    initiatives.save!
 
     # Set up taxonomies ########################################################
     #  Sample taxonomy
