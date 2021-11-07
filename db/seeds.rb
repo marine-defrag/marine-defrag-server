@@ -206,6 +206,23 @@ class Seeds
       actortype: countries
     )
 
+    commlevel = Taxonomy.create!(
+      title: "Commitment level",
+      allow_multiple: false,
+    )
+    MeasuretypeTaxonomy.create!(
+      taxonomy: commlevel,
+      measuretype: intl
+    )
+    commtype = Taxonomy.create!(
+      title: "Commitment type",
+      allow_multiple: true,
+    )
+    MeasuretypeTaxonomy.create!(
+      taxonomy: commtype,
+      measuretype: intl
+    )
+
     # Set up categories ########################################################
     # Convention status taxonomy
     Category.create!(
@@ -473,6 +490,26 @@ class Seeds
     Category.create!(
       taxonomy: countrystatus,
       title: "Sovereign country"
+    )
+    Category.create!(
+      taxonomy: commlevel,
+      title: "Legally binding"
+    )
+    Category.create!(
+      taxonomy: commlevel,
+      title: "Non-legally binding"
+    )
+    Category.create!(
+      taxonomy: commlevel,
+      title: "Non-binding"
+    )
+    Category.create!(
+      taxonomy: commtype,
+      title: "Conference"
+    )
+    Category.create!(
+      taxonomy: commtype,
+      title: "Convention"
     )
   end
 
