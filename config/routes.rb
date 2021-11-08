@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
   get "static_pages/home"
 
-  resources :actor_categories, except: [:edit, :update]
+  resources :actor_categories, only: [:index, :show, :create, :destroy]
   resources :actor_measures, only: [:index, :show]
   resources :actors
   resources :actortype_taxonomies, only: [:index, :show]
