@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_03_091955) do
+ActiveRecord::Schema.define(version: 2021_11_08_064922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actor_categories", force: :cascade do |t|
+    t.bigint "actor_id", null: false
+    t.bigint "category_id", null: false
+    t.bigint "created_by_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["actor_id"], name: "index_actor_categories_on_actor_id"
+    t.index ["category_id"], name: "index_actor_categories_on_category_id"
+    t.index ["created_by_id"], name: "index_actor_categories_on_created_by_id"
+  end
 
   create_table "actor_measures", force: :cascade do |t|
     t.bigint "actor_id", null: false
@@ -409,6 +420,9 @@ ActiveRecord::Schema.define(version: 2021_11_03_091955) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "actor_categories", "actors"
+  add_foreign_key "actor_categories", "categories"
+  add_foreign_key "actor_categories", "users", column: "created_by_id"
   add_foreign_key "actor_measures", "actors"
   add_foreign_key "actor_measures", "measures"
   add_foreign_key "actor_measures", "users", column: "created_by_id"
