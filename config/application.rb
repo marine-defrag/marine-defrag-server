@@ -18,7 +18,7 @@ module HumanRightsNationalReporting
     # (these paths are also autoloaded in development mode)
     # config.eager_load_paths += %W(#{config.root}/lib)
 
-    config.time_zone = "Pacific/Auckland"
+    config.time_zone = "Berlin"
     config.active_record.default_timezone = :local
 
     config.middleware.insert_before 0, Rack::Cors do
