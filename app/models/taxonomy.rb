@@ -1,4 +1,7 @@
 class Taxonomy < VersionedRecord
+  has_many :actortype_taxonomies
+  has_many :actortypes, through: :actortype_taxonomies
+
   has_many :categories
   belongs_to :taxonomy, class_name: "Taxonomy", foreign_key: :parent_id, optional: true
   has_many :taxonomies, class_name: "Taxonomy", foreign_key: :parent_id
