@@ -2,6 +2,9 @@ require "rails_helper"
 require "json"
 
 RSpec.describe MembershipsController, type: :controller do
+  let(:analyst) { FactoryBot.create(:user, :analyst) }
+  let(:guest) { FactoryBot.create(:user) }
+  let(:manager) { FactoryBot.create(:user, :manager) }
   let(:member) { FactoryBot.create(:actor) }
   let(:memberof) { FactoryBot.create(:actor, actortype: FactoryBot.create(:actortype, :with_members)) }
 
@@ -31,9 +34,6 @@ RSpec.describe MembershipsController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryBot.create(:user) }
-      let(:user) { FactoryBot.create(:user, :manager) }
-
       subject do
         post :create,
           format: :json,
@@ -50,13 +50,18 @@ RSpec.describe MembershipsController, type: :controller do
         expect(subject).to be_forbidden
       end
 
+      it "will not allow an analyst to create a membership" do
+        sign_in analyst
+        expect(subject).to be_forbidden
+      end
+
       it "will allow a manager to create a membership" do
-        sign_in user
+        sign_in manager
         expect(subject).to be_created
       end
 
       it "will return an error if params are incorrect" do
-        sign_in user
+        sign_in manager
         post :create, format: :json, params: {membership: {description: "desc only", taxonomy_id: 999}}
         expect(response).to have_http_status(422)
       end
@@ -74,16 +79,18 @@ RSpec.describe MembershipsController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryBot.create(:user) }
-      let(:user) { FactoryBot.create(:user, :manager) }
-
       it "will not allow a guest to delete a membership" do
         sign_in guest
         expect(subject).to be_forbidden
       end
 
+      it "will not allow an analyst to delete a membership" do
+        sign_in analyst
+        expect(subject).to be_forbidden
+      end
+
       it "will allow a manager to delete a membership" do
-        sign_in user
+        sign_in manager
         expect(subject).to be_no_content
       end
     end
