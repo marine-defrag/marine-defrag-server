@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :measure_indicators
   resources :measuretype_taxonomies, only: [:index, :show]
   resources :measuretypes, only: [:index, :show]
+  resources :memberships, only: [:index, :show, :create, :destroy]
   resources :recommendation_categories
   resources :user_categories
   resources :recommendation_measures
