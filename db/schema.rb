@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2021_11_09_073519) do
 
   create_table "actors", force: :cascade do |t|
     t.bigint "actortype_id", null: false
-    t.string "code", null: false
+    t.string "code"
     t.string "title", null: false
     t.text "description"
     t.text "activity_summary"
