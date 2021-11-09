@@ -2,6 +2,10 @@ require "rails_helper"
 require "json"
 
 RSpec.describe MeasureActorsController, type: :controller do
+  let(:analyst) { FactoryBot.create(:user, :analyst) }
+  let(:guest) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:user, :manager) }
+
   describe "Get index" do
     subject { get :index, format: :json }
 
@@ -55,6 +59,76 @@ RSpec.describe MeasureActorsController, type: :controller do
         before { sign_in FactoryBot.create(:user, :admin) }
 
         it { expect(subject).to be_ok }
+      end
+    end
+  end
+
+  describe "PUT update" do
+    let(:measure_actor) { FactoryBot.create(:measure_actor) }
+    subject do
+      put :update,
+        format: :json,
+        params: {id: measure_actor,
+                 measure_actor: {value: "4.2"}}
+    end
+
+    context "when not signed in" do
+      it "not allow updating a measure_actor" do
+        expect(subject).to be_unauthorized
+      end
+    end
+
+    context "when user signed in" do
+      it "will not allow a guest to update a measure_actor" do
+        sign_in guest
+        expect(subject).to be_forbidden
+      end
+
+      it "will not allow an analyst to update an measure_actor" do
+        sign_in analyst
+        expect(subject).to be_forbidden
+      end
+
+      it "will allow a manager to update a measure_actor" do
+        sign_in user
+        expect(subject).to be_ok
+        json = JSON.parse(subject.body)
+        expect(json.dig("data", "attributes", "value")).to eq("4.2")
+      end
+
+      it "will return an error if params are incorrect" do
+        sign_in user
+        put :update, format: :json, params: {id: measure_actor,
+                                             measure_actor: {actor_id: 999}}
+        expect(response).to have_http_status(422)
+      end
+    end
+  end
+
+  describe "Delete destroy" do
+    let(:measure_actor) { FactoryBot.create(:measure_actor) }
+    subject { delete :destroy, format: :json, params: {id: measure_actor} }
+
+    context "when not signed in" do
+      it "not allow deleting a measure_actor" do
+        expect(subject).to be_unauthorized
+      end
+    end
+
+    context "when user signed in" do
+      it "will not allow a guest to delete a measure_actor" do
+        sign_in guest
+        expect(subject).to be_forbidden
+      end
+
+      it "will not allow an analyst to delete a measure_actor" do
+        sign_in analyst
+        expect(subject).to be_forbidden
+      end
+
+      it "will allow a manager to delete a measure_actor" do
+        sign_in user
+        expect(subject).to be_no_content
       end
     end
   end

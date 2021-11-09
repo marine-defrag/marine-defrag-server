@@ -9,11 +9,11 @@ Rails.application.routes.draw do
   get "static_pages/home"
 
   resources :actor_categories, only: [:index, :show, :create, :destroy]
-  resources :actor_measures, only: [:index, :show]
+  resources :actor_measures, only: [:index, :show, :create, :update, :destroy]
   resources :actors
   resources :actortype_taxonomies, only: [:index, :show]
   resources :actortypes, only: [:index, :show]
-  resources :measure_actors, only: [:index, :show]
+  resources :measure_actors, only: [:index, :show, :create, :update, :destroy]
   resources :measure_categories
   resources :measure_indicators
   resources :measuretype_taxonomies, only: [:index, :show]
