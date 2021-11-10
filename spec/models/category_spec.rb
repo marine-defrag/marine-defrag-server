@@ -43,14 +43,23 @@ RSpec.describe Category, type: :model do
       parent_category.save!
 
       sub_category.parent_id = parent_category.id
-      expect { sub_category.save! }.to raise_exception(/Parent category is already a sub-category./)
+      expect(sub_category).to be_invalid
+      expect(sub_category.errors[:parent_id]).to include("Parent category is already a sub-category")
     end
 
     it "Should not update parent_id with incorrect taxonomy relation" do
       category = FactoryBot.create(:category, :parent_category)
       sub_category = FactoryBot.create(:category, :sub_category)
       sub_category.parent_id = category.id
-      expect { sub_category.save! }.to raise_exception(/Validation failed: Parent Taxonomy does not have parent categorys taxonomy as parent./)
+      expect(sub_category).to be_invalid
+      expect(sub_category.errors[:parent_id]).to include("Taxonomy does not have parent category's taxonomy as parent")
+    end
+
+    it "Can't be its own parent" do
+      category = FactoryBot.create(:category)
+      category.update(parent_id: category.id)
+      expect(category).to be_invalid
+      expect(category.errors[:parent_id]).to include("Category can't be its own parent")
     end
   end
 end
