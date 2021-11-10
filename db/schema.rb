@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 2021_11_09_073519) do
     t.integer "parent_id"
     t.date "date"
     t.integer "created_by_id"
+    t.boolean "private", default: true
     t.index ["draft"], name: "index_categories_on_draft"
     t.index ["manager_id"], name: "index_categories_on_manager_id"
     t.index ["taxonomy_id"], name: "index_categories_on_taxonomy_id"
