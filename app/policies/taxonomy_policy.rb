@@ -1,35 +1,19 @@
 # frozen_string_literal: true
 
-class TaxonomyPolicy < ApplicationPolicy
+class TaxonomyPolicy < SystemPolicy
   def permitted_attributes
-    [:title,
-      :tags_measures,
+    [
       :allow_multiple,
-      :tags_users,
-      :priority,
-      :is_smart,
+      :framework_id,
       :groups_measures_default,
       :groups_recommendations_default,
-      :parent_id,
       :has_date,
-      :framework_id]
-  end
-
-  def create?
-    false
-  end
-
-  def update?
-    false
-  end
-
-  def destroy?
-    false
-  end
-
-  class Scope < Scope
-    def resolve
-      scope.all
-    end
+      :is_smart,
+      :parent_id,
+      :priority,
+      :tags_measures,
+      :tags_users,
+      :title
+    ]
   end
 end
