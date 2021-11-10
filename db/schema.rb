@@ -257,6 +257,17 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "member_id", null: false
+    t.bigint "memberof_id", null: false
+    t.bigint "created_by_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_by_id"], name: "index_memberships_on_created_by_id"
+    t.index ["member_id"], name: "index_memberships_on_member_id"
+    t.index ["memberof_id"], name: "index_memberships_on_memberof_id"
+  end
+
   create_table "pages", id: :serial, force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -443,6 +454,9 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
   add_foreign_key "measures", "measuretypes"
   add_foreign_key "measuretype_taxonomies", "measuretypes"
   add_foreign_key "measuretype_taxonomies", "taxonomies"
+  add_foreign_key "memberships", "actors", column: "member_id"
+  add_foreign_key "memberships", "actors", column: "memberof_id"
+  add_foreign_key "memberships", "users", column: "created_by_id"
   add_foreign_key "recommendation_indicators", "indicators"
   add_foreign_key "recommendation_indicators", "recommendations"
   add_foreign_key "recommendation_recommendations", "recommendations"
