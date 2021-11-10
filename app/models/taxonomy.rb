@@ -1,4 +1,4 @@
-class Taxonomy < VersionedRecord
+class Taxonomy < ApplicationRecord
   has_many :actortype_taxonomies
   has_many :actortypes, through: :actortype_taxonomies
 
@@ -17,15 +17,18 @@ class Taxonomy < VersionedRecord
 
   validates :allow_multiple, inclusion: [true, false]
 
+  validate :different_parent
   validate :sub_relation
 
-  def sub_relation
-    if parent_id.present?
-      parent_taxonomy = Taxonomy.find(parent_id)
+  def different_parent
+    if parent_id.present? && parent_id == id
+      errors.add(:parent_id, "Taxonomy can't be its own parent")
+    end
+  end
 
-      if !parent_taxonomy.parent_id.nil?
-        errors.add(:parent_id, "Parent taxonomy is already a sub-taxonomy.")
-      end
+  def sub_relation
+    if parent_id.present? && !taxonomy.parent_id.nil?
+      errors.add(:parent_id, "Parent taxonomy is already a sub-taxonomy")
     end
   end
 end

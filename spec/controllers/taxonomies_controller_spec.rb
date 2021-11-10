@@ -2,6 +2,11 @@ require "rails_helper"
 require "json"
 
 RSpec.describe TaxonomiesController, type: :controller do
+  let(:admin) { FactoryBot.create(:user, :admin) }
+  let(:analyst) { FactoryBot.create(:user, :analyst) }
+  let(:guest) { FactoryBot.create(:user) }
+  let(:manager) { FactoryBot.create(:user, :manager) }
+
   describe "Get index" do
     subject { get :index, format: :json }
     let!(:taxonomy) { FactoryBot.create(:taxonomy) }
@@ -29,8 +34,6 @@ RSpec.describe TaxonomiesController, type: :controller do
     end
 
     context "when signed in" do
-      let(:guest) { FactoryBot.create(:user) }
-      let(:user) { FactoryBot.create(:user, :manager) }
       let(:taxonomy) { FactoryBot.create(:taxonomy) }
 
       subject do
@@ -54,8 +57,18 @@ RSpec.describe TaxonomiesController, type: :controller do
         expect(subject).to be_forbidden
       end
 
+      it "will not allow an analyst to create a taxonomy" do
+        sign_in analyst
+        expect(subject).to be_forbidden
+      end
+
       it "will not allow a manager to create a taxonomy" do
-        sign_in user
+        sign_in manager
+        expect(subject).to be_forbidden
+      end
+
+      it "will not allow an admin to create a taxonomy" do
+        sign_in admin
         expect(subject).to be_forbidden
       end
     end
@@ -77,16 +90,23 @@ RSpec.describe TaxonomiesController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryBot.create(:user) }
-      let(:user) { FactoryBot.create(:user, :manager) }
-
       it "will not allow a guest to update a taxonomy" do
         sign_in guest
         expect(subject).to be_forbidden
       end
 
+      it "will not allow an analyst to update a taxonomy" do
+        sign_in analyst
+        expect(subject).to be_forbidden
+      end
+
       it "will not allow a manager to update a taxonomy" do
-        sign_in user
+        sign_in manager
+        expect(subject).to be_forbidden
+      end
+
+      it "will not allow an admin to update a taxonomy" do
+        sign_in admin
         expect(subject).to be_forbidden
       end
     end
@@ -103,16 +123,23 @@ RSpec.describe TaxonomiesController, type: :controller do
     end
 
     context "when user signed in" do
-      let(:guest) { FactoryBot.create(:user) }
-      let(:user) { FactoryBot.create(:user, :manager) }
-
       it "will not allow a guest to delete a taxonomy" do
         sign_in guest
         expect(subject).to be_forbidden
       end
 
+      it "will not allow an analyst to delete a taxonomy" do
+        sign_in analyst
+        expect(subject).to be_forbidden
+      end
+
       it "will not allow a manager to delete a taxonomy" do
-        sign_in user
+        sign_in manager
+        expect(subject).to be_forbidden
+      end
+
+      it "will not allow an admin to delete a taxonomy" do
+        sign_in admin
         expect(subject).to be_forbidden
       end
     end
