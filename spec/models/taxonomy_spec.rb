@@ -28,7 +28,15 @@ RSpec.describe Taxonomy, type: :model do
       sub_taxonomy = FactoryBot.create(:taxonomy)
       taxonomy = FactoryBot.create(:taxonomy, :sub_taxonomy)
       sub_taxonomy.parent_id = taxonomy.id
-      expect { sub_taxonomy.save! }.to raise_exception(/Parent taxonomy is already a sub-taxonomy./)
+      expect(sub_taxonomy).to be_invalid
+      expect(sub_taxonomy.errors[:parent_id]).to include("Parent taxonomy is already a sub-taxonomy")
+    end
+
+    it "Can't be its own parent" do
+      taxonomy = FactoryBot.create(:taxonomy)
+      taxonomy.update(parent_id: taxonomy.id)
+      expect(taxonomy).to be_invalid
+      expect(taxonomy.errors[:parent_id]).to include("Taxonomy can't be its own parent")
     end
   end
 end
