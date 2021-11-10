@@ -19,23 +19,27 @@ class Category < VersionedRecord
 
   validates :title, presence: true
 
-  validate :sub_relation
+  validate :different_parent
+  validate :no_grandparent
+  validate :consistent_taxonomy
 
-  def sub_relation
-    if parent_id.present?
-      parent_category = Category.find(parent_id)
+  def different_parent
+    if parent_id.present? && parent_id == id
+      errors.add(:parent_id, "Category can't be its own parent")
+    end
+  end
 
-      if !parent_category.parent_id.nil?
-        errors.add(:parent_id, "Parent category is already a sub-category.")
-        return
-      end
+  def no_grandparent
+    if parent_id.present? && category.parent_id.present?
+      errors.add(:parent_id, "Parent category is already a sub-category")
+    end
+  end
 
-      parent_taxonomy_id = Taxonomy.find(taxonomy_id).parent_id
-      parent_category_taxonomy_id = parent_category.taxonomy_id
+  def consistent_taxonomy
+    return if parent_id.blank?
 
-      if parent_category_taxonomy_id != parent_taxonomy_id
-        errors.add(:parent_id, "Taxonomy does not have parent categorys taxonomy as parent.")
-      end
+    if category.taxonomy_id != Taxonomy.find(taxonomy_id).parent_id
+      errors.add(:parent_id, "Taxonomy does not have parent category's taxonomy as parent")
     end
   end
 
