@@ -10,9 +10,10 @@ RSpec.describe Framework, type: :model do
 
   it "is expected to cascade destroy dependent relationships" do
     framework = FactoryBot.create(:framework_framework).framework
+    FactoryBot.create(:framework_taxonomy, framework: framework)
 
     expect { framework.destroy }.to change {
-      [Framework.count, FrameworkFramework.count]
-    }.from([2, 1]).to([1, 0])
+      [Framework.count, FrameworkFramework.count, FrameworkTaxonomy.count]
+    }.from([2, 1, 1]).to([1, 0, 0])
   end
 end
