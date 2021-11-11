@@ -5,6 +5,12 @@ class Measure < VersionedRecord
   has_many :measure_categories, inverse_of: :measure, dependent: :destroy
   has_many :measure_indicators, inverse_of: :measure, dependent: :destroy
 
+  has_many :actor_measures, dependent: :destroy
+  has_many :active_measures, through: :actor_measures
+
+  has_many :measure_actors, dependent: :destroy
+  has_many :passive_measures, through: :measure_actors
+
   has_many :recommendations, through: :recommendation_measures, inverse_of: :measures
   has_many :categories, through: :measure_categories, inverse_of: :measures
   has_many :indicators, through: :measure_indicators, inverse_of: :measures

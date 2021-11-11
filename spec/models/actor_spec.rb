@@ -21,6 +21,8 @@ RSpec.describe Actor, type: :model do
     FactoryBot.create(:measure_actor, actor: actor)
     FactoryBot.create(:membership, member: actor, memberof: FactoryBot.create(:actor, actortype: FactoryBot.create(:actortype, has_members: true)))
 
-    expect { actor.destroy }.to change(Actor, :count).by(-1)
+    expect { actor.destroy }.to change {
+      [Actor.count, ActorCategory.count, ActorMeasure.count, MeasureActor.count, Membership.count]
+    }.from([2, 1, 1, 1, 1]).to([1, 0, 0, 0, 0])
   end
 end
