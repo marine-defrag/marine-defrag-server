@@ -38,5 +38,20 @@ RSpec.describe Taxonomy, type: :model do
       expect(taxonomy).to be_invalid
       expect(taxonomy.errors[:parent_id]).to include("Taxonomy can't be its own parent")
     end
+
+    it "is expected to cascade destroy dependent relationships" do
+      taxonomy = FactoryBot.create(:measuretype_taxonomy).taxonomy
+      FactoryBot.create(:framework_taxonomy, taxonomy: taxonomy)
+      FactoryBot.create(:actortype_taxonomy, taxonomy: taxonomy)
+
+      expect { taxonomy.destroy }.to change {
+        [
+          Taxonomy.count,
+          MeasuretypeTaxonomy.count,
+          FrameworkTaxonomy.count,
+          ActortypeTaxonomy.count
+        ]
+      }.from([1, 1, 1, 1]).to([0, 0, 0, 0])
+    end
   end
 end

@@ -16,9 +16,9 @@ class User < VersionedRecord
   has_many :roles, through: :user_roles
   has_many :managed_categories, foreign_key: :manager_id, class_name: "Category"
   has_many :managed_indicators, foreign_key: :manager_id, class_name: "Indicator"
-  has_many :user_categories
+  has_many :user_categories, dependent: :destroy
   has_many :categories, through: :user_categories
-  has_many :bookmarks
+  has_many :bookmarks, dependent: :destroy
 
   validates :email, presence: true
   validates :name, presence: true
