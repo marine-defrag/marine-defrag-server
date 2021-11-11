@@ -63,7 +63,11 @@ RSpec.describe Category, type: :model do
     end
 
     it "is expected to cascade destroy dependent relationships" do
-      category = FactoryBot.create(:category, taxonomy: FactoryBot.create(:taxonomy, measuretypes: [FactoryBot.create(:measuretype)]))
+      actor = FactoryBot.create(:actor)
+      taxonomy = FactoryBot.create(:taxonomy, actortype_ids: [actor.actortype_id], measuretypes: [FactoryBot.create(:measuretype)])
+
+      category = FactoryBot.create(:category, taxonomy: taxonomy)
+      FactoryBot.create(:actor_category, actor: actor, category: category)
       FactoryBot.create(:user_category, category: category)
       FactoryBot.create(:recommendation_category, category: category)
 
@@ -74,11 +78,12 @@ RSpec.describe Category, type: :model do
       expect { category.destroy }.to change {
         [
           Category.count,
+          ActorCategory.count,
           UserCategory.count,
           RecommendationCategory.count,
           MeasureCategory.count
         ]
-      }.from([1, 1, 1, 1]).to([0, 0, 0, 0])
+      }.from([1, 1, 1, 1, 1]).to([0, 0, 0, 0, 0])
     end
   end
 end

@@ -2,6 +2,7 @@ class Category < VersionedRecord
   belongs_to :taxonomy
   belongs_to :category, class_name: "Category", foreign_key: :parent_id, optional: true
   belongs_to :manager, class_name: "User", foreign_key: :manager_id, optional: true, inverse_of: :categories
+  has_many :actor_categories, inverse_of: :category, dependent: :destroy
   has_many :categories, foreign_key: :parent_id, class_name: "Category"
   has_many :recommendation_categories, inverse_of: :category, dependent: :destroy
   has_many :user_categories, inverse_of: :category, dependent: :destroy
