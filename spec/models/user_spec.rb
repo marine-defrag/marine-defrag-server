@@ -31,4 +31,14 @@ RSpec.describe User, type: :model do
 
     expect(subject.role?("the_role")).to be true
   end
+
+  it "is expected to cascade destroy dependent relationships" do
+    user = FactoryBot.create(:user_category).user
+    FactoryBot.create(:user_role, user: user)
+    FactoryBot.create(:bookmark, user: user)
+
+    expect { user.destroy }.to change {
+      [User.count, UserCategory.count, UserRole.count, Bookmark.count]
+    }.from([1, 1, 1, 1]).to([0, 0, 0, 0])
+  end
 end

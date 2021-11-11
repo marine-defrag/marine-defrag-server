@@ -1,5 +1,5 @@
 class Framework < ApplicationRecord
-  has_many :framework_frameworks, foreign_key: "framework_id"
+  has_many :framework_frameworks, foreign_key: "framework_id", dependent: :destroy
   has_many :frameworks, through: :framework_frameworks, source: :other_framework
 
   has_many :framework_taxonomies, inverse_of: :framework, dependent: :destroy

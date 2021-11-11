@@ -61,5 +61,24 @@ RSpec.describe Category, type: :model do
       expect(category).to be_invalid
       expect(category.errors[:parent_id]).to include("Category can't be its own parent")
     end
+
+    it "is expected to cascade destroy dependent relationships" do
+      category = FactoryBot.create(:category, taxonomy: FactoryBot.create(:taxonomy, measuretypes: [FactoryBot.create(:measuretype)]))
+      FactoryBot.create(:user_category, category: category)
+      FactoryBot.create(:recommendation_category, category: category)
+
+      FactoryBot.create(:measure_category,
+        category: category,
+        measure: FactoryBot.create(:measure, measuretype: category.taxonomy.measuretypes.first))
+
+      expect { category.destroy }.to change {
+        [
+          Category.count,
+          UserCategory.count,
+          RecommendationCategory.count,
+          MeasureCategory.count
+        ]
+      }.from([1, 1, 1, 1]).to([0, 0, 0, 0])
+    end
   end
 end
