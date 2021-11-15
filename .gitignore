@@ -23,6 +23,7 @@
 # Never check passwords into source control!
 /.env
 /.envrc
+/*.envrc
 .rubocop-*
 
 # Ignore IDE specific files
