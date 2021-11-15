@@ -9,12 +9,7 @@ RSpec.describe RolesController, type: :controller do
     let!(:role) { FactoryBot.create(:role) }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "roles are shown" do
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
-      end
+      it { expect(subject).to be_forbidden }
     end
 
     context "when signed in" do
@@ -22,10 +17,9 @@ RSpec.describe RolesController, type: :controller do
       let(:user) { FactoryBot.create(:user, :manager) }
       let(:admin) { FactoryBot.create(:user, :admin) }
 
-      it "guest will see roles" do
+      it "guest will not see roles" do
         sign_in guest
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(1)
+        expect(subject).to be_forbidden
       end
 
       it "manager will see roles" do
@@ -47,12 +41,7 @@ RSpec.describe RolesController, type: :controller do
     subject { get :show, params: {id: role}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
-
-      it "shows the role" do
-        json = JSON.parse(subject.body)
-        expect(json.dig("data", "id").to_i).to eq(role.id)
-      end
+      it { expect(subject).to be_forbidden }
     end
   end
 
@@ -146,14 +135,14 @@ RSpec.describe RolesController, type: :controller do
         expect(subject).to be_forbidden
       end
 
-      it "will allow a manager to delete a role" do
+      it "will not allow a manager to delete a role" do
         sign_in manager
-        expect(subject).to be_no_content
+        expect(subject).to be_forbidden
       end
 
-      it "will allow a admin to delete a role" do
+      it "will not allow a admin to delete a role" do
         sign_in admin
-        expect(subject).to be_no_content
+        expect(subject).to be_forbidden
       end
     end
   end
