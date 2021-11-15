@@ -115,7 +115,7 @@ class Seeds
     # Convention status taxonomy - applies to int. and reg. seas conventions
     convstatus = Taxonomy.create!(
       title: "Convention status",
-      allow_multiple: true,
+      allow_multiple: true
     )
     MeasuretypeTaxonomy.create!(
       taxonomy: convstatus,
@@ -128,7 +128,7 @@ class Seeds
     # Admin. type taxonomy - applies to reg. seas conventions
     admintype = Taxonomy.create!(
       title: "Administration type",
-      allow_multiple: true,
+      allow_multiple: true
     )
     MeasuretypeTaxonomy.create!(
       taxonomy: admintype,
@@ -137,7 +137,7 @@ class Seeds
     # Strategy type taxonomy - applies to nat. and reg. strategies
     strategytype = Taxonomy.create!(
       title: "Strategy type",
-      allow_multiple: true,
+      allow_multiple: true
     )
     MeasuretypeTaxonomy.create!(
       taxonomy: strategytype,
@@ -150,7 +150,7 @@ class Seeds
     # Initiative type taxonomy - applies to initiatives
     initiativetype = Taxonomy.create!(
       title: "Initiative type",
-      allow_multiple: true,
+      allow_multiple: true
     )
     MeasuretypeTaxonomy.create!(
       taxonomy: initiativetype,
@@ -160,7 +160,7 @@ class Seeds
     # Group type taxonomy - applies to groups
     grouptype = Taxonomy.create!(
       title: "Type of group",
-      allow_multiple: false,
+      allow_multiple: false
     )
     ActortypeTaxonomy.create!(
       taxonomy: grouptype,
@@ -170,7 +170,7 @@ class Seeds
     # Org sector taxonomy - applies to orgs
     orgsector = Taxonomy.create!(
       title: "Sector",
-      allow_multiple: false,
+      allow_multiple: false
     )
     ActortypeTaxonomy.create!(
       taxonomy: orgsector,
@@ -181,7 +181,7 @@ class Seeds
     # TODO: link parent
     orgtype = Taxonomy.create!(
       title: "Type of organisation",
-      allow_multiple: false,
+      allow_multiple: false
     )
     ActortypeTaxonomy.create!(
       taxonomy: orgtype,
@@ -190,7 +190,7 @@ class Seeds
     # class type taxonomy - applies to classes
     classtype = Taxonomy.create!(
       title: "Type of country classification",
-      allow_multiple: false,
+      allow_multiple: false
     )
     ActortypeTaxonomy.create!(
       taxonomy: classtype,
@@ -199,7 +199,7 @@ class Seeds
     # country status taxonomy - applies to countries
     countrystatus = Taxonomy.create!(
       title: "Country status",
-      allow_multiple: false,
+      allow_multiple: false
     )
     ActortypeTaxonomy.create!(
       taxonomy: countrystatus,
@@ -208,7 +208,7 @@ class Seeds
 
     commlevel = Taxonomy.create!(
       title: "Commitment level",
-      allow_multiple: false,
+      allow_multiple: false
     )
     MeasuretypeTaxonomy.create!(
       taxonomy: commlevel,
@@ -216,7 +216,7 @@ class Seeds
     )
     commtype = Taxonomy.create!(
       title: "Commitment type",
-      allow_multiple: true,
+      allow_multiple: true
     )
     MeasuretypeTaxonomy.create!(
       taxonomy: commtype,

@@ -3,7 +3,7 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  after_commit :cache_created_by_id, on: [:create], if: :cache_created_by_id?
+  before_commit :cache_created_by_id, on: [:create], if: :cache_created_by_id?
   belongs_to :created_by, class_name: "User", required: false
 
   private

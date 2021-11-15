@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_10_070228) do
+ActiveRecord::Schema.define(version: 2021_11_15_072607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
   create_table "actor_categories", force: :cascade do |t|
     t.bigint "actor_id", null: false
     t.bigint "category_id", null: false
-    t.bigint "created_by_id"
+    t.bigint "created_by_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["actor_id"], name: "index_actor_categories_on_actor_id"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.date "date_end"
     t.decimal "value"
     t.bigint "created_by_id", null: false
-    t.bigint "updated_by_id", null: false
+    t.bigint "updated_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["actor_id"], name: "index_actor_measures_on_actor_id"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.boolean "draft", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "created_by_id"
+    t.bigint "created_by_id", null: false
     t.bigint "updated_by_id"
     t.index ["actortype_id"], name: "index_actors_on_actortype_id"
     t.index ["created_by_id"], name: "index_actors_on_created_by_id"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.integer "updated_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.integer "updated_by_id"
     t.integer "parent_id"
     t.date "date"
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.boolean "private", default: true
     t.index ["draft"], name: "index_categories_on_draft"
     t.index ["manager_id"], name: "index_categories_on_manager_id"
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.datetime "updated_at", null: false
     t.boolean "draft", default: false
     t.integer "updated_by_id"
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.index ["draft"], name: "index_due_dates_on_draft"
     t.index ["indicator_id"], name: "index_due_dates_on_indicator_id"
   end
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.integer "taxonomy_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.index ["framework_id"], name: "index_framework_taxonomies_on_framework_id"
     t.index ["taxonomy_id"], name: "index_framework_taxonomies_on_taxonomy_id"
   end
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.date "end_date"
     t.string "reference"
     t.integer "updated_by_id"
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.index ["created_at"], name: "index_indicators_on_created_at"
     t.index ["draft"], name: "index_indicators_on_draft"
     t.index ["manager_id"], name: "index_indicators_on_manager_id"
@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.date "date_end"
     t.decimal "value"
     t.bigint "created_by_id", null: false
-    t.bigint "updated_by_id", null: false
+    t.bigint "updated_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["actor_id"], name: "index_measure_actors_on_actor_id"
@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.text "indicator_summary"
     t.text "target_date_comment"
     t.integer "updated_by_id"
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.bigint "measuretype_id"
     t.bigint "parent_id"
     t.string "code"
@@ -260,7 +260,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
   create_table "memberships", force: :cascade do |t|
     t.bigint "member_id", null: false
     t.bigint "memberof_id", null: false
-    t.bigint "created_by_id"
+    t.bigint "created_by_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_by_id"], name: "index_memberships_on_created_by_id"
@@ -277,7 +277,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.datetime "updated_at", null: false
     t.integer "order"
     t.integer "updated_by_id"
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.boolean "private", default: true
     t.index ["draft"], name: "index_pages_on_draft"
     t.index ["private"], name: "index_pages_on_private"
@@ -294,7 +294,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "updated_by_id"
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.index ["due_date_id"], name: "index_progress_reports_on_due_date_id"
     t.index ["indicator_id"], name: "index_progress_reports_on_indicator_id"
   end
@@ -304,7 +304,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.integer "category_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
   end
 
   create_table "recommendation_indicators", id: :serial, force: :cascade do |t|
@@ -312,7 +312,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.integer "indicator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.index ["indicator_id"], name: "index_recommendation_indicators_on_indicator_id"
     t.index ["recommendation_id"], name: "index_recommendation_indicators_on_recommendation_id"
   end
@@ -322,7 +322,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.integer "measure_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.index ["measure_id"], name: "index_recommendation_measures_on_measure_id"
     t.index ["recommendation_id"], name: "index_recommendation_measures_on_recommendation_id"
   end
@@ -346,7 +346,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.text "description"
     t.integer "updated_by_id"
     t.integer "framework_id"
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.index ["draft"], name: "index_recommendations_on_draft"
     t.index ["framework_id"], name: "index_recommendations_on_framework_id"
   end
@@ -375,7 +375,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.integer "parent_id"
     t.boolean "has_date"
     t.integer "framework_id"
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.index ["framework_id"], name: "index_taxonomies_on_framework_id"
   end
 
@@ -393,7 +393,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "updated_by_id"
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.index ["role_id"], name: "index_user_roles_on_role_id"
     t.index ["user_id"], name: "index_user_roles_on_user_id"
   end
@@ -417,7 +417,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_070228) do
     t.json "tokens"
     t.integer "updated_by_id"
     t.boolean "allow_password_change", default: true
-    t.integer "created_by_id"
+    t.bigint "created_by_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
