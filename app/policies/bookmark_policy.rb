@@ -1,18 +1,18 @@
 class BookmarkPolicy < ApplicationPolicy
   def create?
-    index?
+    @record.user == @user
   end
 
   def edit?
-    true
+    @record.user == @user
   end
 
   def update?
-    true
+    @record.user == @user
   end
 
   def destroy?
-    true
+    @record.user == @user
   end
 
   def permitted_attributes
@@ -21,7 +21,7 @@ class BookmarkPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.all
+      scope.where(user_id: @user.id)
     end
   end
 end
