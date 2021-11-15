@@ -6,13 +6,13 @@ RSpec.describe UserRolesController, type: :controller do
     subject { get :index, format: :json }
 
     context "when not signed in" do
-      it "shows an empty list" do
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(0)
+      it "is expected to be forbidden" do
+        expect(subject).to be_forbidden
       end
     end
 
     context "when signed in" do
+      let(:analyst) { FactoryBot.create(:user, :analyst) }
       let(:guest) { FactoryBot.create(:user) }
       let(:manager_role) { FactoryBot.create(:role, :manager) }
       let(:manager) { FactoryBot.create(:user, roles: [manager_role]) }
@@ -23,30 +23,44 @@ RSpec.describe UserRolesController, type: :controller do
 
       it "does not show anything to guest user" do
         sign_in guest
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(0)
+        expect(subject).to be_forbidden
       end
 
-      it "shows all users roles for managers" do
+      it "shows all user roles for analysts" do
+        manager
+        manager2
+        admin
+        admin2
+        sign_in analyst
+        json = JSON.parse(subject.body)
+        expect(json["data"].length).to eq(5)
+        returned_roles = json["data"].map { |user_role| user_role["attributes"]["role_id"] }.uniq
+        permitted_roles = [manager.roles.first.id]
+        expect(permitted_roles - returned_roles).to be_empty
+      end
+
+      it "shows all user roles for managers" do
+        analyst
         manager
         manager2
         admin
         admin2
         sign_in manager
         json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(4)
+        expect(json["data"].length).to eq(5)
         returned_roles = json["data"].map { |user_role| user_role["attributes"]["role_id"] }.uniq
         permitted_roles = [manager.roles.first.id]
         expect(permitted_roles - returned_roles).to be_empty
       end
 
       it "shows all user roles for admin" do
+        analyst
         manager
         manager2
         admin2
         sign_in admin
         json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(4)
+        expect(json["data"].length).to eq(5)
         returned_roles = json["data"].map { |user_role| user_role["attributes"]["role_id"] }.uniq
         permitted_roles = [manager.roles.first.id]
         expect(permitted_roles - returned_roles).to be_empty
@@ -70,10 +84,6 @@ RSpec.describe UserRolesController, type: :controller do
       let(:admin) { FactoryBot.create(:user, :admin) }
 
       subject { get :show, params: {id: manager.user_roles.first.id}, format: :json }
-
-      let(:guest) { FactoryBot.create(:user) }
-      let(:manager) { FactoryBot.create(:user, :manager) }
-      let(:admin) { FactoryBot.create(:user, :admin) }
 
       it "shows no user_role for guest" do
         sign_in guest
