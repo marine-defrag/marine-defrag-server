@@ -14,5 +14,6 @@ RUN adduser deploy && mkdir /app && chown -R deploy /app/
 USER deploy
 WORKDIR /app
 ADD . /app
+RUN gem install bundler
 RUN bundle install
 CMD bundle exec rails server -b 0.0.0.0 -p $PORT
