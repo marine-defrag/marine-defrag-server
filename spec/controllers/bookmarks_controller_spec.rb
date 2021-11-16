@@ -9,7 +9,7 @@ RSpec.describe BookmarksController, type: :controller do
     subject { get :index, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_forbidden }
+      it { expect(subject).to be_unauthorized }
     end
 
     context "when signed in" do
@@ -122,7 +122,7 @@ RSpec.describe BookmarksController, type: :controller do
           id: bookmark2.id, bookmark: {title: new_title, view: new_view}
         }
 
-        expect(subject).to have_http_status(403)
+        expect(subject).to have_http_status(404)
       end
     end
   end
@@ -152,7 +152,7 @@ RSpec.describe BookmarksController, type: :controller do
 
         subject = delete :destroy, format: :json, params: {id: bookmark2.id}
 
-        expect(subject).to have_http_status(403)
+        expect(subject).to have_http_status(404)
       end
     end
   end
