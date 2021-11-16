@@ -85,6 +85,20 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe "POST create" do
+    subject do
+      post :create,
+        format: :json,
+        params: {user: {email: "test@co.nz", password: "testtest", name: "Sam"}}
+    end
+
+    context "when not signed in" do
+      it "will allow a user to be created (registration)" do
+        expect(subject).to have_http_status(201)
+      end
+    end
+  end
+
   describe "PUT update" do
     let(:guest) { FactoryBot.create(:user) }
     let(:manager) { FactoryBot.create(:user, :manager) }
@@ -120,20 +134,12 @@ RSpec.describe UsersController, type: :controller do
         expect(json.dig("data", "attributes", "email")).to eq "test@co.nz"
         expect(json.dig("data", "attributes", "name")).to eq "Sam"
       end
-      it "will allow a an manager to update themselves, and guests" do
+      it "will allow a manager to update themselves" do
         sign_in manager
         expect(subject).to be_ok
         json = JSON.parse(subject.body)
         expect(json.dig("data", "id").to_i).to eq(manager.id)
         expect(json.dig("data", "attributes", "email")).to eq "test@co.nz"
-        expect(json.dig("data", "attributes", "name")).to eq "Sam"
-        subject2 = put :update,
-          format: :json,
-          params: {id: guest.id, user: {email: "test@co.guest.nz", password: "testtest", name: "Sam"}}
-        expect(subject2).to be_ok
-        json = JSON.parse(subject2.body)
-        expect(json.dig("data", "id").to_i).to eq(guest.id)
-        expect(json.dig("data", "attributes", "email")).to eq "test@co.guest.nz"
         expect(json.dig("data", "attributes", "name")).to eq "Sam"
       end
       it "will not allow a an manager to another manager or admin" do
@@ -187,10 +193,10 @@ RSpec.describe UsersController, type: :controller do
         expect(subject).to be_not_found
       end
 
-      it "will allow a user to delete themselves" do
+      it "will not allow a user to delete themselves" do
         sign_in manager
         subject = delete :destroy, format: :json, params: {id: manager.id}
-        expect(subject).to be_no_content
+        expect(subject).to be_forbidden
       end
 
       it "will allow an admin to delete another user" do
