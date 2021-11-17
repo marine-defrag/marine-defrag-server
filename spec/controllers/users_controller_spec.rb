@@ -116,6 +116,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context "when user signed in" do
+      let(:analyst) { FactoryBot.create(:user, :analyst) }
       let(:guest) { FactoryBot.create(:user) }
       let(:manager) { FactoryBot.create(:user, :manager) }
       let(:manager2) { FactoryBot.create(:user, :manager) }
@@ -134,6 +135,18 @@ RSpec.describe UsersController, type: :controller do
         expect(subject).to be_ok
         json = JSON.parse(subject.body)
         expect(json.dig("data", "id").to_i).to eq(guest.id)
+        expect(json.dig("data", "attributes", "email")).to eq "test@co.nz"
+        expect(json.dig("data", "attributes", "name")).to eq "Sam"
+      end
+
+      it "will allow an analyst to update themselves" do
+        sign_in analyst
+        subject = put(:update,
+          format: :json,
+          params: {id: analyst.id, user: {email: "test@co.nz", password: "testtest", name: "Sam"}})
+        expect(subject).to be_ok
+        json = JSON.parse(subject.body)
+        expect(json.dig("data", "id").to_i).to eq(analyst.id)
         expect(json.dig("data", "attributes", "email")).to eq "test@co.nz"
         expect(json.dig("data", "attributes", "name")).to eq "Sam"
       end
