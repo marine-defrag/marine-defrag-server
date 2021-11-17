@@ -117,7 +117,6 @@ RSpec.describe UsersController, type: :controller do
 
     context "when user signed in" do
       let(:guest) { FactoryBot.create(:user) }
-      let(:user) { FactoryBot.create(:user) }
       let(:manager) { FactoryBot.create(:user, :manager) }
       let(:manager2) { FactoryBot.create(:user, :manager) }
       let(:admin) { FactoryBot.create(:user, :admin) }
@@ -126,14 +125,19 @@ RSpec.describe UsersController, type: :controller do
         sign_in guest
         expect(subject).to be_not_found
       end
-      it "will allow a user to update themselves" do
-        sign_in manager
+
+      it "will allow a guest to update themselves" do
+        sign_in guest
+        subject = put(:update,
+          format: :json,
+          params: {id: guest.id, user: {email: "test@co.nz", password: "testtest", name: "Sam"}})
         expect(subject).to be_ok
         json = JSON.parse(subject.body)
-        expect(json.dig("data", "id").to_i).to eq(manager.id)
+        expect(json.dig("data", "id").to_i).to eq(guest.id)
         expect(json.dig("data", "attributes", "email")).to eq "test@co.nz"
         expect(json.dig("data", "attributes", "name")).to eq "Sam"
       end
+
       it "will allow a manager to update themselves" do
         sign_in manager
         expect(subject).to be_ok
@@ -142,7 +146,8 @@ RSpec.describe UsersController, type: :controller do
         expect(json.dig("data", "attributes", "email")).to eq "test@co.nz"
         expect(json.dig("data", "attributes", "name")).to eq "Sam"
       end
-      it "will not allow a an manager to another manager or admin" do
+
+      it "will not allow a manager to update another manager or admin" do
         sign_in manager
         subject2 = put :update,
           format: :json,
@@ -153,7 +158,8 @@ RSpec.describe UsersController, type: :controller do
           params: {id: admin.id, user: {email: "test@co.guest.nz", password: "testtest", name: "Sam"}}
         expect(subject2).to be_forbidden
       end
-      it "will allow a an admin to update any user" do
+
+      it "will allow an admin to update any user" do
         sign_in admin
         expect(subject).to be_ok
         json = JSON.parse(subject.body)
