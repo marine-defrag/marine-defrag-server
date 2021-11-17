@@ -3,6 +3,10 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    @record.id == @user.id || super
+  end
+
   def create?
     @user.roles.none?
   end

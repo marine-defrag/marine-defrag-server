@@ -58,6 +58,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context "when signed in" do
+      let(:analyst) { FactoryBot.create(:user, :analyst) }
       let(:guest) { FactoryBot.create(:user) }
       let(:manager) { FactoryBot.create(:user, :manager) }
       let(:admin) { FactoryBot.create(:user, :admin) }
@@ -67,6 +68,20 @@ RSpec.describe UsersController, type: :controller do
       it "shows no user for guest" do
         sign_in guest
         expect(subject).to be_not_found
+      end
+
+      it "shows guest their own record" do
+        sign_in guest
+        subject_guest = get(:show, params: {id: guest.id}, format: :json)
+        json = JSON.parse(subject_guest.body)
+        expect(json.dig("data", "id").to_i).to eq(guest.id)
+      end
+
+      it "shows analyst their own record" do
+        sign_in analyst
+        subject_analyst = get(:show, params: {id: analyst.id}, format: :json)
+        json = JSON.parse(subject_analyst.body)
+        expect(json.dig("data", "id").to_i).to eq(analyst.id)
       end
 
       it "shows user for manager" do
