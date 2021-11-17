@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_16_065947) do
+ActiveRecord::Schema.define(version: 2021_11_17_081925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -349,6 +349,12 @@ ActiveRecord::Schema.define(version: 2021_11_16_065947) do
     t.integer "created_by_id"
     t.index ["draft"], name: "index_recommendations_on_draft"
     t.index ["framework_id"], name: "index_recommendations_on_framework_id"
+  end
+
+  create_table "resourcetypes", force: :cascade do |t|
+    t.string "title", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "roles", id: :serial, force: :cascade do |t|

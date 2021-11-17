@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :measuretypes, only: [:index, :show]
   resources :memberships, only: [:index, :show, :create, :destroy]
   resources :recommendation_categories
+  resources :resourcetypes, only: [:index, :show]
   resources :user_categories
   resources :recommendation_measures
   resources :categories do
