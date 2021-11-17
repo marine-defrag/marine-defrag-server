@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_17_081925) do
+ActiveRecord::Schema.define(version: 2021_11_17_084146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,9 +36,11 @@ ActiveRecord::Schema.define(version: 2021_11_17_081925) do
     t.bigint "updated_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "source_id", null: false
     t.index ["actor_id"], name: "index_actor_measures_on_actor_id"
     t.index ["created_by_id"], name: "index_actor_measures_on_created_by_id"
     t.index ["measure_id"], name: "index_actor_measures_on_measure_id"
+    t.index ["source_id"], name: "index_actor_measures_on_source_id"
     t.index ["updated_by_id"], name: "index_actor_measures_on_updated_by_id"
   end
 
@@ -351,6 +353,21 @@ ActiveRecord::Schema.define(version: 2021_11_17_081925) do
     t.index ["framework_id"], name: "index_recommendations_on_framework_id"
   end
 
+  create_table "resources", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description"
+    t.text "url"
+    t.bigint "type_id", null: false
+    t.boolean "private", default: true
+    t.boolean "draft", default: true
+    t.datetime "publication_date"
+    t.datetime "access_date"
+    t.text "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["type_id"], name: "index_resources_on_type_id"
+  end
+
   create_table "resourcetypes", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -443,6 +460,7 @@ ActiveRecord::Schema.define(version: 2021_11_17_081925) do
   add_foreign_key "actor_categories", "users", column: "created_by_id"
   add_foreign_key "actor_measures", "actors"
   add_foreign_key "actor_measures", "measures"
+  add_foreign_key "actor_measures", "resources", column: "source_id"
   add_foreign_key "actor_measures", "users", column: "created_by_id"
   add_foreign_key "actor_measures", "users", column: "updated_by_id"
   add_foreign_key "actors", "actortypes"
@@ -468,5 +486,6 @@ ActiveRecord::Schema.define(version: 2021_11_17_081925) do
   add_foreign_key "recommendation_recommendations", "recommendations"
   add_foreign_key "recommendation_recommendations", "recommendations", column: "other_recommendation_id"
   add_foreign_key "recommendations", "frameworks"
+  add_foreign_key "resources", "resourcetypes", column: "type_id"
   add_foreign_key "taxonomies", "frameworks"
 end
