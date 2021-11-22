@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2021_11_17_084146) do
     t.bigint "updated_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "source_id", null: false
+    t.bigint "source_id"
     t.index ["actor_id"], name: "index_actor_measures_on_actor_id"
     t.index ["created_by_id"], name: "index_actor_measures_on_created_by_id"
     t.index ["measure_id"], name: "index_actor_measures_on_measure_id"

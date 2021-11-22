@@ -15,7 +15,7 @@ class CreateResources < ActiveRecord::Migration[6.1]
     end
 
     change_table :actor_measures do |t|
-      t.belongs_to :source, null: false, foreign_key: {to_table: "resources"}
+      t.belongs_to :source, null: true, foreign_key: {to_table: "resources"}
     end
   end
 end
