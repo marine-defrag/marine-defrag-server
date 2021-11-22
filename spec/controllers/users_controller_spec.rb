@@ -133,6 +133,7 @@ RSpec.describe UsersController, type: :controller do
     context "when user signed in" do
       let(:analyst) { FactoryBot.create(:user, :analyst) }
       let(:guest) { FactoryBot.create(:user) }
+      let(:guest2) { FactoryBot.create(:user) }
       let(:manager) { FactoryBot.create(:user, :manager) }
       let(:manager2) { FactoryBot.create(:user, :manager) }
       let(:admin) { FactoryBot.create(:user, :admin) }
@@ -154,6 +155,14 @@ RSpec.describe UsersController, type: :controller do
         expect(json.dig("data", "attributes", "name")).to eq "Sam"
       end
 
+      it "will not allow a guest to update another user" do
+        sign_in guest
+        subject2 = put :update,
+          format: :json,
+          params: {id: guest2.id, user: {email: "test@co.guest.nz", password: "testtest", name: "Sam"}}
+        expect(subject2).to be_not_found
+      end
+
       it "will allow an analyst to update themselves" do
         sign_in analyst
         subject = put(:update,
@@ -164,6 +173,14 @@ RSpec.describe UsersController, type: :controller do
         expect(json.dig("data", "id").to_i).to eq(analyst.id)
         expect(json.dig("data", "attributes", "email")).to eq "test@co.nz"
         expect(json.dig("data", "attributes", "name")).to eq "Sam"
+      end
+
+      it "will not allow an analyst to update another user" do
+        sign_in analyst
+        subject2 = put :update,
+          format: :json,
+          params: {id: guest.id, user: {email: "test@co.guest.nz", password: "testtest", name: "Sam"}}
+        expect(subject2).to be_not_found
       end
 
       it "will allow a manager to update themselves" do
@@ -177,14 +194,22 @@ RSpec.describe UsersController, type: :controller do
 
       it "will not allow a manager to update another manager or admin" do
         sign_in manager
-        subject2 = put :update,
+        manager_update = put :update,
           format: :json,
           params: {id: manager2.id, user: {email: "test@co.guest.nz", password: "testtest", name: "Sam"}}
-        expect(subject2).to be_forbidden
-        subject2 = put :update,
+        expect(manager_update).to be_forbidden
+        admin_update = put :update,
           format: :json,
           params: {id: admin.id, user: {email: "test@co.guest.nz", password: "testtest", name: "Sam"}}
-        expect(subject2).to be_forbidden
+        expect(admin_update).to be_forbidden
+        analyst_update = put :update,
+          format: :json,
+          params: {id: analyst.id, user: {email: "test@co.guest.nz", password: "testtest", name: "Sam"}}
+        expect(analyst_update).to be_forbidden
+        guest_update = put :update,
+          format: :json,
+          params: {id: guest.id, user: {email: "test@co.guest.nz", password: "testtest", name: "Sam"}}
+        expect(guest_update).to be_forbidden
       end
 
       it "will allow an admin to update any user" do
