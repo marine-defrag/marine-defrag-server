@@ -233,10 +233,10 @@ RSpec.describe UsersController, type: :controller do
         expect(subject).to be_forbidden
       end
 
-      it "will allow an admin to delete another user" do
+      it "will not allow an admin to delete another user" do
         sign_in admin
         subject = delete :destroy, format: :json, params: {id: manager.id}
-        expect(subject).to be_no_content
+        expect(subject).to be_forbidden
       end
     end
   end
