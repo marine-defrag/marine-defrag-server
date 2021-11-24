@@ -363,9 +363,13 @@ ActiveRecord::Schema.define(version: 2021_11_17_084146) do
     t.datetime "publication_date"
     t.datetime "access_date"
     t.text "status"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_by_id"], name: "index_resources_on_created_by_id"
     t.index ["type_id"], name: "index_resources_on_type_id"
+    t.index ["updated_by_id"], name: "index_resources_on_updated_by_id"
   end
 
   create_table "resourcetypes", force: :cascade do |t|

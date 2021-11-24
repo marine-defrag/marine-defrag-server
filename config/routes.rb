@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   resources :user_roles
   resources :roles
   resources :pages
+  resources :resources
   resources :bookmarks
 
   resources :frameworks, only: [:index, :show]

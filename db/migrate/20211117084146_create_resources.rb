@@ -11,6 +11,8 @@ class CreateResources < ActiveRecord::Migration[6.1]
       t.datetime :access_date
       t.text :status
 
+      t.belongs_to :created_by, index: true
+      t.belongs_to :updated_by, index: true
       t.timestamps
     end
 
