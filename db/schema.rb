@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_17_084146) do
+ActiveRecord::Schema.define(version: 2021_11_24_072059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -206,6 +206,17 @@ ActiveRecord::Schema.define(version: 2021_11_17_084146) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "created_by_id"
+  end
+
+  create_table "measure_resources", force: :cascade do |t|
+    t.bigint "measure_id", null: false
+    t.bigint "resource_id", null: false
+    t.bigint "created_by_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_by_id"], name: "index_measure_resources_on_created_by_id"
+    t.index ["measure_id"], name: "index_measure_resources_on_measure_id"
+    t.index ["resource_id"], name: "index_measure_resources_on_resource_id"
   end
 
   create_table "measures", id: :serial, force: :cascade do |t|
@@ -478,6 +489,9 @@ ActiveRecord::Schema.define(version: 2021_11_17_084146) do
   add_foreign_key "measure_actors", "measures"
   add_foreign_key "measure_actors", "users", column: "created_by_id"
   add_foreign_key "measure_actors", "users", column: "updated_by_id"
+  add_foreign_key "measure_resources", "measures"
+  add_foreign_key "measure_resources", "resources"
+  add_foreign_key "measure_resources", "users", column: "created_by_id"
   add_foreign_key "measures", "measures", column: "parent_id"
   add_foreign_key "measures", "measuretypes"
   add_foreign_key "measuretype_taxonomies", "measuretypes"
