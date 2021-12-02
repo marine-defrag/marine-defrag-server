@@ -25,9 +25,9 @@ class Seeds
 
   def base_seeds!
     # Set up user roles
-    Role.create!(name: "admin", friendly_name: "Admin")
-    Role.create!(name: "manager", friendly_name: "Manager")
-    Role.create!(name: "analyst", friendly_name: "Analyst")
+    # Role.create!(name: "admin", friendly_name: "Admin")
+    # Role.create!(name: "manager", friendly_name: "Manager")
+    # Role.create!(name: "analyst", friendly_name: "Analyst")
 
     # set up Actor Types ########################################################
     countries = Actortype.create!(
@@ -123,6 +123,14 @@ class Seeds
       taxonomy: admintype,
       measuretype: regional_seas
     )
+    lbspstatus = Taxonomy.create!(
+      title: "Status LBS-protocol",
+      allow_multiple: false
+    )
+    MeasuretypeTaxonomy.create!(
+      taxonomy: lbspstatus,
+      measuretype: regional_seas
+    )
     # Strategy type taxonomy - applies to nat. and reg. strategies
     strategytype = Taxonomy.create!(
       title: "Strategy type",
@@ -213,14 +221,34 @@ class Seeds
     )
 
     # Set up categories ########################################################
-    # Convention status taxonomy
+    # Convention status
     convstatus.categories.create!(title: "Signed")
     convstatus.categories.create!(title: "Adopted")
     convstatus.categories.create!(title: "In force")
-    convstatus.categories.create!(title: "Reaffirmed")
-    convstatus.categories.create!(title: "Concluded")
-    convstatus.categories.create!(title: "Established")
-    convstatus.categories.create!(title: "Launched")
+
+    # Commitment level
+    commlevel.categories.create!(title: "Legally binding")
+    commlevel.categories.create!(title: "Non-legally binding")
+
+    # Commitment type
+    commtype.categories.create!(title: "Action Plan")
+    commtype.categories.create!(title: "Action Programme")
+    commtype.categories.create!(title: "Assembly")
+    commtype.categories.create!(title: "Charter")
+    commtype.categories.create!(title: "Conference")
+    commtype.categories.create!(title: "Convention")
+    commtype.categories.create!(title: "Declaration")
+    commtype.categories.create!(title: "Expert Group")
+    commtype.categories.create!(title: "Implementation Guidelines")
+    commtype.categories.create!(title: "Informal Consultative Process")
+    commtype.categories.create!(title: "Partnership")
+    commtype.categories.create!(title: "Protocol")
+    commtype.categories.create!(title: "Resolution")
+
+    # LBS Prototcol status
+    lbspstatus.categories.create!(title: "In place")
+    lbspstatus.categories.create!(title: "Not yet entered into force")
+    lbspstatus.categories.create!(title: "None")
 
     # Admin. type taxonomy
     admintype.categories.create!(
@@ -252,33 +280,39 @@ class Seeds
       title: "Strategy on single-use plastics",
       short_title: "Single-use"
     )
+    strategytype.categories.create!(
+      title: "No specific strategy",
+      short_title: "Unspecific"
+    )
     # Initiative type taxonomy
-    initiativetype.categories.create!(title: "Alliance")
-    initiativetype.categories.create!(title: "Association")
-    initiativetype.categories.create!(title: "Campaign")
-    initiativetype.categories.create!(title: "Coalition")
-    initiativetype.categories.create!(title: "Commitment")
-    initiativetype.categories.create!(title: "Community")
-    initiativetype.categories.create!(title: "Conference")
-    initiativetype.categories.create!(title: "Forum")
-    initiativetype.categories.create!(title: "High-level panel")
-    initiativetype.categories.create!(title: "Initiative")
-    initiativetype.categories.create!(title: "Knowledge centre")
-    initiativetype.categories.create!(title: "Movement")
-    initiativetype.categories.create!(title: "Multi-donor fund")
-    initiativetype.categories.create!(title: "Network")
-    initiativetype.categories.create!(title: "Other")
-    initiativetype.categories.create!(title: "Partnership")
-    initiativetype.categories.create!(title: "Platform")
+    # initiativetype.categories.create!(title: "Alliance")
+    # initiativetype.categories.create!(title: "Association")
+    # initiativetype.categories.create!(title: "Campaign")
+    # initiativetype.categories.create!(title: "Coalition")
+    # initiativetype.categories.create!(title: "Commitment")
+    # initiativetype.categories.create!(title: "Community")
+    # initiativetype.categories.create!(title: "Conference")
+    # initiativetype.categories.create!(title: "Forum")
+    # initiativetype.categories.create!(title: "High-level panel")
+    # initiativetype.categories.create!(title: "Initiative")
+    # initiativetype.categories.create!(title: "Knowledge centre")
+    # initiativetype.categories.create!(title: "Movement")
+    # initiativetype.categories.create!(title: "Multi-donor fund")
+    # initiativetype.categories.create!(title: "Network")
+    # initiativetype.categories.create!(title: "Other")
+    # initiativetype.categories.create!(title: "Partnership")
+    # initiativetype.categories.create!(title: "Platform")
 
     # Group type taxonomy
     grouptype.categories.create!(title: "Intergovernmental")
     grouptype.categories.create!(title: "Mixed")
+
     # Org sector taxonomy
     orgsector.categories.create!(title: "Civil society")
     orgsector.categories.create!(title: "Private sector")
     orgsector.categories.create!(title: "Science & research")
     orgsector.categories.create!(title: "Public sector")
+
     # Org type taxonomy
     # TODO: link with Science & R.
     orgtype.categories.create!(title: "Academia")
@@ -308,7 +342,7 @@ class Seeds
     # TODO: link with Private S.
     orgtype.categories.create!(title: "Other private sector")
 
-    # class type taxonomy
+    # country class type taxonomy
     classtype.categories.create!(
       title: "Development (Natural Earth)",
       short_title: "Development"
@@ -325,17 +359,14 @@ class Seeds
       title: "Official development assistance",
       short_title: "ODA"
     )
+
     # country status taxonomy
     countrystatus.categories.create!(title: "Country")
     countrystatus.categories.create!(title: "Dependency")
     countrystatus.categories.create!(title: "Disputed")
     countrystatus.categories.create!(title: "Indeterminate")
     countrystatus.categories.create!(title: "Sovereign country")
-    commlevel.categories.create!(title: "Legally binding")
-    commlevel.categories.create!(title: "Non-legally binding")
-    commlevel.categories.create!(title: "Non-binding")
-    commtype.categories.create!(title: "Conference")
-    commtype.categories.create!(title: "Convention")
+
   end
 
   def development_seeds!
