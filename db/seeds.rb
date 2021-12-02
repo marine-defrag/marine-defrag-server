@@ -25,9 +25,9 @@ class Seeds
 
   def base_seeds!
     # Set up user roles
-    # Role.create!(name: "admin", friendly_name: "Admin")
-    # Role.create!(name: "manager", friendly_name: "Manager")
-    # Role.create!(name: "analyst", friendly_name: "Analyst")
+    Role.create!(name: "admin", friendly_name: "Admin")
+    Role.create!(name: "manager", friendly_name: "Manager")
+    Role.create!(name: "analyst", friendly_name: "Analyst")
 
     # set up Actor Types ########################################################
     countries = Actortype.create!(
