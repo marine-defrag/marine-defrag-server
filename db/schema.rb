@@ -36,11 +36,11 @@ ActiveRecord::Schema.define(version: 2021_11_17_084146) do
     t.bigint "updated_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "source_id"
+    t.bigint "resource_id"
     t.index ["actor_id"], name: "index_actor_measures_on_actor_id"
     t.index ["created_by_id"], name: "index_actor_measures_on_created_by_id"
     t.index ["measure_id"], name: "index_actor_measures_on_measure_id"
-    t.index ["source_id"], name: "index_actor_measures_on_source_id"
+    t.index ["resource_id"], name: "index_actor_measures_on_resource_id"
     t.index ["updated_by_id"], name: "index_actor_measures_on_updated_by_id"
   end
 
@@ -357,7 +357,7 @@ ActiveRecord::Schema.define(version: 2021_11_17_084146) do
     t.string "title", null: false
     t.text "description"
     t.text "url"
-    t.bigint "type_id", null: false
+    t.bigint "resourcetype_id", null: false
     t.boolean "private", default: true
     t.boolean "draft", default: true
     t.datetime "publication_date"
@@ -368,7 +368,7 @@ ActiveRecord::Schema.define(version: 2021_11_17_084146) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_by_id"], name: "index_resources_on_created_by_id"
-    t.index ["type_id"], name: "index_resources_on_type_id"
+    t.index ["resourcetype_id"], name: "index_resources_on_resourcetype_id"
     t.index ["updated_by_id"], name: "index_resources_on_updated_by_id"
   end
 
@@ -464,7 +464,7 @@ ActiveRecord::Schema.define(version: 2021_11_17_084146) do
   add_foreign_key "actor_categories", "users", column: "created_by_id"
   add_foreign_key "actor_measures", "actors"
   add_foreign_key "actor_measures", "measures"
-  add_foreign_key "actor_measures", "resources", column: "source_id"
+  add_foreign_key "actor_measures", "resources", column: "resource_id"
   add_foreign_key "actor_measures", "users", column: "created_by_id"
   add_foreign_key "actor_measures", "users", column: "updated_by_id"
   add_foreign_key "actors", "actortypes"
@@ -490,6 +490,6 @@ ActiveRecord::Schema.define(version: 2021_11_17_084146) do
   add_foreign_key "recommendation_recommendations", "recommendations"
   add_foreign_key "recommendation_recommendations", "recommendations", column: "other_recommendation_id"
   add_foreign_key "recommendations", "frameworks"
-  add_foreign_key "resources", "resourcetypes", column: "type_id"
+  add_foreign_key "resources", "resourcetypes", column: "resourcetype_id"
   add_foreign_key "taxonomies", "frameworks"
 end
