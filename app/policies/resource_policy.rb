@@ -8,7 +8,7 @@ class ResourcePolicy < ApplicationPolicy
       :publication_date,
       :status,
       :title,
-      :type_id,
+      :resourcetype_id,
       :url
     ]
   end

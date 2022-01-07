@@ -85,7 +85,7 @@ RSpec.describe ResourcesController, type: :controller do
           params: {
             resource: {
               title: "test",
-              type_id: resourcetype.id
+              resourcetype_id: resourcetype.id
             }
           }
       end

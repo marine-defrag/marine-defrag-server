@@ -8,7 +8,7 @@ class ResourceSerializer
     :publication_date,
     :status,
     :title,
-    :type_id,
+    :resourcetype_id,
     :url
 
   set_type :resources
