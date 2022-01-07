@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :measure_actors, only: [:index, :show, :create, :update, :destroy]
   resources :measure_categories
   resources :measure_indicators
+  resources :measure_resources
   resources :measuretype_taxonomies, only: [:index, :show]
   resources :measuretypes, only: [:index, :show]
   resources :memberships, only: [:index, :show, :create, :destroy]
@@ -43,6 +44,7 @@ Rails.application.routes.draw do
   resources :user_roles
   resources :roles
   resources :pages
+  resources :resources
   resources :bookmarks
 
   resources :frameworks, only: [:index, :show]
