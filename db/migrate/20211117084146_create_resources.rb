@@ -4,7 +4,7 @@ class CreateResources < ActiveRecord::Migration[6.1]
       t.string :title, null: false
       t.text :description
       t.text :url
-      t.belongs_to :resourcetype, null: false, foreign_key: true,
+      t.belongs_to :resourcetype, null: false, foreign_key: true
       t.boolean :private, default: true
       t.boolean :draft, default: true
       t.datetime :publication_date
