@@ -88,7 +88,7 @@ RSpec.describe RolesController, type: :controller do
     end
 
     context "when not signed in" do
-      it "not allow updating a measure" do
+      it "not allow updating a role" do
         expect(subject).to be_unauthorized
       end
     end
@@ -98,7 +98,7 @@ RSpec.describe RolesController, type: :controller do
       let(:manager) { FactoryBot.create(:user, :manager) }
       let(:admin) { FactoryBot.create(:user, :admin) }
 
-      it "will not allow a guest to update a measure" do
+      it "will not allow a guest to update a role" do
         sign_in guest
         expect(subject).to be_forbidden
       end
@@ -120,7 +120,7 @@ RSpec.describe RolesController, type: :controller do
     subject { delete :destroy, format: :json, params: {id: role} }
 
     context "when not signed in" do
-      it "not allow deleting a measure" do
+      it "not allow deleting a role" do
         expect(subject).to be_unauthorized
       end
     end
