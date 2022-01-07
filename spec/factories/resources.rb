@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :resource do
     access_date { Date.today }
-    association(:resourcetype, factory: :resourcetype)
+    association(:resourcetype)
     description { Faker::Movies::StarWars.quote }
     draft { false }
     private { true }

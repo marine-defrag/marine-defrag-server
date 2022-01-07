@@ -1,5 +1,5 @@
 class Resource < VersionedRecord
-  belongs_to :type, class_name: "Resourcetype"
+  belongs_to :resourcetype, required: true
 
   validates :title, presence: true
   validates :resourcetype_id, presence: true

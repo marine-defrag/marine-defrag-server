@@ -490,6 +490,6 @@ ActiveRecord::Schema.define(version: 2021_11_17_084146) do
   add_foreign_key "recommendation_recommendations", "recommendations"
   add_foreign_key "recommendation_recommendations", "recommendations", column: "other_recommendation_id"
   add_foreign_key "recommendations", "frameworks"
-  add_foreign_key "resources", "resourcetypes", column: "resourcetype_id"
+  add_foreign_key "resources", "resourcetypes"
   add_foreign_key "taxonomies", "frameworks"
 end
