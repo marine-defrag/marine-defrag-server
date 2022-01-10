@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ResourcesController < ApplicationController
   before_action :set_and_authorize_resource, only: [:show, :update, :destroy]
 
@@ -11,44 +13,47 @@ class ResourcesController < ApplicationController
 
   # GET /resources/1
   def show
-    render json: serialize(@resource)
+    @res = policy_scope(base_object).find(params[:id])
+    render json: serialize(@res)
   end
 
   # POST /resources
   def create
-    @resource = Resource.new
-    @resource.assign_attributes(permitted_attributes(@resource))
-    authorize @resource
+    @res = Resource.new
+    @res.assign_attributes(permitted_attributes(@res))
+    authorize @res
 
-    if @resource.save
-      render json: serialize(@resource), status: :created, location: @resource
+    if @res.save
+      render json: serialize(@res), status: :created, location: @res
     else
-      render json: @resource.errors, status: :unprocessable_entity
+      render json: @res.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /resources/1
   def update
-    if params[:resource][:updated_at] && DateTime.parse(params[:resource][:updated_at]).to_i != @resource.updated_at.to_i
+    @res = policy_scope(base_object).find(params[:id])
+    if params[:resource][:updated_at] && DateTime.parse(params[:resource][:updated_at]).to_i != @res.updated_at.to_i
       return render json: '{"error":"Record outdated"}', status: :unprocessable_entity
     end
-    if @resource.update!(permitted_attributes(@resource))
+    if @res.update!(permitted_attributes(@res))
       set_and_authorize_resource
-      render json: serialize(@resource)
+      render json: serialize(@res)
     end
   end
 
   # DELETE /resources/1
   def destroy
-    @resource.destroy
+    @res = policy_scope(base_object).find(params[:id])
+    @res.destroy
   end
 
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_and_authorize_resource
-    @resource = policy_scope(base_object).find(params[:id])
-    authorize @resource
+    @res = policy_scope(base_object).find(params[:id])
+    authorize @res
   end
 
   def base_object
