@@ -100,6 +100,23 @@ class Seeds
       has_target: true
     )
 
+    # set up Resource Types ########################################################
+    refs = Resourcetype.create!(
+      title: "References",
+    )
+    sites = Resourcetype.create!(
+      title: "Websites",
+    )
+    docs = Resourcetype.create!(
+      title: "Documents",
+    )
+    aps = Resourcetype.create!(
+      title: "Action Plans",
+    )
+    mlaps = Resourcetype.create!(
+      title: "Marine Litter Action Plans",
+    )
+
     # Set up taxonomies ########################################################
     # Convention status taxonomy - applies to int. and reg. seas conventions
     convstatus = Taxonomy.create!(
