@@ -65,6 +65,13 @@ RSpec.describe MembershipsController, type: :controller do
         post :create, format: :json, params: {membership: {description: "desc only", taxonomy_id: 999}}
         expect(response).to have_http_status(422)
       end
+
+      it "will record what manager created the membership", versioning: true do
+        expect(PaperTrail).to be_enabled
+        sign_in manager
+        json = JSON.parse(subject.body)
+        expect(json.dig("data", "attributes", "updated_by_id").to_i).to eq manager.id
+      end
     end
   end
 

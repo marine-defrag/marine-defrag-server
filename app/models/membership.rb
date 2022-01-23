@@ -1,4 +1,4 @@
-class Membership < ApplicationRecord
+class Membership < VersionedRecord
   belongs_to :member, class_name: "Actor", required: true
   belongs_to :memberof, class_name: "Actor", required: true
 
