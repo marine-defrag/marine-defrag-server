@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_24_072059) do
+ActiveRecord::Schema.define(version: 2022_01_23_224010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,9 +21,11 @@ ActiveRecord::Schema.define(version: 2021_11_24_072059) do
     t.bigint "created_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "updated_by_id"
     t.index ["actor_id"], name: "index_actor_categories_on_actor_id"
     t.index ["category_id"], name: "index_actor_categories_on_category_id"
     t.index ["created_by_id"], name: "index_actor_categories_on_created_by_id"
+    t.index ["updated_by_id"], name: "index_actor_categories_on_updated_by_id"
   end
 
   create_table "actor_measures", force: :cascade do |t|
@@ -198,6 +200,8 @@ ActiveRecord::Schema.define(version: 2021_11_24_072059) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "created_by_id"
+    t.bigint "updated_by_id"
+    t.index ["updated_by_id"], name: "index_measure_categories_on_updated_by_id"
   end
 
   create_table "measure_indicators", id: :serial, force: :cascade do |t|
@@ -214,9 +218,11 @@ ActiveRecord::Schema.define(version: 2021_11_24_072059) do
     t.bigint "created_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "updated_by_id"
     t.index ["created_by_id"], name: "index_measure_resources_on_created_by_id"
     t.index ["measure_id"], name: "index_measure_resources_on_measure_id"
     t.index ["resource_id"], name: "index_measure_resources_on_resource_id"
+    t.index ["updated_by_id"], name: "index_measure_resources_on_updated_by_id"
   end
 
   create_table "measures", id: :serial, force: :cascade do |t|
@@ -276,9 +282,11 @@ ActiveRecord::Schema.define(version: 2021_11_24_072059) do
     t.bigint "created_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "updated_by_id"
     t.index ["created_by_id"], name: "index_memberships_on_created_by_id"
     t.index ["member_id"], name: "index_memberships_on_member_id"
     t.index ["memberof_id"], name: "index_memberships_on_memberof_id"
+    t.index ["updated_by_id"], name: "index_memberships_on_updated_by_id"
   end
 
   create_table "pages", id: :serial, force: :cascade do |t|
@@ -473,9 +481,10 @@ ActiveRecord::Schema.define(version: 2021_11_24_072059) do
   add_foreign_key "actor_categories", "actors"
   add_foreign_key "actor_categories", "categories"
   add_foreign_key "actor_categories", "users", column: "created_by_id"
+  add_foreign_key "actor_categories", "users", column: "updated_by_id"
   add_foreign_key "actor_measures", "actors"
   add_foreign_key "actor_measures", "measures"
-  add_foreign_key "actor_measures", "resources", column: "resource_id"
+  add_foreign_key "actor_measures", "resources"
   add_foreign_key "actor_measures", "users", column: "created_by_id"
   add_foreign_key "actor_measures", "users", column: "updated_by_id"
   add_foreign_key "actors", "actortypes"
@@ -489,9 +498,11 @@ ActiveRecord::Schema.define(version: 2021_11_24_072059) do
   add_foreign_key "measure_actors", "measures"
   add_foreign_key "measure_actors", "users", column: "created_by_id"
   add_foreign_key "measure_actors", "users", column: "updated_by_id"
+  add_foreign_key "measure_categories", "users", column: "updated_by_id"
   add_foreign_key "measure_resources", "measures"
   add_foreign_key "measure_resources", "resources"
   add_foreign_key "measure_resources", "users", column: "created_by_id"
+  add_foreign_key "measure_resources", "users", column: "updated_by_id"
   add_foreign_key "measures", "measures", column: "parent_id"
   add_foreign_key "measures", "measuretypes"
   add_foreign_key "measuretype_taxonomies", "measuretypes"
@@ -499,6 +510,7 @@ ActiveRecord::Schema.define(version: 2021_11_24_072059) do
   add_foreign_key "memberships", "actors", column: "member_id"
   add_foreign_key "memberships", "actors", column: "memberof_id"
   add_foreign_key "memberships", "users", column: "created_by_id"
+  add_foreign_key "memberships", "users", column: "updated_by_id"
   add_foreign_key "recommendation_indicators", "indicators"
   add_foreign_key "recommendation_indicators", "recommendations"
   add_foreign_key "recommendation_recommendations", "recommendations"

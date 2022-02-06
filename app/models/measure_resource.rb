@@ -1,4 +1,4 @@
-class MeasureResource < ApplicationRecord
+class MeasureResource < VersionedRecord
   belongs_to :measure, required: true
   belongs_to :resource, required: true
 

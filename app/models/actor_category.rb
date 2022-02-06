@@ -1,4 +1,4 @@
-class ActorCategory < ApplicationRecord
+class ActorCategory < VersionedRecord
   belongs_to :actor, required: true
   belongs_to :category, required: true
 

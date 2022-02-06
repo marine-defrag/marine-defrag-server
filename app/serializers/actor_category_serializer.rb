@@ -1,5 +1,5 @@
 class ActorCategorySerializer
-  include FastApplicationSerializer
+  include FastVersionedSerializer
 
   attributes :actor_id, :category_id
 

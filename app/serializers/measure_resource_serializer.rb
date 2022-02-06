@@ -1,5 +1,5 @@
 class MeasureResourceSerializer
-  include FastApplicationSerializer
+  include FastVersionedSerializer
 
   attributes :measure_id, :resource_id
 
