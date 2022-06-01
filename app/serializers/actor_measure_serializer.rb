@@ -7,6 +7,7 @@ class ActorMeasureSerializer
     :date_end,
     :date_start,
     :measure_id,
+    :relationshiptype_id,
     :updated_by_id,
     :value
   )

@@ -69,7 +69,7 @@ RSpec.describe ActorMeasuresController, type: :controller do
       put :update,
         format: :json,
         params: {id: actor_measure,
-                 actor_measure: {value: "4.2"}}
+                 actor_measure: {value: "4.2", relationshiptype_id: 1}}
     end
 
     context "when not signed in" do
@@ -94,6 +94,7 @@ RSpec.describe ActorMeasuresController, type: :controller do
         expect(subject).to be_ok
         json = JSON.parse(subject.body)
         expect(json.dig("data", "attributes", "value")).to eq("4.2")
+        expect(json.dig("data", "attributes", "relationshiptype_id")).to eq(1)
       end
 
       it "will return an error if params are incorrect" do

@@ -32,6 +32,7 @@ RSpec.describe "actor to measure relationships", type: :request do
               "date_end" => "2021-11-02",
               "date_start" => "2021-11-02",
               "measure_id" => actor_measure.measure_id,
+              "relationshiptype_id" => actor_measure.relationshiptype_id,
               "updated_at" => actor_measure.updated_at.in_time_zone.iso8601,
               "updated_by_id" => user.id,
               "value" => "3.14"
@@ -69,6 +70,7 @@ RSpec.describe "actor to measure relationships", type: :request do
                 "date_end" => "2021-11-02",
                 "date_start" => "2021-11-02",
                 "measure_id" => actor_measure_1.measure_id,
+                "relationshiptype_id" => actor_measure_1.relationshiptype_id,
                 "updated_at" => actor_measure_1.updated_at.in_time_zone.iso8601,
                 "updated_by_id" => user.id,
                 "value" => "3.14"
@@ -83,6 +85,7 @@ RSpec.describe "actor to measure relationships", type: :request do
                 "date_end" => "2021-11-02",
                 "date_start" => "2021-11-02",
                 "measure_id" => actor_measure_2.measure_id,
+                "relationshiptype_id" => actor_measure_2.relationshiptype_id,
                 "updated_at" => actor_measure_2.updated_at.in_time_zone.iso8601,
                 "updated_by_id" => user.id,
                 "value" => "3.14"
@@ -97,6 +100,7 @@ RSpec.describe "actor to measure relationships", type: :request do
                 "date_end" => "2021-11-02",
                 "date_start" => "2021-11-02",
                 "measure_id" => actor_measure_3.measure_id,
+                "relationshiptype_id" => actor_measure_3.relationshiptype_id,
                 "updated_at" => actor_measure_3.updated_at.in_time_zone.iso8601,
                 "updated_by_id" => user.id,
                 "value" => "3.14"

@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2022_06_01_090644) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "resource_id"
+    t.bigint "relationshiptype_id"
     t.index ["actor_id", "measure_id"], name: "index_actor_measures_on_actor_id_and_measure_id", unique: true
     t.index ["actor_id"], name: "index_actor_measures_on_actor_id"
     t.index ["created_by_id"], name: "index_actor_measures_on_created_by_id"
