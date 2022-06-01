@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_01_085513) do
+ActiveRecord::Schema.define(version: 2022_06_01_090644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2022_06_01_085513) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "updated_by_id"
+    t.index ["actor_id", "category_id"], name: "index_actor_categories_on_actor_id_and_category_id", unique: true
     t.index ["actor_id"], name: "index_actor_categories_on_actor_id"
     t.index ["category_id"], name: "index_actor_categories_on_category_id"
     t.index ["created_by_id"], name: "index_actor_categories_on_created_by_id"
@@ -40,6 +41,7 @@ ActiveRecord::Schema.define(version: 2022_06_01_085513) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "resource_id"
     t.bigint "relationshiptype_id"
+    t.index ["actor_id", "measure_id"], name: "index_actor_measures_on_actor_id_and_measure_id", unique: true
     t.index ["actor_id"], name: "index_actor_measures_on_actor_id"
     t.index ["created_by_id"], name: "index_actor_measures_on_created_by_id"
     t.index ["measure_id"], name: "index_actor_measures_on_measure_id"
@@ -191,6 +193,7 @@ ActiveRecord::Schema.define(version: 2022_06_01_085513) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["actor_id"], name: "index_measure_actors_on_actor_id"
     t.index ["created_by_id"], name: "index_measure_actors_on_created_by_id"
+    t.index ["measure_id", "actor_id"], name: "index_measure_actors_on_measure_id_and_actor_id", unique: true
     t.index ["measure_id"], name: "index_measure_actors_on_measure_id"
     t.index ["updated_by_id"], name: "index_measure_actors_on_updated_by_id"
   end
@@ -202,6 +205,7 @@ ActiveRecord::Schema.define(version: 2022_06_01_085513) do
     t.datetime "updated_at", null: false
     t.integer "created_by_id"
     t.bigint "updated_by_id"
+    t.index ["measure_id", "category_id"], name: "index_measure_categories_on_measure_id_and_category_id", unique: true
     t.index ["updated_by_id"], name: "index_measure_categories_on_updated_by_id"
   end
 
@@ -221,6 +225,7 @@ ActiveRecord::Schema.define(version: 2022_06_01_085513) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "updated_by_id"
     t.index ["created_by_id"], name: "index_measure_resources_on_created_by_id"
+    t.index ["measure_id", "resource_id"], name: "index_measure_resources_on_measure_id_and_resource_id", unique: true
     t.index ["measure_id"], name: "index_measure_resources_on_measure_id"
     t.index ["resource_id"], name: "index_measure_resources_on_resource_id"
     t.index ["updated_by_id"], name: "index_measure_resources_on_updated_by_id"
@@ -285,6 +290,7 @@ ActiveRecord::Schema.define(version: 2022_06_01_085513) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "updated_by_id"
     t.index ["created_by_id"], name: "index_memberships_on_created_by_id"
+    t.index ["member_id", "memberof_id"], name: "index_memberships_on_member_id_and_memberof_id", unique: true
     t.index ["member_id"], name: "index_memberships_on_member_id"
     t.index ["memberof_id"], name: "index_memberships_on_memberof_id"
     t.index ["updated_by_id"], name: "index_memberships_on_updated_by_id"
