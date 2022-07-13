@@ -43,7 +43,7 @@ class Measure < VersionedRecord
   end
 
   def parent_id_allowed_by_measuretype
-    if parent_id && !parent.measuretype&.has_parent
+    if parent_id && !self.measuretype&.has_parent
       errors.add(:parent_id, "is not allowed for this measuretype")
     end
   end
