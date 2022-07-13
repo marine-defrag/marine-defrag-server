@@ -60,6 +60,7 @@ RSpec.describe Measure, type: :model do
       FactoryBot.create(:actor_measure, measure: measure)
       FactoryBot.create(:measure_actor, measure: measure)
       FactoryBot.create(:recommendation_measure, measure: measure)
+      FactoryBot.create(:measure_resource, measure: measure)
 
       expect { measure.destroy }.to change {
         [
@@ -68,9 +69,10 @@ RSpec.describe Measure, type: :model do
           MeasureIndicator.count,
           ActorMeasure.count,
           MeasureActor.count,
-          RecommendationMeasure.count
+          RecommendationMeasure.count,
+          MeasureResource.count
         ]
-      }.from([1, 1, 1, 1, 1, 1]).to([0, 0, 0, 0, 0, 0])
+      }.from([1, 1, 1, 1, 1, 1, 1]).to([0, 0, 0, 0, 0, 0, 0])
     end
   end
 end
