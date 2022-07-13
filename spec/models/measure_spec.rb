@@ -30,7 +30,7 @@ RSpec.describe Measure, type: :model do
       expect(subject.errors[:parent_id]).to(include("can't be the same as id"))
     end
 
-    it "can't be set to a measure with :measuretype.has_parent = false" do
+    it "can't be set to if measure's measuretype :measuretype.has_parent = false" do
       subject.parent_id = described_class.create(
         measuretype: FactoryBot.create(:measuretype, :parent_not_allowed),
         title: "no parent"
