@@ -18,8 +18,8 @@ RSpec.describe DeviseTokenAuth::SessionsController, type: :controller do
       end
     end
 
-    context "when user is inactive" do
-      let(:user) { FactoryBot.create(:user, :inactive) }
+    context "when user is archived" do
+      let(:user) { FactoryBot.create(:user, :archived) }
 
       it "does not allow sign in" do
         expect(subject).to have_http_status(:unauthorized)

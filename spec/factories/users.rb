@@ -24,7 +24,7 @@ FactoryBot.define do
     archived_at { nil }
   end
 
-  trait :inactive do
+  trait :archived do
     archived_at { Time.current }
   end
 end

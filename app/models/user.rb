@@ -30,6 +30,10 @@ class User < VersionedRecord
 
   scope :active, -> { where(archived_at: nil) }
 
+  def archived?
+    archived_at.present?
+  end
+
   def role?(role)
     roles.where(name: role).any?
   end

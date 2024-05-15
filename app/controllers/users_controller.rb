@@ -46,6 +46,12 @@ class UsersController < ApplicationController
     User
   end
 
+  def permitted_attributes(user)
+    attrs = super
+    attrs[:tokens] = nil if attrs.key?(:archived_at) && !attrs[:archived_at].nil?
+    attrs
+  end
+
   def serialize(target, serializer: UserSerializer)
     super
   end
