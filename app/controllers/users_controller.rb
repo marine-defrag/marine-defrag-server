@@ -46,6 +46,16 @@ class UsersController < ApplicationController
     User
   end
 
+  def permitted_attributes(user)
+    attrs = super
+    if attrs.key?(:is_archived) && attrs[:is_archived].to_s == "true"
+      attrs.delete(:is_archived)
+      attrs[:archived_at] = Time.zone.now
+      attrs[:tokens] = nil
+    end
+    attrs
+  end
+
   def serialize(target, serializer: UserSerializer)
     super
   end
