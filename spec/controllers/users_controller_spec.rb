@@ -244,7 +244,7 @@ RSpec.describe UsersController, type: :controller do
         subject do
           put :update,
             format: :json,
-            params: {id: manager.id, user: {archived_at: Time.now}}
+            params: {id: manager.id, user: {is_archived: true}}
         end
 
         it "can be updated by an admin" do
@@ -252,6 +252,8 @@ RSpec.describe UsersController, type: :controller do
           expect(subject).to be_ok
           json = JSON.parse(subject.body)
           expect(json.dig("data", "id").to_i).to eq(manager.id)
+          expect(json.dig("data", "attributes", "archived_at")).to be_present
+          expect(json.dig("data", "attributes", "is_archived")).to eq(true)
           expect(manager.reload.archived_at).to be_present
         end
 
@@ -265,6 +267,10 @@ RSpec.describe UsersController, type: :controller do
         it "can't be set by a manager on themselves" do
           sign_in manager
           expect(subject).to be_ok
+          json = JSON.parse(subject.body)
+          expect(json.dig("data", "id").to_i).to eq(manager.id)
+          expect(json.dig("data", "attributes", "archived_at")).to be_nil
+          expect(json.dig("data", "attributes", "is_archived")).to eq(false)
           expect(manager.reload.archived_at).to be_nil
           expect(manager.tokens).to be_present
         end

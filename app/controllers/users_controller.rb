@@ -48,7 +48,11 @@ class UsersController < ApplicationController
 
   def permitted_attributes(user)
     attrs = super
-    attrs[:tokens] = nil if attrs.key?(:archived_at) && !attrs[:archived_at].nil?
+    if attrs.key?(:is_archived) && attrs[:is_archived].to_s == "true"
+      attrs.delete(:is_archived)
+      attrs[:archived_at] = Time.zone.now
+      attrs[:tokens] = nil
+    end
     attrs
   end
 

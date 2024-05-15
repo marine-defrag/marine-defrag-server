@@ -25,7 +25,7 @@ class UserPolicy < ApplicationPolicy
 
   def permitted_attributes
     attrs = [:email, :password, :password_confirmation, :name]
-    attrs << [:archived_at] if @user.role?("admin")
+    attrs << [:is_archived] if @user.role?("admin")
     attrs
   end
 

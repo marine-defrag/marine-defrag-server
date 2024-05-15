@@ -33,6 +33,7 @@ class User < VersionedRecord
   def archived?
     archived_at.present?
   end
+  alias is_archived archived?
 
   def role?(role)
     roles.where(name: role).any?
