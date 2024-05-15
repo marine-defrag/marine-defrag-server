@@ -19,4 +19,12 @@ FactoryBot.define do
   trait :analyst do
     roles { [create(:role, :analyst)] }
   end
+
+  trait :active do
+    archived_at { nil }
+  end
+
+  trait :archived do
+    archived_at { Time.current }
+  end
 end

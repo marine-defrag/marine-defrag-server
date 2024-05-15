@@ -227,6 +227,54 @@ RSpec.describe UsersController, type: :controller do
         json = JSON.parse(subject.body)
         expect(json.dig("data", "attributes", "updated_by_id").to_i).to eq admin.id
       end
+
+      context "archived_at" do
+        before do
+          # Set up an example token
+          manager.update(
+            tokens: {
+              "-oLb3gV1gLYfnONNWJwAqw" => {
+                "token"=>"$2a$10$hvTl9tFQarHd0xrk40uj7OXH3ll0w0rLDobHZRunI220YCRisQT.a",
+                "expiry"=>(Time.now + 1.day).to_i
+              }
+            }
+          )
+        end
+
+        subject do
+          put :update,
+            format: :json,
+            params: {id: manager.id, user: {is_archived: true}}
+        end
+
+        it "can be updated by an admin" do
+          sign_in admin
+          expect(subject).to be_ok
+          json = JSON.parse(subject.body)
+          expect(json.dig("data", "id").to_i).to eq(manager.id)
+          expect(json.dig("data", "attributes", "archived_at")).to be_present
+          expect(json.dig("data", "attributes", "is_archived")).to eq(true)
+          expect(manager.reload.archived_at).to be_present
+        end
+
+        it "will expire the user's tokens" do
+          sign_in admin
+          expect(manager.tokens).to be_present
+          expect(subject).to be_ok
+          expect(manager.reload.tokens).to be_empty
+        end
+
+        it "can't be set by a manager on themselves" do
+          sign_in manager
+          expect(subject).to be_ok
+          json = JSON.parse(subject.body)
+          expect(json.dig("data", "id").to_i).to eq(manager.id)
+          expect(json.dig("data", "attributes", "archived_at")).to be_nil
+          expect(json.dig("data", "attributes", "is_archived")).to eq(false)
+          expect(manager.reload.archived_at).to be_nil
+          expect(manager.tokens).to be_present
+        end
+      end
     end
   end
 
