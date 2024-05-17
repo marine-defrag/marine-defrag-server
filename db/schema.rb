@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(version: 2024_05_15_082006) do
     t.text "subject"
     t.text "content"
     t.bigint "user_id", null: false
-    t.datetime "notified_at"
+    t.datetime "sent_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_feedbacks_on_user_id"

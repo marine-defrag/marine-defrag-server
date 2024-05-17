@@ -4,7 +4,7 @@ class CreateFeedbacks < ActiveRecord::Migration[6.1]
       t.text :subject
       t.text :content
       t.belongs_to :user, null: false, foreign_key: true, index: true
-      t.datetime :notified_at
+      t.datetime :sent_at
 
       t.timestamps
     end
