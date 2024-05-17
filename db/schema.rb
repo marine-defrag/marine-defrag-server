@@ -132,16 +132,6 @@ ActiveRecord::Schema.define(version: 2024_05_17_081746) do
     t.index ["indicator_id"], name: "index_due_dates_on_indicator_id"
   end
 
-  create_table "feedbacks", force: :cascade do |t|
-    t.text "subject"
-    t.text "content"
-    t.bigint "user_id", null: false
-    t.datetime "notified_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_feedbacks_on_user_id"
-  end
-
   create_table "framework_frameworks", id: :serial, force: :cascade do |t|
     t.integer "framework_id"
     t.integer "other_framework_id"
@@ -508,7 +498,6 @@ ActiveRecord::Schema.define(version: 2024_05_17_081746) do
   add_foreign_key "actors", "actortypes"
   add_foreign_key "actortype_taxonomies", "actortypes"
   add_foreign_key "actortype_taxonomies", "taxonomies"
-  add_foreign_key "feedbacks", "users"
   add_foreign_key "framework_frameworks", "frameworks"
   add_foreign_key "framework_frameworks", "frameworks", column: "other_framework_id"
   add_foreign_key "framework_taxonomies", "frameworks"
