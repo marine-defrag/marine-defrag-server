@@ -13,6 +13,12 @@ RSpec.describe FeedbacksController, type: :controller do
       it "not allow creating a feedback" do
         expect(subject).to be_unauthorized
       end
+
+      it "will not send a notification" do
+        expect(FeedbackMailer).not_to receive(:created)
+
+        subject
+      end
     end
 
     context "when signed in" do
@@ -26,6 +32,12 @@ RSpec.describe FeedbacksController, type: :controller do
           json = JSON.parse(subject.body)
           expect(json["data"]["attributes"]["user_id"]).to eq(user.id)
         end
+
+        it "will send a notification" do
+          expect(FeedbackMailer).to receive(:created).and_call_original
+
+          subject
+        end
       end
 
       context "as an analyst" do
@@ -35,6 +47,12 @@ RSpec.describe FeedbacksController, type: :controller do
           expect(subject).to be_created
           json = JSON.parse(subject.body)
           expect(json["data"]["attributes"]["user_id"]).to eq(user.id)
+        end
+
+        it "will send a notification" do
+          expect(FeedbackMailer).to receive(:created).and_call_original
+
+          subject
         end
       end
 
@@ -46,6 +64,12 @@ RSpec.describe FeedbacksController, type: :controller do
           json = JSON.parse(subject.body)
           expect(json["data"]["attributes"]["user_id"]).to eq(user.id)
         end
+
+        it "will send a notification" do
+          expect(FeedbackMailer).to receive(:created).and_call_original
+
+          subject
+        end
       end
 
       context "as a manager" do
@@ -55,6 +79,12 @@ RSpec.describe FeedbacksController, type: :controller do
           expect(subject).to be_created
           json = JSON.parse(subject.body)
           expect(json["data"]["attributes"]["user_id"]).to eq(user.id)
+        end
+
+        it "will send a notification" do
+          expect(FeedbackMailer).to receive(:created).and_call_original
+
+          subject
         end
       end
     end

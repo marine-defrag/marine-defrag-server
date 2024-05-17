@@ -9,6 +9,7 @@ class FeedbacksController < ApplicationController
     authorize @feedback
 
     if @feedback.save
+      FeedbackMailer.created(@feedback).deliver_now
       render json: serialize(@feedback), status: :created
     else
       render json: @feedback.errors, status: :unprocessable_entity
