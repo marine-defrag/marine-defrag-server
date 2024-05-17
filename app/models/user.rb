@@ -28,12 +28,7 @@ class User < VersionedRecord
   validates :email, presence: true
   validates :name, presence: true
 
-  scope :active, -> { where(archived_at: nil) }
-
-  def archived?
-    archived_at.present?
-  end
-  alias is_archived archived?
+  scope :active, -> { where(is_archived: false) }
 
   def role?(role)
     roles.where(name: role).any?
