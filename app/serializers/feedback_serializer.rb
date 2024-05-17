@@ -1,5 +1,5 @@
 class FeedbackSerializer
-  include FastVersionedSerializer
+  include FastApplicationSerializer
 
   attributes :user_id, :subject, :content
 

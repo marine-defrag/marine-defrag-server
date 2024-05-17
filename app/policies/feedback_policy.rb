@@ -8,7 +8,7 @@ class FeedbackPolicy < ApplicationPolicy
   end
 
   def create?
-    @user.roles.any?
+    !@user.is_archived
   end
 
   def edit?
@@ -24,7 +24,7 @@ class FeedbackPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:subject, :content, :user_id]
+    [:subject, :content]
   end
 
   class Scope < Scope

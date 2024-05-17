@@ -3,13 +3,60 @@ require "json"
 
 RSpec.describe FeedbacksController, type: :controller do
   describe "POST create" do
+    subject do
+      post :create,
+        format: :json,
+        params: {feedback: {subject: "Test Subject", content: "Test Content"}}
+    end
+
     context "when not signed in" do
       it "not allow creating a feedback" do
-        post :create, format: :json, params: {feedback: {subject: "Test", content: "Test"}}
-        expect(response).to be_unauthorized
+        expect(subject).to be_unauthorized
       end
     end
 
+    context "when signed in" do
+      before { sign_in user }
 
+      context "as a guest" do
+        let(:user) { FactoryBot.create(:user) }
+
+        it "will create a feedback" do
+          expect(subject).to be_created
+          json = JSON.parse(subject.body)
+          expect(json["data"]["attributes"]["user_id"]).to eq(user.id)
+        end
+      end
+
+      context "as an analyst" do
+        let(:user) { FactoryBot.create(:user, :analyst) }
+
+        it "will create a feedback" do
+          expect(subject).to be_created
+          json = JSON.parse(subject.body)
+          expect(json["data"]["attributes"]["user_id"]).to eq(user.id)
+        end
+      end
+
+      context "as an admin" do
+        let(:user) { FactoryBot.create(:user, :admin) }
+
+        it "will create a feedback" do
+          expect(subject).to be_created
+          json = JSON.parse(subject.body)
+          expect(json["data"]["attributes"]["user_id"]).to eq(user.id)
+        end
+      end
+
+      context "as a manager" do
+        let(:user) { FactoryBot.create(:user, :manager) }
+
+        it "will create a feedback" do
+          expect(subject).to be_created
+          json = JSON.parse(subject.body)
+          expect(json["data"]["attributes"]["user_id"]).to eq(user.id)
+        end
+      end
+    end
   end
 end

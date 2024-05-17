@@ -1,8 +1,6 @@
 class FeedbacksController < ApplicationController
   before_action :authenticate_user!
-
   skip_before_action :authorize_base_object!
-  before_action :set_and_authorize_user, only: [:create]
 
   # POST /feedbacks
   def create
@@ -11,7 +9,7 @@ class FeedbacksController < ApplicationController
     authorize @feedback
 
     if @feedback.save
-      render json: serialize(@feedback), status: :created, location: @feedback
+      render json: serialize(@feedback), status: :created
     else
       render json: @feedback.errors, status: :unprocessable_entity
     end
