@@ -228,51 +228,79 @@ RSpec.describe UsersController, type: :controller do
         expect(json.dig("data", "attributes", "updated_by_id").to_i).to eq admin.id
       end
 
-      context "archived_at" do
+      context "is_archived" do
+        let(:tokens) do
+          {
+            "-oLb3gV1gLYfnONNWJwAqw" => {
+              "token" => "some_token",
+              "expiry" => (Time.now + 1.day).to_i
+            }
+          }
+        end
         before do
           # Set up an example token
-          manager.update(
-            tokens: {
-              "-oLb3gV1gLYfnONNWJwAqw" => {
-                "token"=>"$2a$10$hvTl9tFQarHd0xrk40uj7OXH3ll0w0rLDobHZRunI220YCRisQT.a",
-                "expiry"=>(Time.now + 1.day).to_i
-              }
-            }
-          )
+          manager.update(tokens: tokens)
         end
 
         subject do
           put :update,
             format: :json,
-            params: {id: manager.id, user: {is_archived: true}}
+            params: {id: manager.id, user: {is_archived: is_archived}}
         end
 
-        it "can be updated by an admin" do
-          sign_in admin
-          expect(subject).to be_ok
-          json = JSON.parse(subject.body)
-          expect(json.dig("data", "id").to_i).to eq(manager.id)
-          expect(json.dig("data", "attributes", "archived_at")).to be_present
-          expect(json.dig("data", "attributes", "is_archived")).to eq(true)
-          expect(manager.reload.archived_at).to be_present
+        context "when false" do
+          let(:is_archived) { "false" }
+          let(:manager) { FactoryBot.create(:user, :manager, :archived) }
+
+          it "can be set by an admin" do
+            sign_in admin
+            expect(subject).to be_ok
+            json = JSON.parse(subject.body)
+            expect(json.dig("data", "id").to_i).to eq(manager.id)
+            expect(json.dig("data", "attributes", "is_archived")).to eq(false)
+            expect(manager.reload).not_to be_is_archived
+          end
+
+          it "can't be set by a manager on themselves" do
+            sign_in manager
+            expect(subject).to be_ok
+            json = JSON.parse(subject.body)
+            expect(json.dig("data", "id").to_i).to eq(manager.id)
+            expect(json.dig("data", "attributes", "is_archived")).to eq(true)
+            expect(manager.reload).to be_is_archived
+            expect(manager.tokens).to eq(tokens)
+          end
         end
 
-        it "will expire the user's tokens" do
-          sign_in admin
-          expect(manager.tokens).to be_present
-          expect(subject).to be_ok
-          expect(manager.reload.tokens).to be_empty
-        end
+        context "when true" do
+          let(:manager) { FactoryBot.create(:user, :manager, :active) }
+          let(:is_archived) { "true" }
 
-        it "can't be set by a manager on themselves" do
-          sign_in manager
-          expect(subject).to be_ok
-          json = JSON.parse(subject.body)
-          expect(json.dig("data", "id").to_i).to eq(manager.id)
-          expect(json.dig("data", "attributes", "archived_at")).to be_nil
-          expect(json.dig("data", "attributes", "is_archived")).to eq(false)
-          expect(manager.reload.archived_at).to be_nil
-          expect(manager.tokens).to be_present
+          it "can be set by an admin" do
+            sign_in admin
+            expect(subject).to be_ok
+            json = JSON.parse(subject.body)
+            expect(json.dig("data", "id").to_i).to eq(manager.id)
+            expect(json.dig("data", "attributes", "is_archived")).to eq(true)
+            expect(manager.reload).to be_is_archived
+          end
+
+          it "will expire the user's tokens" do
+            sign_in admin
+            expect(manager.tokens).to be_present
+            expect(subject).to be_ok
+            expect(manager.reload.tokens).to be_empty
+          end
+
+          it "can't be set by a manager on themselves" do
+            sign_in manager
+            expect(subject).to be_ok
+            json = JSON.parse(subject.body)
+            expect(json.dig("data", "id").to_i).to eq(manager.id)
+            expect(json.dig("data", "attributes", "is_archived")).to eq(false)
+            expect(manager.reload).not_to be_is_archived
+            expect(manager.tokens).to eq(tokens)
+          end
         end
       end
     end
