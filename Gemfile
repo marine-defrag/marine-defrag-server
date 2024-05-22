@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-ruby File.read(File.expand_path(".ruby-version", __dir__)).strip
+ruby file: ".ruby-version"
 
 gem "active_model_serializers"
 gem "batch_api"
@@ -19,13 +19,8 @@ gem "pg", "~> 1.2"
 gem "pundit"
 gem "rack-cors", require: "rack/cors"
 gem "rails", "~> 6.0"
-gem "sass-rails", "~> 6.0"
 gem "secure_headers", ">= 3.0"
-
-group :production, :staging do
-  gem "unicorn"
-  gem "unicorn-worker-killer"
-end
+gem "sass-rails", "~> 6.0"
 
 group :development do
   gem "better_errors"
@@ -37,7 +32,6 @@ group :development do
   gem "simplecov", require: false
   gem "spring"
   gem "standard"
-  gem "thin", require: false
   gem "web-console", "~> 4.1"
 end
 
@@ -63,5 +57,4 @@ group :test do
   gem "timecop"
 end
 
-
-gem "puma", "~> 5.5"
+gem "puma"
