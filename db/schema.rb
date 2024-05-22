@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_29_205738) do
+ActiveRecord::Schema.define(version: 2024_05_15_082006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,16 @@ ActiveRecord::Schema.define(version: 2024_04_29_205738) do
     t.integer "created_by_id"
     t.index ["draft"], name: "index_due_dates_on_draft"
     t.index ["indicator_id"], name: "index_due_dates_on_indicator_id"
+  end
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.text "subject"
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.datetime "sent_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_feedbacks_on_user_id"
   end
 
   create_table "framework_frameworks", id: :serial, force: :cascade do |t|
@@ -498,6 +508,7 @@ ActiveRecord::Schema.define(version: 2024_04_29_205738) do
   add_foreign_key "actors", "actortypes"
   add_foreign_key "actortype_taxonomies", "actortypes"
   add_foreign_key "actortype_taxonomies", "taxonomies"
+  add_foreign_key "feedbacks", "users"
   add_foreign_key "framework_frameworks", "frameworks"
   add_foreign_key "framework_frameworks", "frameworks", column: "other_framework_id"
   add_foreign_key "framework_taxonomies", "frameworks"
