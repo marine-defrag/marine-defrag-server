@@ -4,8 +4,8 @@ en:
     logo:
       alt: IMPACT OSS logo
     title:
-      main: IMPACT OSS demo site API
-      sub: Integrated Planning and Management of Actions
+      main: Marine:DeFRAG Marine Litter Action Mapping Tool | Server API
+      sub: Marine Litter Action Mapping Tool
   due_date_mailer:
     category_due:
       subject: Indicator progress report due for your category
