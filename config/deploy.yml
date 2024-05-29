@@ -10,9 +10,9 @@ servers:
     hosts:
       - <%= ENV.fetch("DEPLOY_SSH_HOST") %>
     labels:
-      traefik.http.routers.web.entrypoints: websecure
-      traefik.http.routers.web.rule: Host(`<%= ENV.fetch("DEPLOY_WEB_HOST") %>`)
-      traefik.http.routers.web.tls.certresolver: letsencrypt
+      traefik.http.routers.md-api.entrypoints: websecure
+      traefik.http.routers.md-api.rule: Host(`<%= ENV.fetch("DEPLOY_WEB_HOST") %>`)
+      traefik.http.routers.md-api.tls.certresolver: letsencrypt
     options:
       network: "private"
 
