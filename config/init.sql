@@ -1,1 +1,1 @@
-CREATE DATABASE IF NOT EXISTS marine_defrag_production;
+CREATE DATABASE marine_defrag_production;
