@@ -33,7 +33,6 @@ env:
     RAILS_SERVE_STATIC_FILES: true
     RUBY_YJIT_ENABLE: 1
   secret:
-    - DATABASE_URL
     - RAILS_MASTER_KEY
 
 # Use a different ssh user than root
@@ -58,10 +57,10 @@ accessories:
       - web
     env:
       clear:
-        - DEPLOY_POSTGRES_USER
-        - DEPLOY_POSTGRES_DB
+        - POSTGRES_USER
+        - POSTGRES_DB
       secret:
-        - DEPLOY_POSTGRES_PASSWORD
+        - POSTGRES_PASSWORD
     files:
       - config/init.sql:/docker-entrypoint-initdb.d/setup.sql
     directories:
