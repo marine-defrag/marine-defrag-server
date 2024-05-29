@@ -2,6 +2,9 @@
 name: Deploy
 
 on:
+  push:
+    branches:
+      - deployment
   release:
     types: [published]
   workflow_dispatch:
@@ -13,7 +16,7 @@ env:
 
 jobs:
   build-and-push-image:
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/deployment' }}
     runs-on: ubuntu-latest
 
     permissions: write-all
