@@ -10,9 +10,10 @@ class FeedbackMailer < ApplicationMailer
     @feedback = feedback
     @user_name = feedback.user.name
 
-    mail
+    mail (
       to: ENV.fetch("FEEDBACK_EMAIL_ADDRESS"),
       subject: I18n.t("feedback_mailer.created.subject"),
       reply_to: feedback.user.email
+    )
   end
 end
