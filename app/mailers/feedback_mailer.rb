@@ -8,7 +8,11 @@ class FeedbackMailer < ApplicationMailer
     return unless ENV["FEEDBACK_EMAIL_ADDRESS"]
 
     @feedback = feedback
+    @user_name = feedback.user.name
 
-    mail to: ENV.fetch("FEEDBACK_EMAIL_ADDRESS"), subject: I18n.t("feedback_mailer.created.subject")
+    mail
+      to: ENV.fetch("FEEDBACK_EMAIL_ADDRESS"),
+      subject: I18n.t("feedback_mailer.created.subject"),
+      reply_to: feedback.user.email
   end
 end
