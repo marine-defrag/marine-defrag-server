@@ -102,19 +102,19 @@ class Seeds
 
     # set up Resource Types ########################################################
     refs = Resourcetype.create!(
-      title: "References",
+      title: "References"
     )
     sites = Resourcetype.create!(
-      title: "Websites",
+      title: "Websites"
     )
     docs = Resourcetype.create!(
-      title: "Documents",
+      title: "Documents"
     )
     aps = Resourcetype.create!(
-      title: "Action Plans",
+      title: "Action Plans"
     )
     mlaps = Resourcetype.create!(
-      title: "Marine Litter Action Plans",
+      title: "Marine Litter Action Plans"
     )
 
     # Set up taxonomies ########################################################
@@ -383,11 +383,10 @@ class Seeds
     countrystatus.categories.create!(title: "Disputed")
     countrystatus.categories.create!(title: "Indeterminate")
     countrystatus.categories.create!(title: "Sovereign country")
-
   end
 
   def development_seeds!
-    return unless User.count.zero?
+    nil unless User.count.zero?
   end
 
   def log(msg, level: :info)

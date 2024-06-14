@@ -9,7 +9,7 @@ gem "bcrypt", "~> 3.1.7"
 gem "devise"
 gem "devise_token_auth"
 gem "fast_jsonapi", git: "https://github.com/Netflix/fast_jsonapi",
-                    branch: "dev"
+  branch: "dev"
 gem "foundation-rails"
 gem "jquery-rails"
 gem "kaminari"
