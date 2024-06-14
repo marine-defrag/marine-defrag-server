@@ -15,3 +15,6 @@ en:
       subject: Indicator progress report is due
     overdue:
       subject: Indicator progress report is overdue
+  feedback_mailer:
+    created:
+      subject: (via Marine:DeFRAG Marine Litter Action Mapping Tool)
