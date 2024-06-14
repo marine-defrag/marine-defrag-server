@@ -1,7 +1,7 @@
 class PageSerializer
   include FastVersionedSerializer
 
-  attributes :title, :content, :menu_title, :order, :draft
+  attributes :title, :content, :menu_title, :order, :draft, :document_url
 
   set_type :pages
 end
