@@ -83,7 +83,8 @@ RSpec.describe PagesController, type: :controller do
             page: {
               title: "test",
               content: "bla",
-              menu_title: "test"
+              menu_title: "test",
+              document_url: "test.example.com"
             }
           }
       end
@@ -115,6 +116,12 @@ RSpec.describe PagesController, type: :controller do
         post :create, format: :json, params: {page: {description: "desc only", taxonomy_id: 999}}
         expect(response).to have_http_status(422)
       end
+
+      it "will store the document_url" do
+        sign_in admin
+        json = JSON.parse(subject.body)
+        expect(json["data"]["attributes"]["document_url"]).to eq("test.example.com")
+      end
     end
   end
 
@@ -123,8 +130,14 @@ RSpec.describe PagesController, type: :controller do
     subject do
       put :update,
         format: :json,
-        params: {id: page,
-                 page: {title: "test update", description: "test update", target_date: "today update"}}
+        params: {
+          id: page,
+          page: {
+            title: "test update",
+            description: "test update",
+            target_date: "today update"
+          }
+        }
     end
 
     context "when not signed in" do
@@ -162,15 +175,29 @@ RSpec.describe PagesController, type: :controller do
         Timecop.travel(Time.new + 15.days) do
           subject = put :update,
             format: :json,
-            params: {id: page,
-                     page: {title: "test update", description: "test updateeee", target_date: "today update", updated_at: current_update_at}}
+            params: {
+              id: page,
+              page: {
+                title: "test update",
+                description: "test updateeee",
+                target_date: "today update",
+                updated_at: current_update_at
+              }
+            }
           expect(subject).to be_ok
         end
         Timecop.travel(Time.new + 5.days) do
           subject = put :update,
             format: :json,
-            params: {id: page,
-                     page: {title: "test update", description: "test updatebbbb", target_date: "today update", updated_at: current_update_at}}
+            params: {
+              id: page,
+              page: {
+                title: "test update",
+                description: "test updatebbbb",
+                target_date: "today update",
+                updated_at: current_update_at
+              }
+            }
           expect(subject).to_not be_ok
         end
       end
