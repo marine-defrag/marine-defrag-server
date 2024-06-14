@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  get "up", to: proc { [200, {}, ["success"]] }, as: :rails_health_check
+
   mount_devise_token_auth_for "User", at: "auth"
 
   resources :taxonomies do
@@ -13,6 +17,7 @@ Rails.application.routes.draw do
   resources :actors
   resources :actortype_taxonomies, only: [:index, :show]
   resources :actortypes, only: [:index, :show]
+  resources :feedbacks, only: [:create]
   resources :measure_actors, only: [:index, :show, :create, :update, :destroy]
   resources :measure_categories
   resources :measure_indicators
