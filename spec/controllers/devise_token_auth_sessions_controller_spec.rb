@@ -24,6 +24,13 @@ RSpec.describe DeviseTokenAuth::SessionsController, type: :controller do
       it "does not allow sign in" do
         expect(subject).to have_http_status(:unauthorized)
       end
+
+      it "returns an error message" do
+        subject
+
+        expect(JSON.parse(response.body).dig("errors"))
+          .to include(I18n.t("devise.mailer.unlock_instructions.account_lock_msg"))
+      end
     end
   end
 end

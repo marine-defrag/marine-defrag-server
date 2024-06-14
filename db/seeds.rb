@@ -49,7 +49,7 @@ class Seeds
       has_members: true
     )
 
-    regions = Actortype.create!(
+    _regions = Actortype.create!(
       title: "Region",
       is_active: false,
       is_target: true,
@@ -88,7 +88,7 @@ class Seeds
       has_target: false
     )
 
-    donations = Measuretype.create!(
+    _donations = Measuretype.create!(
       title: "Donor activities",
       has_parent: true,
       has_target: true
@@ -101,19 +101,19 @@ class Seeds
     )
 
     # set up Resource Types ########################################################
-    refs = Resourcetype.create!(
+    _refs = Resourcetype.create!(
       title: "References"
     )
-    sites = Resourcetype.create!(
+    _sites = Resourcetype.create!(
       title: "Websites"
     )
-    docs = Resourcetype.create!(
+    _docs = Resourcetype.create!(
       title: "Documents"
     )
-    aps = Resourcetype.create!(
+    _aps = Resourcetype.create!(
       title: "Action Plans"
     )
-    mlaps = Resourcetype.create!(
+    _mlaps = Resourcetype.create!(
       title: "Marine Litter Action Plans"
     )
 
