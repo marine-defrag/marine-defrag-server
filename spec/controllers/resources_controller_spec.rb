@@ -85,7 +85,8 @@ RSpec.describe ResourcesController, type: :controller do
           params: {
             resource: {
               title: "test",
-              resourcetype_id: resourcetype.id
+              resourcetype_id: resourcetype.id,
+              document_url: "test.example.com"
             }
           }
       end
@@ -121,6 +122,12 @@ RSpec.describe ResourcesController, type: :controller do
         sign_in admin
         post :create, format: :json, params: {resource: {description: "desc only", taxonomy_id: 999}}
         expect(response).to have_http_status(422)
+      end
+
+      it "will store the document_url" do
+        sign_in admin
+        json = JSON.parse(subject.body)
+        expect(json["data"]["attributes"]["document_url"]).to eq("test.example.com")
       end
     end
   end

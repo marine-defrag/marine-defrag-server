@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_05_17_081746) do
+ActiveRecord::Schema.define(version: 2024_05_17_094056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -317,6 +317,7 @@ ActiveRecord::Schema.define(version: 2024_05_17_081746) do
     t.integer "updated_by_id"
     t.integer "created_by_id"
     t.boolean "private", default: true
+    t.text "document_url"
     t.index ["draft"], name: "index_pages_on_draft"
     t.index ["private"], name: "index_pages_on_private"
   end
@@ -403,6 +404,7 @@ ActiveRecord::Schema.define(version: 2024_05_17_081746) do
     t.bigint "updated_by_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "document_url"
     t.index ["created_by_id"], name: "index_resources_on_created_by_id"
     t.index ["resourcetype_id"], name: "index_resources_on_resourcetype_id"
     t.index ["updated_by_id"], name: "index_resources_on_updated_by_id"
@@ -481,7 +483,7 @@ ActiveRecord::Schema.define(version: 2024_05_17_081746) do
     t.integer "updated_by_id"
     t.boolean "allow_password_change", default: true
     t.integer "created_by_id"
-    t.boolean "is_archived", default: false, null: false
+    t.datetime "archived_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
