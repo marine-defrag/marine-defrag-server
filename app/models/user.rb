@@ -6,16 +6,12 @@ class User < VersionedRecord
     :recoverable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
 
-  def self.dta_find_by(...)
-    active.find_by(...)
-  end
-
   has_paper_trail ignore: [:tokens, :updated_at]
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :trackable, :validatable
+  :recoverable, :rememberable, :trackable, :validatable
 
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
@@ -29,6 +25,18 @@ class User < VersionedRecord
   validates :name, presence: true
 
   scope :active, -> { where(is_archived: false) }
+
+  def active_for_authentication?
+    super && active?
+  end
+
+  def active?
+    !is_archived
+  end
+
+  def locked_at
+    updated_at if is_archived
+  end
 
   def role?(role)
     roles.where(name: role).any?
