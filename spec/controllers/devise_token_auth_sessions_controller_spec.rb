@@ -29,7 +29,7 @@ RSpec.describe DeviseTokenAuth::SessionsController, type: :controller do
         subject
 
         expect(JSON.parse(response.body).dig("errors"))
-          .to include(I18n.t('devise.mailer.unlock_instructions.account_lock_msg'))
+          .to include(I18n.t("devise.mailer.unlock_instructions.account_lock_msg"))
       end
     end
   end
