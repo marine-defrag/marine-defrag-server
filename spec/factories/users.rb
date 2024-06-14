@@ -21,10 +21,10 @@ FactoryBot.define do
   end
 
   trait :active do
-    archived_at { nil }
+    is_archived { false }
   end
 
   trait :archived do
-    archived_at { Time.current }
+    is_archived { true }
   end
 end
