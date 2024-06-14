@@ -232,20 +232,21 @@ RSpec.describe UsersController, type: :controller do
         let(:tokens) do
           {
             "-oLb3gV1gLYfnONNWJwAqw" => {
-              "token" => "some_token",
+              "token" => "$2a$10$hvTl9tFQarHd0xrk40uj7OXH3ll0w0rLDobHZRunI220YCRisQT.a",
               "expiry" => (Time.now + 1.day).to_i
             }
           }
         end
+
         before do
           # Set up an example token
-          manager.update(tokens: tokens)
+          manager.update(tokens:)
         end
 
         subject do
           put :update,
             format: :json,
-            params: {id: manager.id, user: {is_archived: is_archived}}
+            params: {id: manager.id, user: {is_archived:}}
         end
 
         context "when false" do
