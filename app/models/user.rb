@@ -27,7 +27,7 @@ class User < VersionedRecord
   scope :active, -> { where(is_archived: false) }
 
   def active_for_authentication?
-    super && active?
+    super && !locked_at
   end
 
   def active?
@@ -35,7 +35,7 @@ class User < VersionedRecord
   end
 
   def locked_at
-    updated_at if is_archived
+    updated_at unless active?
   end
 
   def role?(role)
