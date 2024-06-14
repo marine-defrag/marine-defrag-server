@@ -234,8 +234,8 @@ RSpec.describe UsersController, type: :controller do
           manager.update(
             tokens: {
               "-oLb3gV1gLYfnONNWJwAqw" => {
-                "token"=>"$2a$10$hvTl9tFQarHd0xrk40uj7OXH3ll0w0rLDobHZRunI220YCRisQT.a",
-                "expiry"=>(Time.now + 1.day).to_i
+                "token" => "$2a$10$hvTl9tFQarHd0xrk40uj7OXH3ll0w0rLDobHZRunI220YCRisQT.a",
+                "expiry" => (Time.now + 1.day).to_i
               }
             }
           )
