@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :categories
   end
   get "static_pages/home"
+  get "s3/sign"
 
   resources :actor_categories, only: [:index, :show, :create, :destroy]
   resources :actor_measures, only: [:index, :show, :create, :update, :destroy]
