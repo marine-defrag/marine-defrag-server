@@ -1,3 +1,10 @@
-Message submitted by <%= @user_name %>
+Feedback submitted from <%= @user_name %> (<%= @user_email %>)
+
+Subject: <%= @feedback.subject %>
+
+Content:
 
 <%= @feedback.content %>
+
+---
+Note: replying to this email will send your response to the email address associated with the feedback's author

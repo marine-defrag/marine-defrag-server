@@ -8,4 +8,4 @@ en:
       sub: Marine Litter Action Mapping Tool
   feedback_mailer:
     created:
-      subject: (via Marine:DeFRAG Marine Litter Action Mapping Tool)
+      subject: [Feedback from Marine Litter Action Mapping Tool]
