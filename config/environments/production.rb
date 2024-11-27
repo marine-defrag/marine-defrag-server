@@ -77,7 +77,7 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
     address: ENV["MAILGUN_SMTP_SERVER"],
     user_name: ENV["MAILGUN_SMTP_LOGIN"],
     password: ENV["MAILGUN_SMTP_PASSWORD"],
-    domain: "impactoss.org",
+    domain: "marine-defrag.org",
     authentication: :plain
   }
   config.action_mailer.raise_delivery_errors = true
