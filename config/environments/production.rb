@@ -78,7 +78,9 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
     user_name: ENV["SMTP_LOGIN"],
     password: ENV["SMTP_PASSWORD"],
     domain: ENV["SMTP_DOMAIN"] || "marine-defrag.org",
-    authentication: :plain
+    authentication: :plain,
+    ssl: true,
+    tls: true
   }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = {
