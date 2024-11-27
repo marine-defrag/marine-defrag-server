@@ -73,11 +73,11 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    port: ENV["MAILGUN_SMTP_PORT"],
-    address: ENV["MAILGUN_SMTP_SERVER"],
-    user_name: ENV["MAILGUN_SMTP_LOGIN"],
-    password: ENV["MAILGUN_SMTP_PASSWORD"],
-    domain: "marine-defrag.org",
+    port: ENV["SMTP_PORT"],
+    address: ENV["SMTP_SERVER"],
+    user_name: ENV["SMTP_LOGIN"],
+    password: ENV["SMTP_PASSWORD"],
+    domain: ENV["SMTP_DOMAIN"] || "marine-defrag.org",
     authentication: :plain
   }
   config.action_mailer.raise_delivery_errors = true
