@@ -83,6 +83,7 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
       domain: "impactoss.org",
       authentication: :plain
     }
+    config.action_mailer.perform_deliveries = true
     config.action_mailer.raise_delivery_errors = true
     config.action_mailer.default_url_options = {
       host: ENV["ACTION_MAILER_HOST"] || "impactoss.org",
