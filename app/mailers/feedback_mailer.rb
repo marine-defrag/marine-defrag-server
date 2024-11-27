@@ -13,7 +13,7 @@ class FeedbackMailer < ApplicationMailer
 
     mail(
       to: ENV.fetch("FEEDBACK_EMAIL_ADDRESS"),
-      subject: feedback.subject + " " + I18n.t("feedback_mailer.created.subject"),
+      subject: "#{feedback.subject} #{I18n.t('feedback_mailer.created.subject')}",
       reply_to: feedback.user.email)
   end
 end
