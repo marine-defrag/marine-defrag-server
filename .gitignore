@@ -21,7 +21,7 @@
 /public/uploads/
 
 # Never check passwords into source control!
-/.env
+.env*
 /.envrc
 .rubocop-*
 
