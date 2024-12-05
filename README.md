@@ -24,9 +24,11 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for information on how deployment is handled.
 
 ### Production consoles
 
-To access the production Rails console, run `bin/kamal app exec "bin/rails console" --interactive`.
+To access the production Rails console, run `bin/production/console`.
 
-To access the production postgresql console, run `bin/kamal app exec "psql $(bin/rails runner 'puts Rails.application.credentials.database_url')" --interactive`.
+To access the production postgresql console, run `bin/production/psql`.
+
+Note that both of these require that you have the correct permissions to access the production environment.
 
 ## OUTDATED: Documentation
 

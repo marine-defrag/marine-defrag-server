@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+bin/kamal app exec "psql $(bin/rails runner 'puts Rails.application.credentials.database_url')" --interactive
