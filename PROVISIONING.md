@@ -1,1 +1,1 @@
-# How to provision a new environment for the Marine: DeFRAG API
+# How to provision a new environment for the Marine:DeFRAG server application

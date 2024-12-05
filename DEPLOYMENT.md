@@ -1,4 +1,4 @@
-# How to deploy the Marine: DeFRAG API
+# How to deploy the Marine:DeFRAG server application
 
 This document covers the steps need to deploy the application to an existing environment. To create a new environment, refer to [PROVISIONING.md](PROVISIONING.md).
 
