@@ -4,7 +4,7 @@
 
 This is the source code for the server-side application (the "API") of Marine:DeFRAG.
 
-It is a **Rails 6.1.4.1 application** and is a thin server that is responsible for:
+It is a **Rails 6.1.7.7 application** and is a thin server that is responsible for:
 * database management and access via an API (Application Programming Interface)
 * user authentication
 * automated email reminders
@@ -17,6 +17,16 @@ IMPACT OSS is an Open Source Software (OSS) for Integrated Management and Planni
 The IMPACT OSS project is maintained by the Impact Open Source Software Trust. To learn more about the project and the Trust see https://impactoss.org
 
 ---
+
+## Production Deployment
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for information on how deployment is handled.
+
+### Production consoles
+
+To access the production Rails console, run `bin/kamal app exec "bin/rails console" --interactive`.
+
+To access the production postgresql console, run `bin/kamal app exec "psql $(bin/rails runner 'puts Rails.application.credentials.database_url')" --interactive`.
 
 ## OUTDATED: Documentation
 
