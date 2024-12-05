@@ -24,9 +24,9 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for information on how deployment is handled.
 
 ### Production consoles
 
-To access the production Rails console, run `bin/production/console`.
+To access the production Rails console, run `bin/production/console` on your local machine.
 
-To access the production postgresql console, run `bin/production/psql`.
+To access the production postgresql console, run `bin/production/psql` on your local machine.
 
 Note that both of these require that you have the correct permissions to access the production environment.
 
