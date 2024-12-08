@@ -17,7 +17,6 @@ class Measure < VersionedRecord
   has_many :recommendations, through: :recommendation_measures, inverse_of: :measures
   has_many :categories, through: :measure_categories, inverse_of: :measures
   has_many :indicators, through: :measure_indicators, inverse_of: :measures
-  has_many :due_dates, through: :indicators
   has_many :progress_reports, through: :indicators
 
   belongs_to :measuretype, required: true
