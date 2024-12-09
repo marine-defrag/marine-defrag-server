@@ -33,6 +33,12 @@ env:
     RUBY_YJIT_ENABLE: 1
   secret:
     - RAILS_MASTER_KEY
+    - FEEDBACK_EMAIL_ADDRESS
+    - SMTP_SERVER
+    - SMTP_PORT
+    - SMTP_PASSWORD
+    - SMTP_LOGIN
+    - SMTP_DOMAIN
 
 # Use a different ssh user than root
 # ssh:

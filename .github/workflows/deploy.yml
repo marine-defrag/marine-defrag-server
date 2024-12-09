@@ -77,6 +77,17 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
 
+      - name: Push environment secrets
+        run: bin/kamal env push
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          FEEDBACK_EMAIL_ADDRESS: ${{ secrets.FEEDBACK_EMAIL_ADDRESS }}
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_LOGIN: ${{ secrets.SMTP_LOGIN }}
+          SMTP_DOMAIN: ${{ secrets.SMTP_DOMAIN }}
+
       - name: Deploy command
         run: bin/kamal deploy --skip-push
         env:
