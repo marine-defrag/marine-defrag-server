@@ -12,9 +12,6 @@ class Category < VersionedRecord
   has_many :measures, through: :measure_categories
   has_many :indicators, through: :recommendations
   has_many :progress_reports, through: :indicators
-  has_many :due_dates, -> { distinct }, through: :indicators
-
-  has_many :children_due_dates, -> { distinct }, through: :categories, source: :due_dates
 
   delegate :name, :email, to: :manager, prefix: true, allow_nil: true
 
@@ -44,31 +41,4 @@ class Category < VersionedRecord
     end
   end
 
-  def self.send_all_due_emails
-    Category.all.each(&:send_due_emails)
-  end
-
-  def self.send_all_overdue_emails
-    Category.all.each(&:send_overdue_emails)
-  end
-
-  def send_due_emails
-    due_dates.are_due.each do |due_date|
-      DueDateMailer.category_due(due_date, self).deliver_now
-    end
-
-    children_due_dates.are_due.each do |due_date|
-      DueDateMailer.category_due(due_date, self).deliver_now
-    end
-  end
-
-  def send_overdue_emails
-    due_dates.are_overdue.each do |due_date|
-      DueDateMailer.category_overdue(due_date, self).deliver_now
-    end
-
-    children_due_dates.are_overdue.each do |due_date|
-      DueDateMailer.category_overdue(due_date, self).deliver_now
-    end
-  end
 end

@@ -47,7 +47,6 @@ Rails.application.routes.draw do
     resources :progress_reports, only: [:index, :show]
   end
   resources :progress_reports
-  resources :due_dates
   resources :users
   resources :user_roles
   resources :roles

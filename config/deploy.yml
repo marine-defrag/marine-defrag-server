@@ -31,8 +31,25 @@ env:
 
     RAILS_SERVE_STATIC_FILES: true
     RUBY_YJIT_ENABLE: 1
+    DEPLOY_REGISTRY: ghcr.io
+    DEPLOY_SSH_HOST: api.marine-defrag.org
   secret:
+    - DEPLOY_LETSENCRYPT_EMAIL
+    - DEPLOY_REGISTRY_PASSWORD
+    - DEPLOY_USERNAME
+    - DEPLOY_WEB_HOST
+    - POSTGRES_DB
+    - POSTGRES_PASSWORD
+    - POSTGRES_USER
     - RAILS_MASTER_KEY
+    - FEEDBACK_EMAIL_ADDRESS
+    - SMTP_SERVER
+    - SMTP_PORT
+    - SMTP_PASSWORD
+    - SMTP_LOGIN
+    - SMTP_DOMAIN
+    - ACTION_MAILER_ASSET_HOST
+    - ACTION_MAILER_HOST
 
 # Use a different ssh user than root
 # ssh:
