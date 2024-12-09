@@ -98,6 +98,8 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_LOGIN: ${{ secrets.SMTP_LOGIN }}
           SMTP_DOMAIN: ${{ secrets.SMTP_DOMAIN }}
+          ACTION_MAILER_ASSET_HOST: ${{ secrets.ACTION_MAILER_ASSET_HOST }}
+          ACTION_MAILER_HOST: ${{ secrets.ACTION_MAILER_HOST }}
 
       - name: Deploy command
         run: bin/kamal deploy --skip-push
@@ -118,3 +120,5 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_LOGIN: ${{ secrets.SMTP_LOGIN }}
           SMTP_DOMAIN: ${{ secrets.SMTP_DOMAIN }}
+          ACTION_MAILER_ASSET_HOST: ${{ secrets.ACTION_MAILER_ASSET_HOST }}
+          ACTION_MAILER_HOST: ${{ secrets.ACTION_MAILER_HOST }}

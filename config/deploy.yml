@@ -48,6 +48,8 @@ env:
     - SMTP_PASSWORD
     - SMTP_LOGIN
     - SMTP_DOMAIN
+    - ACTION_MAILER_ASSET_HOST
+    - ACTION_MAILER_HOST
 
 # Use a different ssh user than root
 # ssh:
