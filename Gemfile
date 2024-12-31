@@ -10,7 +10,7 @@ gem 'devise', '~> 4.9.0'
 gem "devise_token_auth"
 gem "fast_jsonapi", git: "https://github.com/Netflix/fast_jsonapi",
   branch: "dev"
-gem "foundation-rails"
+gem 'foundation-rails', '~> 6.9'
 gem "jquery-rails"
 gem "kaminari"
 gem "oj"
@@ -20,7 +20,7 @@ gem "pundit"
 gem "rack-cors", require: "rack/cors"
 gem "rails", "~> 7.2.2.1"
 gem "secure_headers", ">= 7.1.0"
-gem "sass-rails", "~> 6.0"
+gem 'sassc-rails', '~> 2.1'
 
 group :development do
   gem "better_errors"
