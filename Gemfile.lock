@@ -489,7 +489,7 @@ DEPENDENCIES
   rails (~> 7.2.2.1)
   rspec-rails
   sass-rails (~> 6.0)
-  secure_headers (>= 3.0)
+  secure_headers (>= 7.1.0)
   shoulda-matchers
   simplecov
   spring

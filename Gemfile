@@ -19,7 +19,7 @@ gem "pg", "~> 1.2"
 gem "pundit"
 gem "rack-cors", require: "rack/cors"
 gem "rails", "~> 7.2.2.1"
-gem "secure_headers", ">= 3.0"
+gem "secure_headers", ">= 7.1.0"
 gem "sass-rails", "~> 6.0"
 
 group :development do
