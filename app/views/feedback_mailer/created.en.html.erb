@@ -1,7 +1,15 @@
+<h3>Feedback submitted from <%= @user_name %> (<%= @user_email %>)</h3>
+
+<p><strong>Feedback subject:</strong></p>
+
 <p>
-  Message submitted by: <%= @user_name %>
+  <%= @feedback.subject %>
 </p>
+
+<p><strong>Feedback content:</strong></p>
 
 <p>
   <%= @feedback.content %>
 </p>
+
+<em>Note: replying to this email will send your response to the email address associated with the feedback's author</em>

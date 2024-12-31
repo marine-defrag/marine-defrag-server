@@ -6,15 +6,6 @@ en:
     title:
       main: Marine:DeFRAG Marine Litter Action Mapping Tool | Server API
       sub: Marine Litter Action Mapping Tool
-  due_date_mailer:
-    category_due:
-      subject: Indicator progress report due for your category
-    category_overdue:
-      subject: Indicator progress reports are overdue for your category
-    due:
-      subject: Indicator progress report is due
-    overdue:
-      subject: Indicator progress report is overdue
   feedback_mailer:
     created:
-      subject: (via Marine:DeFRAG Marine Litter Action Mapping Tool)
+      subject: [Feedback from Marine Litter Action Mapping Tool]
