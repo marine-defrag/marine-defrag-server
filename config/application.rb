@@ -42,6 +42,6 @@ module HumanRightsNationalReporting
 
     config.active_record.belongs_to_required_by_default = true
 
-    config.load_defaults 7.2.2.1
+    config.load_defaults 7.2
   end
 end
