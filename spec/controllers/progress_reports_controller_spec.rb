@@ -53,7 +53,6 @@ RSpec.describe ProgressReportsController, type: :controller do
     context "when signed in" do
       let(:guest) { FactoryBot.create(:user) }
       let(:user) { FactoryBot.create(:user, :manager) }
-      let(:due_date) { FactoryBot.create(:due_date) }
       let(:indicator) { FactoryBot.create(:indicator) }
 
       subject do
@@ -62,7 +61,6 @@ RSpec.describe ProgressReportsController, type: :controller do
           params: {
             progress_report: {
               indicator_id: indicator.id,
-              due_date_id: due_date.id,
               title: "test title",
               description: "test desc",
               document_url: "test_url",
