@@ -18,7 +18,7 @@ gem "paper_trail"
 gem "pg", "~> 1.2"
 gem "pundit"
 gem "rack-cors", require: "rack/cors"
-gem "rails", "~> 6.0"
+gem "rails", "~> 6.1.7.7"
 gem "secure_headers", ">= 3.0"
 gem "sass-rails", "~> 6.0"
 
