@@ -12,20 +12,24 @@ Rails.application.configure do
   # Do not eager load code on boot. This avoids loading your whole application
   # just for the purpose of running a single test. If you are using a tool that
   # preloads Rails for running tests, you may have to set it to true.
-  config.eager_load = defined?(SimpleCov).present?
+  config.eager_load = true
 
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Show full error reports and disable caching.
-  config.consider_all_requests_local = true
-  config.action_controller.perform_caching = false
+  config.consider_all_requests_local = false
+  config.action_controller.perform_caching = true
+
+  # Disable serving static files from the `/public` folder by default since
+  # Apache or NGINX already handles this.
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = false
+  # config.action_dispatch.show_exceptions = false
 
   # Disable request forgery protection in test environment.
-  config.action_controller.allow_forgery_protection = false
+  # config.action_controller.allow_forgery_protection = false
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = false
@@ -45,8 +49,6 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "human-rights-national-reporting_#{Rails.env}"
   config.action_mailer.perform_caching = false
 
-  # Ensure mailer works in test
-  config.action_mailer.raise_delivery_errors = true
   # Production SMTP config
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
