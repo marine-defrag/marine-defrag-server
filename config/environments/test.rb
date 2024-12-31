@@ -15,10 +15,7 @@ Rails.application.configure do
   config.eager_load = defined?(SimpleCov).present?
 
   # Configure public file server for tests with Cache-Control for performance.
-  config.public_file_server.enabled = true
-  config.public_file_server.headers = {
-    "Cache-Control" => "public, max-age=3600"
-  }
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local = true
@@ -29,21 +26,69 @@ Rails.application.configure do
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
-  config.action_mailer.perform_caching = false
 
-  # Tell Action Mailer not to deliver emails to the real world.
-  # The :test delivery method accumulates sent emails in the
-  # ActionMailer::Base.deliveries array.
-  config.action_mailer.delivery_method = :test
+  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  config.force_ssl = false
+
+  # Use the lowest log level to ensure availability of diagnostic information
+  # when problems arise.
+  config.log_level = :debug
+
+  # Prepend all log lines with the following tags.
+  config.log_tags = [:request_id]
+
+  # Use a different cache store in production.
+  # config.cache_store = :mem_cache_store
+
+  # Use a real queuing backend for Active Job (and separate queues per environment)
+  # config.active_job.queue_adapter     = :resque
+  # config.active_job.queue_name_prefix = "human-rights-national-reporting_#{Rails.env}"
+  config.action_mailer.perform_caching = false
 
   # Ensure mailer works in test
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = {host: "localhost:3000"}
-  config.action_mailer.asset_host = "http://localhost:3000"
+  # Production SMTP config
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    port: ENV["SMTP_PORT"],
+    address: ENV["SMTP_SERVER"],
+    user_name: ENV["SMTP_LOGIN"],
+    password: ENV["SMTP_PASSWORD"],
+    domain: ENV["SMTP_DOMAIN"],
+    authentication: :plain,
+    enable_starttls_auto: true,
+    openssl_verify_mode: "none",
+    ssl: true,
+    tls: true
+  }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = {
+    host: ENV["ACTION_MAILER_HOST"],
+    protocol: ENV["ACTION_MAILER_PROTOCOL"] || "https"
+  }
+  config.action_mailer.asset_host = ENV["ACTION_MAILER_ASSET_HOST"]
 
-  # Print deprecation notices to the stderr.
-  config.active_support.deprecation = :stderr
+  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
+  # the I18n.default_locale when a translation cannot be found).
+  config.i18n.fallbacks = true
 
-  # Raises error for missing translations
-  # config.action_view.raise_on_missing_translations = true
+  # Send deprecation notices to registered listeners.
+  config.active_support.deprecation = :notify
+
+  # Use default logging formatter so that PID and timestamp are not suppressed.
+  config.log_formatter = ::Logger::Formatter.new
+
+  # Use a different logger for distributed setups.
+  # require 'syslog/logger'
+  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
+
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger = ActiveSupport::Logger.new($stdout)
+    logger.formatter = config.log_formatter
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+  # Do not dump schema after migrations.
+  config.active_record.dump_schema_after_migration = false
 end
