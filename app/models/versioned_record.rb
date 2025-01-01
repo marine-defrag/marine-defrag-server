@@ -6,7 +6,7 @@ class VersionedRecord < ApplicationRecord
   before_commit :cache_updated_by_id, on: [:create, :update]
   belongs_to :updated_by, class_name: "User", required: false
 
-  has_paper_trail
+  has_paper_trail ignore: [:tokens, :updated_at]
 
   private
 
