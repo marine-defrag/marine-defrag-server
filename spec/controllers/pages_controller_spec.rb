@@ -10,7 +10,7 @@ RSpec.describe PagesController, type: :controller do
     let!(:public_page) { FactoryBot.create(:page, private: false, draft: false) }
 
     context "when not signed in" do
-      it { expect(subject).to ok }
+      it { expect(subject).to be_ok }
 
       it "will not show draft page" do
         get :show, params: {id: draft_page}, format: :json
@@ -24,7 +24,7 @@ RSpec.describe PagesController, type: :controller do
 
       it "will show public page" do
         get :show, params: {id: public_page}, format: :json
-        expect(response).to ok
+        expect(response).to be_ok
       end
     end
 
@@ -35,7 +35,7 @@ RSpec.describe PagesController, type: :controller do
       context "guest" do
         before { sign_in guest }
 
-        it { expect(subject).to ok }
+        it { expect(subject).to be_ok }
 
         it "will not show draft page" do
           get :show, params: {id: draft_page}, format: :json
@@ -49,7 +49,7 @@ RSpec.describe PagesController, type: :controller do
 
         it "will show public page" do
           get :show, params: {id: public_page}, format: :json
-          expect(response).to ok
+          expect(response).to be_ok
         end
       end
 
@@ -86,7 +86,7 @@ RSpec.describe PagesController, type: :controller do
     subject { get :show, params: {id: page}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to ok }
+      it { expect(subject).to be_ok }
 
       it "will not show draft page" do
         get :show, params: {id: draft_page}, format: :json
@@ -100,7 +100,7 @@ RSpec.describe PagesController, type: :controller do
 
       it "will show public page" do
         get :show, params: {id: public_page}, format: :json
-        expect(response).to ok
+        expect(response).to be_ok
       end
     end
 
