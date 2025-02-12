@@ -10,7 +10,7 @@ RSpec.describe PagesController, type: :controller do
     let!(:public_page) { FactoryBot.create(:page, private: false, draft: false) }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
+      it { expect(subject).to be_successful  }
 
       it "will not show draft page" do
         get :show, params: {id: draft_page}, format: :json
@@ -35,7 +35,7 @@ RSpec.describe PagesController, type: :controller do
       context "guest" do
         before { sign_in guest }
 
-        it { expect(subject).to be_ok }
+        it { expect(subject).to be_successful  }
 
         it "will not show draft page" do
           get :show, params: {id: draft_page}, format: :json
@@ -58,14 +58,14 @@ RSpec.describe PagesController, type: :controller do
           subject { get :show, params: {id: page}, format: :json }
           before { sign_in FactoryBot.create(:user, :analyst) }
 
-          it { expect(subject).to be_ok }
+          it { expect(subject).to be_successful }
         end
 
         context "will show private page" do
           subject { get :show, params: {id: private_page}, format: :json }
           before { sign_in FactoryBot.create(:user, :analyst) }
 
-          it { expect(subject).to be_ok }
+          it { expect(subject).to be_successful }
         end
 
         context "will not show draft page" do
@@ -86,7 +86,7 @@ RSpec.describe PagesController, type: :controller do
     subject { get :show, params: {id: page}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_ok }
+      it { expect(subject).to be_successful }
 
       it "will not show draft page" do
         get :show, params: {id: draft_page}, format: :json
@@ -110,14 +110,14 @@ RSpec.describe PagesController, type: :controller do
           subject { get :show, params: {id: page}, format: :json }
           before { sign_in FactoryBot.create(:user, :analyst) }
 
-          it { expect(subject).to be_ok }
+          it { expect(subject).to be_successful }
         end
 
         context "will show private page" do
           subject { get :show, params: {id: private_page}, format: :json }
           before { sign_in FactoryBot.create(:user, :analyst) }
 
-          it { expect(subject).to be_ok }
+          it { expect(subject).to be_successful }
         end
 
         context "will not show draft page" do
