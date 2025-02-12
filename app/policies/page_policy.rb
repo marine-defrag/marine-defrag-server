@@ -11,7 +11,7 @@ class PagePolicy < ApplicationPolicy
     def resolve
       # If the user is not authenticated, only allow access to pages where private: false
       if @user.nil?
-        scope.where(private: false)
+        scope.where(draft: false, is_archive: false, private: false)
       # If the user has one of the roles, return all pages
       elsif @user.role?("admin") || @user.role?("manager")
         scope.all
