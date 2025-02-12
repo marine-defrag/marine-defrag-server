@@ -6,9 +6,26 @@ RSpec.describe PagesController, type: :controller do
     subject { get :index, format: :json }
     let!(:page) { FactoryBot.create(:page) }
     let!(:draft_page) { FactoryBot.create(:page, draft: true) }
+    let!(:private_page) { FactoryBot.create(:page, private: true, draft: false) }
+    let!(:public_page) { FactoryBot.create(:page, private: false, draft: false) }
 
     context "when not signed in" do
-      it { expect(subject).to be_forbidden }
+      it { expect(subject).to ok }
+
+      it "will not show draft page" do
+        get :show, params: {id: draft_page}, format: :json
+        expect(response).to be_forbidden
+      end
+
+      it "will not show private page" do
+        get :show, params: {id: private_page}, format: :json
+        expect(response).to be_forbidden
+      end
+
+      it "will show public page" do
+        get :show, params: {id: public_page}, format: :json
+        expect(response).to ok
+      end
     end
 
     context "when signed in" do
@@ -18,13 +35,45 @@ RSpec.describe PagesController, type: :controller do
       context "guest" do
         before { sign_in guest }
 
-        it { expect(subject).to be_forbidden }
+        it { expect(subject).to ok }
+
+        it "will not show draft page" do
+          get :show, params: {id: draft_page}, format: :json
+          expect(response).to be_forbidden
+        end
+
+        it "will not show private page" do
+          get :show, params: {id: private_page}, format: :json
+          expect(response).to be_forbidden
+        end
+
+        it "will show public page" do
+          get :show, params: {id: public_page}, format: :json
+          expect(response).to ok
+        end
       end
 
-      it "manager will see draft pages" do
-        sign_in user
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(2)
+      context "as analyst" do
+        context "will show page" do
+          subject { get :show, params: {id: page}, format: :json }
+          before { sign_in FactoryBot.create(:user, :analyst) }
+
+          it { expect(subject).to be_ok }
+        end
+
+        context "will show private page" do
+          subject { get :show, params: {id: private_page}, format: :json }
+          before { sign_in FactoryBot.create(:user, :analyst) }
+
+          it { expect(subject).to be_ok }
+        end
+
+        context "will not show draft page" do
+          subject { get :show, params: {id: draft_page}, format: :json }
+          before { sign_in FactoryBot.create(:user, :analyst) }
+
+          it { expect(subject).to be_not_found }
+        end
       end
     end
   end
@@ -32,14 +81,26 @@ RSpec.describe PagesController, type: :controller do
   describe "Get show" do
     let(:page) { FactoryBot.create(:page) }
     let(:draft_page) { FactoryBot.create(:page, draft: true) }
+    let(:private_page) { FactoryBot.create(:page, private: true, draft: false) }
+    let(:public_page) { FactoryBot.create(:page, private: false, draft: false) }
     subject { get :show, params: {id: page}, format: :json }
 
     context "when not signed in" do
-      it { expect(subject).to be_forbidden }
+      it { expect(subject).to ok }
 
       it "will not show draft page" do
         get :show, params: {id: draft_page}, format: :json
         expect(response).to be_forbidden
+      end
+
+      it "will not show private page" do
+        get :show, params: {id: private_page}, format: :json
+        expect(response).to be_forbidden
+      end
+
+      it "will show public page" do
+        get :show, params: {id: public_page}, format: :json
+        expect(response).to ok
       end
     end
 
@@ -47,6 +108,13 @@ RSpec.describe PagesController, type: :controller do
       context "as analyst" do
         context "will show page" do
           subject { get :show, params: {id: page}, format: :json }
+          before { sign_in FactoryBot.create(:user, :analyst) }
+
+          it { expect(subject).to be_ok }
+        end
+
+        context "will show private page" do
+          subject { get :show, params: {id: private_page}, format: :json }
           before { sign_in FactoryBot.create(:user, :analyst) }
 
           it { expect(subject).to be_ok }
