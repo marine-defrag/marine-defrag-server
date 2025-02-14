@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   # GET /pages
   def index
     @pages = policy_scope(base_object).order(created_at: :desc)
-    authorize @pages
+    authorize @pages if user_signed_in?
 
     render json: serialize(@pages)
   end
