@@ -114,7 +114,7 @@ traefik:
     entryPoints.web.http.redirections.entryPoint.to: websecure # We want to force https
     entryPoints.web.http.redirections.entryPoint.scheme: https
     entryPoints.web.http.redirections.entrypoint.permanent: true
-    certificatesResolvers.letsencrypt.acme.email: "<%= ENV.fetch('DEPLOY_LETSENCRYPT_EMAIL') %>"
+    certificatesResolvers.letsencrypt.acme.email: '<%= ENV.fetch("DEPLOY_LETSENCRYPT_EMAIL") %>'
     certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json" # Must match the path in `volume`
     certificatesResolvers.letsencrypt.acme.httpchallenge: true
     certificatesResolvers.letsencrypt.acme.httpchallenge.entrypoint: web # Must match the role in `servers`
