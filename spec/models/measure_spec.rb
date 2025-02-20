@@ -5,7 +5,6 @@ RSpec.describe Measure, type: :model do
   it { is_expected.to have_many :recommendations }
   it { is_expected.to have_many :categories }
   it { is_expected.to have_many :indicators }
-  it { is_expected.to have_many :due_dates }
   it { is_expected.to have_many :progress_reports }
 
   context "parent_id" do
@@ -30,14 +29,23 @@ RSpec.describe Measure, type: :model do
       expect(subject.errors[:parent_id]).to(include("can't be the same as id"))
     end
 
-    # it "can't be set if measure's measuretype :measuretype.has_parent = false" do
-    #   subject.parent_id = described_class.create(
-    #     measuretype: FactoryBot.create(:measuretype, :parent_not_allowed),
-    #     title: "no parent"
-    #   ).id
-    #   expect(subject).to be_invalid
-    #   expect(subject.errors[:parent_id]).to(include("is not allowed for this measuretype"))
-    # end
+    context "when parent is not allowed" do
+      subject do
+        described_class.create(
+          measuretype: FactoryBot.create(:measuretype, :parent_not_allowed),
+          title: "parent isn't allowed"
+        )
+      end
+
+      it "can't be set" do
+        subject.parent_id = described_class.create(
+          measuretype: FactoryBot.create(:measuretype, :parent_allowed),
+          title: "no parent"
+        ).id
+        expect(subject).to be_invalid
+        expect(subject.errors[:parent_id]).to(include("is not allowed for this measuretype"))
+      end
+    end
 
     it "can't be its own descendant" do
       child = described_class.create(

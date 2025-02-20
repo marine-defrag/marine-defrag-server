@@ -9,7 +9,6 @@ class Recommendation < VersionedRecord
   has_many :categories, through: :recommendation_categories
   has_many :indicators, through: :recommendation_indicators
   has_many :progress_reports, through: :indicators
-  has_many :due_dates, through: :indicators
 
   has_many :recommendation_recommendations, foreign_key: "recommendation_id"
   has_many :recommendations, through: :recommendation_recommendations, source: :other_recommendation

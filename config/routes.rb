@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   get "up", to: proc { [200, {}, ["success"]] }, as: :rails_health_check
 
   mount_devise_token_auth_for "User", at: "auth"
+  # , controllers: {
+  #   sessions: "overrides/sessions"
+  # }
 
   resources :taxonomies do
     resources :categories
@@ -45,7 +48,6 @@ Rails.application.routes.draw do
     resources :progress_reports, only: [:index, :show]
   end
   resources :progress_reports
-  resources :due_dates
   resources :users
   resources :user_roles
   resources :roles

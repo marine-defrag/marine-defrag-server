@@ -10,9 +10,7 @@ RSpec.describe Category, type: :model do
   it { is_expected.to have_many :measures }
   it { is_expected.to have_many :indicators }
   it { is_expected.to have_many :progress_reports }
-  it { is_expected.to have_many :due_dates }
   it { is_expected.to have_many :categories }
-  it { is_expected.to have_many :children_due_dates }
 
   context "Sub-relation validations" do
     it "Should update parent_id with correct taxonomy relation" do
