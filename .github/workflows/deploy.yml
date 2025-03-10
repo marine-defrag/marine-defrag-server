@@ -99,6 +99,12 @@ jobs:
           SMTP_DOMAIN: ${{ secrets.SMTP_DOMAIN }}
           ACTION_MAILER_ASSET_HOST: ${{ secrets.ACTION_MAILER_ASSET_HOST }}
           ACTION_MAILER_HOST: ${{ secrets.ACTION_MAILER_HOST }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+          S3_ASSET_FOLDER: ${{ secrets.S3_ASSET_FOLDER }}
+          CLIENT_URL: ${{ secrets.CLIENT_URL }}
 
       - name: Deploy command
         run: bin/kamal deploy --skip-push
@@ -121,3 +127,9 @@ jobs:
           SMTP_DOMAIN: ${{ secrets.SMTP_DOMAIN }}
           ACTION_MAILER_ASSET_HOST: ${{ secrets.ACTION_MAILER_ASSET_HOST }}
           ACTION_MAILER_HOST: ${{ secrets.ACTION_MAILER_HOST }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ENDPOINT: ${{ secrets.AWS_ENDPOINT }}
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+          S3_ASSET_FOLDER: ${{ secrets.S3_ASSET_FOLDER }}
+          CLIENT_URL: ${{ secrets.CLIENT_URL }}

@@ -10,6 +10,7 @@ gem 'devise', '~> 4.9.0'
 gem "devise_token_auth"
 gem "fast_jsonapi", git: "https://github.com/Netflix/fast_jsonapi",
   branch: "dev"
+gem "fog-aws"
 gem "kaminari"
 gem "oj"
 gem "paper_trail"
