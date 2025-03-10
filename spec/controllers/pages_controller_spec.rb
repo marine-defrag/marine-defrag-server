@@ -5,62 +5,111 @@ RSpec.describe PagesController, type: :controller do
   describe "Get index" do
     subject { get :index, format: :json }
     let!(:page) { FactoryBot.create(:page) }
-    let!(:draft_page) { FactoryBot.create(:page, draft: true) }
+    let!(:draft_page) { FactoryBot.create(:page, draft: true, private: true) }
+    let!(:private_page) { FactoryBot.create(:page, private: true, draft: false) }
+    let!(:public_page) { FactoryBot.create(:page, private: false, draft: false) }
 
     context "when not signed in" do
-      it { expect(subject).to be_forbidden }
+      it "returns only public and non-draft pages" do
+        subject  # Makes the request to the index action
+
+        # Parse the JSON response
+        json_response = JSON.parse(response.body)
+
+        # Check if all pages in the response are not draft and not private
+        expect(json_response["data"].all? do |page|
+          page["attributes"]["draft"] == false && page["attributes"]["private"] == false
+        end).to be true
+      end
     end
-
     context "when signed in" do
-      let(:guest) { FactoryBot.create(:user) }
-      let(:user) { FactoryBot.create(:user, :manager) }
+      let(:user) { FactoryBot.create(:user, :manager) } # You can change role as needed (admin, analyst)
 
-      context "guest" do
-        before { sign_in guest }
+      before { sign_in user }
 
-        it { expect(subject).to be_forbidden }
+      it "returns all pages for admin/manager" do
+        subject
+        json_response = JSON.parse(response.body)
+
+        # Check that all pages are returned (draft, private, etc.)
+        expect(json_response["data"].length).to eq(4)
       end
 
-      it "manager will see draft pages" do
-        sign_in user
-        json = JSON.parse(subject.body)
-        expect(json["data"].length).to eq(2)
+      context "as an analyst" do
+        let(:analyst) { FactoryBot.create(:user, :analyst) }
+
+        before { sign_in analyst }
+
+        it "returns only non-draft pages" do
+          subject
+          json_response = JSON.parse(response.body)
+
+          # Check that draft pages are excluded
+          expect(json_response["data"].all? { |page| page["attributes"]["draft"] == false }).to be true
+        end
       end
     end
   end
 
   describe "Get show" do
-    let(:page) { FactoryBot.create(:page) }
-    let(:draft_page) { FactoryBot.create(:page, draft: true) }
-    subject { get :show, params: {id: page}, format: :json }
+    let!(:page) { FactoryBot.create(:page) }
+    let!(:draft_page) { FactoryBot.create(:page, draft: true, private: true) }
+    let!(:private_page) { FactoryBot.create(:page, private: true, draft: false) }
+    let!(:public_page) { FactoryBot.create(:page, private: false, draft: false) }
 
     context "when not signed in" do
-      it { expect(subject).to be_forbidden }
+      it "does not allow access to draft pages" do
+        get :show, params: { id: draft_page }, format: :json
+        expect(response).to be_not_found
+      end
 
-      it "will not show draft page" do
-        get :show, params: {id: draft_page}, format: :json
-        expect(response).to be_forbidden
+      it "does not allow access to private pages" do
+        get :show, params: { id: private_page }, format: :json
+        expect(response).to be_not_found
+      end
+
+      it "allows access to public pages" do
+        get :show, params: { id: public_page }, format: :json
+        expect(response).to have_http_status(:ok)
+
+        json_response = JSON.parse(response.body)
+        expect(json_response["data"]["attributes"]["draft"]).to be false
+        expect(json_response["data"]["attributes"]["private"]).to be false
       end
     end
 
     context "when signed in" do
-      context "as analyst" do
-        context "will show page" do
-          subject { get :show, params: {id: page}, format: :json }
-          before { sign_in FactoryBot.create(:user, :analyst) }
+      let(:user) { FactoryBot.create(:user, :manager) } # Change role as needed
 
-          it { expect(subject).to be_ok }
+      before { sign_in user }
+
+      it "allows managers to access all pages" do
+        [page, draft_page, private_page, public_page].each do |p|
+          get :show, params: { id: p }, format: :json
+          expect(response).to have_http_status(:ok)
         end
+      end
 
-        context "will not show draft page" do
-          subject { get :show, params: {id: draft_page}, format: :json }
-          before { sign_in FactoryBot.create(:user, :analyst) }
+      context "as an analyst" do
+        let(:analyst) { FactoryBot.create(:user, :analyst) }
 
-          it { expect(subject).to be_not_found }
+        before { sign_in analyst }
+
+        it "allows access to non-draft pages but not drafts" do
+          get :show, params: { id: public_page }, format: :json
+          expect(response).to have_http_status(:ok)
+
+          get :show, params: { id: private_page }, format: :json
+          expect(response).to have_http_status(:ok)
+
+          get :show, params: { id: draft_page }, format: :json
+          expect(response).to be_not_found
         end
       end
     end
   end
+
+
 
   describe "Post create" do
     context "when not signed in" do

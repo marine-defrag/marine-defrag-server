@@ -13,7 +13,6 @@ class ActorCategoryPolicy < ApplicationPolicy
         :draft,
         :gdp,
         :population,
-        :private,
         :title,
         :url
       ],

@@ -10,7 +10,6 @@ class ActorPolicy < ApplicationPolicy
       :draft,
       :gdp,
       :population,
-      :private,
       :title,
       :url
     ]
