@@ -16,7 +16,6 @@ class MeasureSerializer
     :measuretype_id,
     :outcome,
     :parent_id,
-    :private,
     :reference_landbased_ml,
     :reference_ml,
     :status_comment,

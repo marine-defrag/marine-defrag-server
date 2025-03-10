@@ -9,7 +9,6 @@ class ActorSerializer
     :draft,
     :gdp,
     :population,
-    :private,
     :title,
     :url
   )

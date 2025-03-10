@@ -5,7 +5,6 @@ class ResourceSerializer
     :description,
     :draft,
     :document_url,
-    :private,
     :publication_date,
     :status,
     :title,
