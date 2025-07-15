@@ -4,6 +4,14 @@ class S3Controller < ApplicationController
   def sign
     render json: {error: "Not configured"} and return unless defined?(::FogStorage)
 
+    unless UPLOAD_ALLOWED_MIME_TYPES.include?(params[:contentType])
+      render json: { error: "File type not allowed" }, status: 422 and return
+    end
+
+    if UPLOAD_FORBIDDEN_EXTENSIONS.any? { |ext| object_name.downcase.end_with?(ext) }
+      render json: { error: "File extension not allowed" }, status: 422 and return
+    end
+
     options = {path_style: true}
     headers = {"Content-Type" => params[:contentType], "x-amz-acl" => "public-read"}
 
