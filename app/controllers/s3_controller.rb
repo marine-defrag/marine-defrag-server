@@ -8,6 +8,8 @@ class S3Controller < ApplicationController
       render json: { error: "File type not allowed" }, status: 422 and return
     end
 
+    object_name = params[:objectName].to_s
+
     if UPLOAD_FORBIDDEN_EXTENSIONS.any? { |ext| object_name.downcase.end_with?(ext) }
       render json: { error: "File extension not allowed" }, status: 422 and return
     end
@@ -16,7 +18,7 @@ class S3Controller < ApplicationController
     headers = {
       "Content-Type" => params[:contentType],
       "x-amz-acl" => "public-read",
-      "Content-Disposition" => "attachment" 
+      "Content-Disposition" => "attachment"
     }
 
     object_path = "#{ENV["S3_ASSET_FOLDER"]}/#{params[:objectName]}"
