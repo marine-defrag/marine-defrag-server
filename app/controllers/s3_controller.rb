@@ -18,7 +18,6 @@ class S3Controller < ApplicationController
     headers = {
       "Content-Type" => params[:contentType],
       "x-amz-acl" => "public-read",
-      "Content-Disposition" => "attachment"
     }
 
     object_path = "#{ENV["S3_ASSET_FOLDER"]}/#{params[:objectName]}"
