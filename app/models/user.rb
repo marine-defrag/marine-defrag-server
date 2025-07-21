@@ -21,6 +21,7 @@ class User < VersionedRecord
 
   validates :email, presence: true
   validates :name, presence: true
+  validates :password, secure_password: true, if: :password_required?
 
   scope :active, -> { where(is_archived: false) }
 
