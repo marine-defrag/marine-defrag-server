@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   get "up", to: proc { [200, {}, ["success"]] }, as: :rails_health_check
 
   mount_devise_token_auth_for "User", at: "auth", controllers: {
-    passwords: "overrides/passwords"
+    passwords: "overrides/passwords",
+    sessions: "overrides/sessions"
   }
 
   resources :taxonomies do
