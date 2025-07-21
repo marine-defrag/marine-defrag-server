@@ -36,7 +36,7 @@ en:
         no_changes_msg: "Your password won't change until you access the link above and create a new one."
       unlock_instructions:
         subject: "Unlock instructions"
-        account_lock_msg: "Your account has been locked or archived."
+        account_lock_msg: "Your account has been locked for 3 minutes."
         unlock_link_msg: "Click the link below to unlock your account:"
         unlock_link: "Unlock my account"
       password_change:
