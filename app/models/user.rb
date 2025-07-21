@@ -31,6 +31,7 @@ class User < VersionedRecord
 
   def inactive_message
     return :archived if is_archived
+    return :locked if access_locked?
     super
   end
 
