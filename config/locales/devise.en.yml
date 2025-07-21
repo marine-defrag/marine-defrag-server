@@ -16,12 +16,13 @@ en:
       already_authenticated: "You are already signed in."
       inactive: "Your account is not activated yet."
       invalid: "Invalid %{authentication_keys} or password."
-      locked: "Your account is locked or archived."
+      locked: "Your account has been locked for 3 minutes due to too many failed attempts."
       last_attempt: "You have one more attempt before your account is locked."
       not_found_in_database: "Invalid %{authentication_keys} or password."
       timeout: "Your session expired. Please sign in again to continue."
       unauthenticated: "You need to sign in or sign up before continuing."
       unconfirmed: "You have to confirm your email address before continuing."
+      archived: 'Your account has been archived. Please contact support for assistance.'
     mailer:
       confirmation_instructions:
         subject: "Confirmation instructions"

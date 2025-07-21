@@ -29,6 +29,11 @@ class User < VersionedRecord
     super && !is_archived
   end
 
+  def inactive_message
+    return :archived if is_archived
+    super
+  end
+
   def active?
     !is_archived
   end
