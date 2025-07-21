@@ -14,6 +14,8 @@ module Overrides
     private
 
     def render_authentication_error
+      Rails.logger.debug "[Overrides::SessionsController] render_authentication_error called with inactive_message: #{@resource&.inactive_message.inspect}"
+
       message = error_message_for(@resource)
 
       render json: {
@@ -24,7 +26,7 @@ module Overrides
 
     def error_message_for(resource)
       return I18n.t("devise.failure.invalid") unless resource
-      
+
       return I18n.t("devise.failure.archived") if resource&.inactive_message == :archived
 
       case resource&.inactive_message
