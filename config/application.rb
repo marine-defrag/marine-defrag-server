@@ -4,7 +4,7 @@ require_relative "boot"
 
 require "rails/all"
 
-# require_relative '../lib/middleware/block_trace_requests'
+require_relative '../lib/middleware/block_trace_requests'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -23,7 +23,7 @@ module HumanRightsNationalReporting
     config.time_zone = "Berlin"
     config.active_record.default_timezone = :local
 
-    # config.middleware.insert_before 0, BlockTraceRequests
+    config.middleware.insert_before 0, BlockTraceRequests
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do

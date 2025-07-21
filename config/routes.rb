@@ -5,10 +5,9 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up", to: proc { [200, {}, ["success"]] }, as: :rails_health_check
 
-  mount_devise_token_auth_for "User", at: "auth"
-  # , controllers: {
-  #   passwords: "overrides/passwords"
-  # }
+  mount_devise_token_auth_for "User", at: "auth", controllers: {
+    passwords: "overrides/passwords"
+  }
 
   resources :taxonomies do
     resources :categories
