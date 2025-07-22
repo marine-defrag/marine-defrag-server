@@ -4,7 +4,7 @@ module Overrides
       field = (resource_params.keys.map(&:to_sym) & resource_class.authentication_keys).first
       @resource = find_resource(field, resource_params[field])
 
-      if @resource && valid_params?(field, resource_params[field]) && valid_password?(@resource, resource_params[:password])
+      if @resource && valid_params?(field, resource_params[field]) && @resource.valid_password?(resource_params[:password])
         return render_create_success
       end
 
