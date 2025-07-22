@@ -19,6 +19,8 @@ module Overrides
       Rails.logger.debug "[SessionsController] Entering render_create_error_bad_credentials"
       opts = request.env['warden.options'] || {}
       Rails.logger.debug "[SessionsController] warden.options: #{opts.inspect}"
+      Rails.logger.debug "[SessionsController] request.env keys: #{request.env.keys.inspect}"
+
       if opts[:message] == :last_attempt
         Rails.logger.debug "[SessionsController] Last attempt before lock"
         return render json: { error: I18n.t("devise.failure.last_attempt"), reason: "last_attempt" }, status: :unauthorized
