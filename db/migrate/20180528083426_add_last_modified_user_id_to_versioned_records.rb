@@ -1,4 +1,6 @@
 class AddLastModifiedUserIdToVersionedRecords < ActiveRecord::Migration[5.0]
+  class DueDate < ActiveRecord::Base; self.table_name = 'due_dates'; end
+
   def up
     VERSIONED_MODELS.each do |model|
       add_column model.table_name, :last_modified_user_id, :integer
