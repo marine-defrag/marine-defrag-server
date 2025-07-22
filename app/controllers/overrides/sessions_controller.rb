@@ -17,7 +17,11 @@ module Overrides
     # Called when authentication fails
     def render_create_error_bad_credentials
       Rails.logger.debug "[SessionsController] Entering render_create_error_bad_credentials"
-
+      opts = request.env['warden.options'] || {}
+      if opts[:message] == :last_attempt
+        Rails.logger.debug "[SessionsController] Last attempt before lock"
+        return render json: { error: I18n.t("devise.failure.last_attempt"), reason: "last_attempt" }, status: :unauthorized
+      end
       attempted_user = resource_class.find_by(email: resource_params[:email])
 
       if attempted_user && !attempted_user.active_for_authentication?
