@@ -1,6 +1,8 @@
 # lib/custom_failure.rb
 class CustomFailure < Devise::FailureApp
   def respond
+    Rails.logger.debug "[CustomFailure] respond called"
+    puts "[CustomFailure] respond called"
     json_api_error_response
   end
 
