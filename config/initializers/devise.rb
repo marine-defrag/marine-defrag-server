@@ -257,6 +257,7 @@ Devise.setup do |config|
   #   manager.default_strategies(scope: :user).unshift :some_external_strategy
   # end
   config.warden do |manager|
+    puts "[Devise] Setting custom failure app (put)"
     Rails.logger.debug "[Devise] Setting custom failure app"
     manager.failure_app = CustomFailure
   end
