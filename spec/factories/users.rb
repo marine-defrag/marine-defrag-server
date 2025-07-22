@@ -6,6 +6,7 @@ FactoryBot.define do
     name { Faker::Name.name }
     password { "1lj#hIKekU17" }
     password_confirmation { password }
+    password_changed_at { Time.current }
   end
 
   trait :admin do

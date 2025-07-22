@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
 class User < VersionedRecord
-  # Include default devise modules.
-  devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :trackable, :validatable, :lockable,
-    :expirable
-  include DeviseTokenAuth::Concerns::User
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable,
+         :validatable, :lockable, :password_expirable
+
+  include DeviseTokenAuth::Concerns::User
 
   has_many :user_roles, dependent: :destroy
   has_many :roles, through: :user_roles
@@ -23,6 +19,8 @@ class User < VersionedRecord
   validates :email, presence: true
   validates :name, presence: true
   validates :password, secure_password: true, if: :password_required?
+
+  before_update :set_password_changed_at, if: :saved_change_to_encrypted_password?
 
   scope :active, -> { where(is_archived: false) }
 
@@ -43,4 +41,11 @@ class User < VersionedRecord
   def role?(role)
     roles.where(name: role).any?
   end
+
+  private
+
+  def set_password_changed_at
+    self.password_changed_at = Time.current
+  end
+
 end

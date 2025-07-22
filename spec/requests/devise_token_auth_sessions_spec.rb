@@ -9,6 +9,7 @@ RSpec.describe "DeviseTokenAuth::Sessions", type: :request do
 
       it "allows sign in" do
         post "/auth/sign_in", params: { email: user.email, password: password }
+        puts response.body
         expect(response).to have_http_status(:success)
       end
     end
