@@ -1,13 +1,5 @@
 module Overrides
   class SessionsController < DeviseTokenAuth::SessionsController
-    def create
-      Rails.logger.debug "[SessionsController] Entering #create"
-
-      # Let Devise handle everything first
-      begin
-        super
-    end
-
     protected
 
     # Called when authentication fails
