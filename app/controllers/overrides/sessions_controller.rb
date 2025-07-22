@@ -17,9 +17,11 @@ module Overrides
     # Called when authentication fails
     def render_create_error_bad_credentials
       Rails.logger.debug "[SessionsController] Entering render_create_error_bad_credentials"
+      Rails.logger.debug "[SessionsController] request.env keys: #{request.env.keys.inspect}"
+      warden = request.env['warden'] || {}
+      Rails.logger.debug "[SessionsController] warden: #{warden.inspect}"
       opts = request.env['warden.options'] || {}
       Rails.logger.debug "[SessionsController] warden.options: #{opts.inspect}"
-      Rails.logger.debug "[SessionsController] request.env keys: #{request.env.keys.inspect}"
 
       if opts[:message] == :last_attempt
         Rails.logger.debug "[SessionsController] Last attempt before lock"
