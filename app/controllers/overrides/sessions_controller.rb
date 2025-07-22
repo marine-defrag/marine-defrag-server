@@ -1,5 +1,19 @@
 module Overrides
   class SessionsController < DeviseTokenAuth::SessionsController
+    def create
+      user = User.find_by(email: resource_params[:email])
+
+      if user&.is_archived
+        return render json: { error: I18n.t("devise.failure.archived") }, status: :unauthorized
+      end
+
+      if user&.access_locked?
+        return render json: { error: I18n.t("devise.failure.locked") }, status: :unauthorized
+      end
+
+      super
+    end
+
     protected
 
     # Called when authentication fails
