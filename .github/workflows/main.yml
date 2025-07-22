@@ -34,6 +34,5 @@ jobs:
           sudo systemctl start postgresql.service
           sudo -u postgres psql -c "CREATE USER runner WITH SUPERUSER PASSWORD 'runner'"
 
-      - run: bin/rails db:setup
-      - run: bin/rails db:migrate
+      - run: bin/rails db:create db:migrate db:seed
       - run: bin/rspec
