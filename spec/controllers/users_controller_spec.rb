@@ -185,6 +185,9 @@ RSpec.describe UsersController, type: :controller do
 
       it "will allow a manager to update themselves" do
         sign_in manager
+        subject = put(:update,
+          format: :json,
+          params: {id: manager.id, user: {email: "test@co.nz", password: "password123@ABC", name: "Sam"}})
         expect(subject).to be_ok
         json = JSON.parse(subject.body)
         expect(json.dig("data", "id").to_i).to eq(manager.id)
@@ -214,9 +217,12 @@ RSpec.describe UsersController, type: :controller do
 
       it "will allow an admin to update any user" do
         sign_in admin
+        subject = put(:update,
+          format: :json,
+          params: {id: admin.id, user: {email: "test@co.nz", password: "password123@ABXXX", name: "Sam"}})
         expect(subject).to be_ok
         json = JSON.parse(subject.body)
-        expect(json.dig("data", "id").to_i).to eq(manager.id)
+        expect(json.dig("data", "id").to_i).to eq(admin.id)
         expect(json.dig("data", "attributes", "email")).to eq "test@co.nz"
         expect(json.dig("data", "attributes", "name")).to eq "Sam"
       end
@@ -224,6 +230,9 @@ RSpec.describe UsersController, type: :controller do
       it "will record what manager updated the user", versioning: true do
         expect(PaperTrail).to be_enabled
         sign_in admin
+        subject = put(:update,
+          format: :json,
+          params: {id: manager.id, user: {email: "test@co.nz", password: "password123@ABXXXDD", name: "Sam"}})
         json = JSON.parse(subject.body)
         expect(json.dig("data", "attributes", "updated_by_id").to_i).to eq admin.id
       end
