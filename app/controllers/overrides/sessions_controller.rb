@@ -4,7 +4,7 @@ module Overrides
       @resource = warden.authenticate(auth_options)
 
       if @resource
-        sign_in(:user, @resource)  # Ensure Devise sign-in
+        sign_in(resource_name, @resource)  # `resource_name` is better than hardcoded :user
         return render_create_success
       end
 
@@ -31,6 +31,12 @@ module Overrides
       end
 
       render json: { error: I18n.t("devise.failure.invalid") }, status: :unauthorized
+    end
+
+    private
+
+    def auth_options
+      { scope: resource_name, recall: "#{controller_path}#new" }
     end
   end
 end
