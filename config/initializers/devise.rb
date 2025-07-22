@@ -275,5 +275,5 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   # Password expires after 90 days
-  config.expire_password_after = 9.minutes
+  config.expire_password_after = 90.days
 end
