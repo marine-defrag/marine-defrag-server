@@ -1,30 +1,32 @@
 module Overrides
   class SessionsController < DeviseTokenAuth::SessionsController
     def create
-      # Attempt to authenticate the user via Warden (Devise)
-      self.resource = warden.authenticate!(scope: resource_name)
-
-      # Successful authentication, proceed as usual
-      render_create_success
-    rescue ::Warden::NotAuthenticated => e
-      # Authentication failed — find the resource (user) to check locking or inactive reasons
-      field = (resource_params.keys.map(&:to_sym) & resource_class.authentication_keys).first
-      @resource = find_resource(field, resource_params[field])
+      @resource = warden.authenticate(auth_options)
 
       if @resource
-        Rails.logger.debug "[Overrides::SessionsController] create called with inactive_message: #{@resource&.inactive_message.inspect}"
-        Rails.logger.debug "[Overrides::SessionsController] locked_at: #{@resource&.locked_at.inspect}"
-        Rails.logger.debug "[Overrides::SessionsController] Warden options: #{request.env['warden.options'].inspect}"
+        sign_in(:user, @resource)  # Ensure Devise sign-in
+        return render_create_success
+      end
 
-        case @resource.inactive_message
+      # If authentication failed, get the attempted resource (for error analysis)
+      attempted_email = resource_params[:email]
+      attempted_resource = User.find_by(email: attempted_email)
+
+      if attempted_resource
+        Rails.logger.debug "[SessionsController] inactive_message: #{attempted_resource.inactive_message.inspect}"
+        Rails.logger.debug "[SessionsController] locked_at: #{attempted_resource.locked_at.inspect}"
+        Rails.logger.debug "[SessionsController] failed_attempts: #{attempted_resource.failed_attempts}"
+        Rails.logger.debug "[SessionsController] Warden options: #{request.env['warden.options'].inspect}"
+
+        case attempted_resource.inactive_message
         when :locked
-          return render json: { error: I18n.t("devise.failure.locked"), reason: @resource.inactive_message }, status: :unauthorized
+          return render json: { error: I18n.t("devise.failure.locked"), reason: :locked }, status: :unauthorized
         when :archived
-          return render json: { error: I18n.t("devise.failure.archived"), reason: @resource.inactive_message }, status: :unauthorized
+          return render json: { error: I18n.t("devise.failure.archived"), reason: :archived }, status: :unauthorized
         end
       end
 
-      if request.env["warden.options"] && request.env["warden.options"][:message] == :last_attempt
+      if request.env["warden.options"]&.[](:message) == :last_attempt
         return render json: { error: I18n.t("devise.failure.last_attempt"), reason: "last-attempt" }, status: :unauthorized
       end
 
