@@ -17,20 +17,19 @@ module Overrides
     # Called when authentication fails
     def render_create_error_bad_credentials
       Rails.logger.debug "[SessionsController] Entering render_create_error_bad_credentials"
-      Rails.logger.debug "[SessionsController] request.env keys: #{request.env.keys.inspect}"
-      warden = request.env['warden'] || {}
-      Rails.logger.debug "[SessionsController] warden: #{warden.inspect}"
-      opts = request.env['warden.options'] || {}
-      Rails.logger.debug "[SessionsController] warden.options: #{opts.inspect}"
-
-      if opts[:message] == :last_attempt
-        Rails.logger.debug "[SessionsController] Last attempt before lock"
-        return render json: { error: I18n.t("devise.failure.last_attempt"), reason: "last_attempt" }, status: :unauthorized
-      end
       attempted_user = resource_class.find_by(email: resource_params[:email])
       if attempted_user
         Rails.logger.debug "[SessionsController] locked_at: #{attempted_user.locked_at}"
         Rails.logger.debug "[SessionsController] failed_attempts: #{attempted_user.failed_attempts}"
+
+        max_attempts = Devise.maximum_attempts || 3
+        if attempted_user.failed_attempts == (max_attempts - 1)
+          Rails.logger.debug "[SessionsController] Detected last attempt before lock"
+          return render json: {
+            error: I18n.t("devise.failure.last_attempt"),
+            reason: "last_attempt"
+          }, status: :unauthorized
+        end
       end
       if attempted_user && !attempted_user.active_for_authentication?
         reason = attempted_user.inactive_message
