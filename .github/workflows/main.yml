@@ -34,10 +34,10 @@ jobs:
           sudo systemctl start postgresql.service
           sudo -u postgres psql -c "CREATE USER runner WITH SUPERUSER PASSWORD 'runner'"
 
-    - name: Setup database
-      run: |
-        RAILS_ENV=test bin/rails db:create
-        RAILS_ENV=test bin/rails db:schema:load
-        RAILS_ENV=test bin/rails db:seed
+      - name: Setup database
+        run: |
+          RAILS_ENV=test bin/rails db:create
+          RAILS_ENV=test bin/rails db:schema:load
+          RAILS_ENV=test bin/rails db:seed
 
-    - run: RAILS_ENV=test bin/rspec
+      - run: RAILS_ENV=test bin/rspec
