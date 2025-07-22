@@ -276,4 +276,8 @@ Devise.setup do |config|
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   # Password expires after 90 days
   config.expire_password_after = 90.days
+  # Keep the last 5 passwords
+  config.password_archiving_count = 5
+  # Prevent reuse of old passwords
+  config.deny_old_passwords = true
 end

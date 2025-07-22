@@ -147,7 +147,7 @@ RSpec.describe UsersController, type: :controller do
         sign_in guest
         subject = put(:update,
           format: :json,
-          params: {id: guest.id, user: {email: "test@co.nz", password: "1lj#hIKekU17", name: "Sam"}})
+          params: {id: guest.id, user: {email: "test@co.nz", password: "password123@ABC", name: "Sam"}})
         expect(subject).to be_ok
         json = JSON.parse(subject.body)
         expect(json.dig("data", "id").to_i).to eq(guest.id)
@@ -159,7 +159,7 @@ RSpec.describe UsersController, type: :controller do
         sign_in guest
         subject2 = put :update,
           format: :json,
-          params: {id: guest2.id, user: {email: "test@co.guest.nz", password: "1lj#hIKekU17", name: "Sam"}}
+          params: {id: guest2.id, user: {email: "test@co.guest.nz", password: "password123@ABC", name: "Sam"}}
         expect(subject2).to be_not_found
       end
 
@@ -167,7 +167,7 @@ RSpec.describe UsersController, type: :controller do
         sign_in analyst
         subject = put(:update,
           format: :json,
-          params: {id: analyst.id, user: {email: "test@co.nz", password: "1lj#hIKekU17", name: "Sam"}})
+          params: {id: analyst.id, user: {email: "test@co.nz", password: "password123@ABC", name: "Sam"}})
         expect(subject).to be_ok
         json = JSON.parse(subject.body)
         expect(json.dig("data", "id").to_i).to eq(analyst.id)
@@ -179,7 +179,7 @@ RSpec.describe UsersController, type: :controller do
         sign_in analyst
         subject2 = put :update,
           format: :json,
-          params: {id: guest.id, user: {email: "test@co.guest.nz", password: "1lj#hIKekU17", name: "Sam"}}
+          params: {id: guest.id, user: {email: "test@co.guest.nz", password: "password123@ABCD", name: "Sam"}}
         expect(subject2).to be_not_found
       end
 
@@ -196,19 +196,19 @@ RSpec.describe UsersController, type: :controller do
         sign_in manager
         manager_update = put :update,
           format: :json,
-          params: {id: manager2.id, user: {email: "test@co.guest.nz", password: "1lj#hIKekU17", name: "Sam"}}
+          params: {id: manager2.id, user: {email: "test@co.guest.nz", password: "password123@ABCD", name: "Sam"}}
         expect(manager_update).to be_forbidden
         admin_update = put :update,
           format: :json,
-          params: {id: admin.id, user: {email: "test@co.guest.nz", password: "1lj#hIKekU17", name: "Sam"}}
+          params: {id: admin.id, user: {email: "test@co.guest.nz", password: "password123@ABCDE", name: "Sam"}}
         expect(admin_update).to be_forbidden
         analyst_update = put :update,
           format: :json,
-          params: {id: analyst.id, user: {email: "test@co.guest.nz", password: "1lj#hIKekU17", name: "Sam"}}
+          params: {id: analyst.id, user: {email: "test@co.guest.nz", password: "password123@ABCDF", name: "Sam"}}
         expect(analyst_update).to be_forbidden
         guest_update = put :update,
           format: :json,
-          params: {id: guest.id, user: {email: "test@co.guest.nz", password: "1lj#hIKekU17", name: "Sam"}}
+          params: {id: guest.id, user: {email: "test@co.guest.nz", password: "password123@ABCDG", name: "Sam"}}
         expect(guest_update).to be_forbidden
       end
 

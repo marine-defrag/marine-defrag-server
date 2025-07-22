@@ -4,7 +4,8 @@ class User < VersionedRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
-         :validatable, :lockable, :password_expirable
+         :validatable, :lockable, :password_expirable,
+         :password_archivable
 
   include DeviseTokenAuth::Concerns::User
 
