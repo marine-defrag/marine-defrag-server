@@ -18,7 +18,7 @@ module HumanRightsNationalReporting
 
     # Ensure non-standard paths are eager-loaded in production
     # (these paths are also autoloaded in development mode)
-    config.eager_load_paths += %W(#{config.root}/lib)
+    config.eager_load_paths << Rails.root.join('lib')
     # Add lib folder to autoload paths
     config.autoload_paths << Rails.root.join('lib')
 
