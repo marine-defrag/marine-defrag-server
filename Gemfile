@@ -8,6 +8,7 @@ gem "batch_api"
 gem "bcrypt", "~> 3.1.7"
 gem 'devise', '~> 4.9.0'
 gem "devise_token_auth"
+gem 'devise-security'
 gem "fast_jsonapi", git: "https://github.com/Netflix/fast_jsonapi",
   branch: "dev"
 gem "fog-aws"
