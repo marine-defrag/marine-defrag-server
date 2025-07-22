@@ -21,8 +21,6 @@ module HumanRightsNationalReporting
     config.eager_load_paths << Rails.root.join('lib').to_s
     # Add lib folder to autoload paths
     config.autoload_paths << Rails.root.join('lib').to_s
-    config.eager_load_paths << Rails.root.join('lib', 'middleware')
-    config.autoload_paths << Rails.root.join('lib', 'middleware')
 
     config.time_zone = "Berlin"
     config.active_record.default_timezone = :local

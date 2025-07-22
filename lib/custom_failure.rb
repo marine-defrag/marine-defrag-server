@@ -1,4 +1,6 @@
 # lib/custom_failure.rb
+puts "CustomFailure loaded"
+
 class CustomFailure < Devise::FailureApp
   def respond
     Rails.logger.debug "[CustomFailure] respond called"
