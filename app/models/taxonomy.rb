@@ -21,15 +21,13 @@ class Taxonomy < ApplicationRecord
   validate :sub_relation
 
   def different_parent
-    return unless self.class.column_names.include?("parent_id") && parent_id.present?
-    if parent_id == id
+    if parent_id.present? && parent_id == id
       errors.add(:parent_id, "Taxonomy can't be its own parent")
     end
   end
 
   def sub_relation
-    return unless self.class.column_names.include?("parent_id") && parent_id.present?
-    if !taxonomy.parent_id.nil?
+    if parent_id.present? && !taxonomy.parent_id.nil?
       errors.add(:parent_id, "Parent taxonomy is already a sub-taxonomy")
     end
   end
