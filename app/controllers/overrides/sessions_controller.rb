@@ -1,12 +1,14 @@
 module Overrides
   class SessionsController < DeviseTokenAuth::SessionsController
     def create
+      Rails.logger.debug "[SessionsController] Entering #create"
+
       # Let Devise handle everything first
       begin
         super
       rescue Devise::Lockable::LockedError => e
-        # Optional: custom locked response
-        return render json: { error: I18n.t("devise.failure.locked"), reason: :locked }, status: :unauthorized
+        Rails.logger.debug "[SessionsController] Caught Devise::Lockable::LockedError"
+        return render json: { error: I18n.t("devise.failure.locked"), reason: "locked" }, status: :unauthorized
       end
     end
 
@@ -14,6 +16,8 @@ module Overrides
 
     # Called when authentication fails
     def render_create_error_bad_credentials
+      Rails.logger.debug "[SessionsController] Entering render_create_error_bad_credentials"
+
       attempted_user = resource_class.find_by(email: resource_params[:email])
 
       if attempted_user && !attempted_user.active_for_authentication?
