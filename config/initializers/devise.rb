@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require Rails.root.join('lib/custom_failure')
+require Rails.root.join('lib/devise_overrides/custom_failure')
 
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
@@ -261,7 +261,7 @@ Devise.setup do |config|
   config.warden do |manager|
     puts "[Devise] Setting custom failure app (put)"
     Rails.logger.debug "[Devise] Setting custom failure app"
-    manager.failure_app = CustomFailure
+    manager.failure_app = DeviseOverrides::CustomFailures
   end
 
   # ==> Mountable engine configurations
