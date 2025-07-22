@@ -141,6 +141,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise-security (0.18.0)
+      devise (>= 4.3.0)
     devise_token_auth (1.2.4)
       bcrypt (~> 3.0)
       devise (> 3.5.2, < 5)
@@ -452,6 +454,7 @@ DEPENDENCIES
   connection_pool
   database_cleaner
   devise (~> 4.9.0)
+  devise-security
   devise_token_auth
   dotenv-rails
   factory_bot_rails (~> 6.0)

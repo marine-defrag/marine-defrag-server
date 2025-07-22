@@ -11,7 +11,7 @@ RSpec.describe "recommendation to recommendation relationships", type: :request 
       "uid" => user.uid
     }
   end
-  let(:user) { FactoryBot.create(:user, :admin, password: "password") }
+  let(:user) { FactoryBot.create(:user, :admin, password: "1lj#hIKekU17") }
   let!(:token) { user.create_token }
 
   before { user.save }

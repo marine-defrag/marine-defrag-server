@@ -28,8 +28,10 @@ class UserPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_update
-    permitted_attributes.tap do
-      _1 << :is_archived if @user.role?("admin")
+    if @user.role?("admin")
+      permitted_attributes + [:is_archived]
+    else
+      (permitted_attributes - [:email])
     end
   end
 

@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_05_17_094056) do
-
+ActiveRecord::Schema[7.2].define(version: 2025_07_22_211838) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,8 +18,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.bigint "actor_id", null: false
     t.bigint "category_id", null: false
     t.bigint "created_by_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "updated_by_id"
     t.index ["actor_id", "category_id"], name: "index_actor_categories_on_actor_id_and_category_id", unique: true
     t.index ["actor_id"], name: "index_actor_categories_on_actor_id"
@@ -37,8 +36,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.decimal "value"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "resource_id"
     t.bigint "relationshiptype_id"
     t.index ["actor_id", "measure_id"], name: "index_actor_measures_on_actor_id_and_measure_id", unique: true
@@ -60,8 +59,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.decimal "gdp"
     t.boolean "private", default: true
     t.boolean "draft", default: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
     t.index ["actortype_id"], name: "index_actors_on_actortype_id"
@@ -72,8 +71,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
   create_table "actortype_taxonomies", force: :cascade do |t|
     t.bigint "actortype_id", null: false
     t.bigint "taxonomy_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["actortype_id"], name: "index_actortype_taxonomies_on_actortype_id"
     t.index ["taxonomy_id"], name: "index_actortype_taxonomies_on_taxonomy_id"
   end
@@ -83,8 +82,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.boolean "has_members", default: false
     t.boolean "is_active", default: false
     t.boolean "is_target", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "bookmarks", id: :serial, force: :cascade do |t|
@@ -92,8 +91,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.string "title", null: false
     t.json "view", null: false
     t.integer "updated_by_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
@@ -104,8 +103,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.text "description"
     t.string "url"
     t.integer "taxonomy_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "draft", default: false
     t.integer "manager_id"
     t.string "reference"
@@ -123,8 +122,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
   create_table "due_dates", id: :serial, force: :cascade do |t|
     t.integer "indicator_id"
     t.date "due_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "draft", default: false
     t.integer "updated_by_id"
     t.integer "created_by_id"
@@ -136,25 +135,25 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.text "subject"
     t.text "content"
     t.bigint "user_id", null: false
-    t.datetime "sent_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "sent_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_feedbacks_on_user_id"
   end
 
   create_table "framework_frameworks", id: :serial, force: :cascade do |t|
     t.integer "framework_id"
     t.integer "other_framework_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
   end
 
   create_table "framework_taxonomies", id: :serial, force: :cascade do |t|
     t.integer "framework_id", null: false
     t.integer "taxonomy_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
     t.index ["framework_id"], name: "index_framework_taxonomies_on_framework_id"
     t.index ["taxonomy_id"], name: "index_framework_taxonomies_on_taxonomy_id"
@@ -167,16 +166,16 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.boolean "has_indicators"
     t.boolean "has_measures"
     t.boolean "has_response"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
   end
 
   create_table "indicators", id: :serial, force: :cascade do |t|
     t.text "title", null: false
     t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "draft", default: false
     t.integer "manager_id"
     t.integer "frequency_months"
@@ -199,8 +198,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.decimal "value"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["actor_id"], name: "index_measure_actors_on_actor_id"
     t.index ["created_by_id"], name: "index_measure_actors_on_created_by_id"
     t.index ["measure_id", "actor_id"], name: "index_measure_actors_on_measure_id_and_actor_id", unique: true
@@ -211,8 +210,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
   create_table "measure_categories", id: :serial, force: :cascade do |t|
     t.integer "measure_id"
     t.integer "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
     t.bigint "updated_by_id"
     t.index ["measure_id", "category_id"], name: "index_measure_categories_on_measure_id_and_category_id", unique: true
@@ -222,8 +221,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
   create_table "measure_indicators", id: :serial, force: :cascade do |t|
     t.integer "measure_id"
     t.integer "indicator_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
   end
 
@@ -231,8 +230,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.bigint "measure_id", null: false
     t.bigint "resource_id", null: false
     t.bigint "created_by_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "updated_by_id"
     t.index ["created_by_id"], name: "index_measure_resources_on_created_by_id"
     t.index ["measure_id", "resource_id"], name: "index_measure_resources_on_measure_id_and_resource_id", unique: true
@@ -245,8 +244,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.text "title", null: false
     t.text "description"
     t.text "target_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "draft", default: false
     t.text "outcome"
     t.text "indicator_summary"
@@ -258,8 +257,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.string "code"
     t.string "comment"
     t.string "url"
-    t.datetime "date_start"
-    t.datetime "date_end"
+    t.datetime "date_start", precision: nil
+    t.datetime "date_end", precision: nil
     t.string "date_comment"
     t.string "target_comment"
     t.string "status_comment"
@@ -278,8 +277,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
   create_table "measuretype_taxonomies", force: :cascade do |t|
     t.bigint "measuretype_id", null: false
     t.bigint "taxonomy_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["measuretype_id"], name: "index_measuretype_taxonomies_on_measuretype_id"
     t.index ["taxonomy_id"], name: "index_measuretype_taxonomies_on_taxonomy_id"
   end
@@ -288,16 +287,16 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.string "title", null: false
     t.boolean "has_target", default: true
     t.boolean "has_parent", default: true
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "memberships", force: :cascade do |t|
     t.bigint "member_id", null: false
     t.bigint "memberof_id", null: false
     t.bigint "created_by_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "updated_by_id"
     t.index ["created_by_id"], name: "index_memberships_on_created_by_id"
     t.index ["member_id", "memberof_id"], name: "index_memberships_on_member_id_and_memberof_id", unique: true
@@ -306,13 +305,21 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.index ["updated_by_id"], name: "index_memberships_on_updated_by_id"
   end
 
+  create_table "old_passwords", force: :cascade do |t|
+    t.string "encrypted_password", null: false
+    t.string "password_archivable_type", null: false
+    t.integer "password_archivable_id", null: false
+    t.datetime "created_at"
+    t.index ["password_archivable_type", "password_archivable_id"], name: "index_password_archivable"
+  end
+
   create_table "pages", id: :serial, force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.string "menu_title"
     t.boolean "draft", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "order"
     t.integer "updated_by_id"
     t.integer "created_by_id"
@@ -330,8 +337,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.string "document_url"
     t.boolean "document_public"
     t.boolean "draft"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "updated_by_id"
     t.integer "created_by_id"
     t.index ["due_date_id"], name: "index_progress_reports_on_due_date_id"
@@ -341,16 +348,16 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
   create_table "recommendation_categories", id: :serial, force: :cascade do |t|
     t.integer "recommendation_id"
     t.integer "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
   end
 
   create_table "recommendation_indicators", id: :serial, force: :cascade do |t|
     t.integer "recommendation_id"
     t.integer "indicator_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
     t.index ["indicator_id"], name: "index_recommendation_indicators_on_indicator_id"
     t.index ["recommendation_id"], name: "index_recommendation_indicators_on_recommendation_id"
@@ -359,8 +366,8 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
   create_table "recommendation_measures", id: :serial, force: :cascade do |t|
     t.integer "recommendation_id"
     t.integer "measure_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
     t.index ["measure_id"], name: "index_recommendation_measures_on_measure_id"
     t.index ["recommendation_id"], name: "index_recommendation_measures_on_recommendation_id"
@@ -369,15 +376,15 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
   create_table "recommendation_recommendations", id: :serial, force: :cascade do |t|
     t.integer "recommendation_id"
     t.integer "other_recommendation_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
   end
 
   create_table "recommendations", id: :serial, force: :cascade do |t|
     t.text "title", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "draft", default: false
     t.boolean "accepted"
     t.text "response"
@@ -397,13 +404,13 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.bigint "resourcetype_id", null: false
     t.boolean "private", default: true
     t.boolean "draft", default: true
-    t.datetime "publication_date"
-    t.datetime "access_date"
+    t.datetime "publication_date", precision: nil
+    t.datetime "access_date", precision: nil
     t.text "status"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.text "document_url"
     t.index ["created_by_id"], name: "index_resources_on_created_by_id"
     t.index ["resourcetype_id"], name: "index_resources_on_resourcetype_id"
@@ -412,23 +419,23 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
 
   create_table "resourcetypes", force: :cascade do |t|
     t.string "title", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.string "friendly_name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
   end
 
   create_table "taxonomies", id: :serial, force: :cascade do |t|
     t.text "title", null: false
     t.boolean "tags_measures"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "allow_multiple"
     t.boolean "tags_users"
     t.boolean "has_manager", default: false
@@ -447,16 +454,16 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
   create_table "user_categories", id: :serial, force: :cascade do |t|
     t.integer "user_id"
     t.integer "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "created_by_id"
   end
 
   create_table "user_roles", id: :serial, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "role_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "updated_by_id"
     t.integer "created_by_id"
     t.index ["role_id"], name: "index_user_roles_on_role_id"
@@ -467,15 +474,15 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "name"
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
@@ -484,6 +491,9 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.boolean "allow_password_change", default: true
     t.integer "created_by_id"
     t.boolean "is_archived", default: false, null: false
+    t.integer "failed_attempts", default: 0, null: false
+    t.datetime "locked_at"
+    t.datetime "password_changed_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -494,7 +504,7 @@ ActiveRecord::Schema.define(version: 2024_05_17_094056) do
     t.string "event", null: false
     t.string "whodunnit"
     t.text "object"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
