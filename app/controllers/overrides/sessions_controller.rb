@@ -1,46 +1,29 @@
-# app/controllers/overrides/sessions_controller.rb
 module Overrides
   class SessionsController < DeviseTokenAuth::SessionsController
-    protected
+    def create
+      field = (resource_params.keys.map(&:to_sym) & resource_class.authentication_keys).first
+      @resource = find_resource(field, resource_params[field])
 
-    def render_create_error_not_confirmed
-      render_authentication_error
-    end
-
-    def render_create_error
-      render_authentication_error
-    end
-
-    private
-
-    def render_authentication_error
-      Rails.logger.debug "[Overrides::SessionsController] render_authentication_error called with inactive_message: #{@resource&.inactive_message.inspect}"
-
-      message = error_message_for(@resource)
-
-      render json: {
-        success: false,
-        errors: [message]
-      }, status: :unauthorized
-    end
-
-    def error_message_for(resource)
-      return I18n.t("devise.failure.invalid") unless resource
-
-      return I18n.t("devise.failure.archived") if resource&.inactive_message == :archived
-
-      case resource&.inactive_message
-      when :locked
-        return I18n.t("devise.failure.locked")
-      when :last_attempt
-        return I18n.t("devise.failure.last_attempt")
+      if @resource && valid_params?(field, resource_params[field]) && valid_password?(@resource, resource_params[:password])
+        return render_create_success
       end
 
-      I18n.t("devise.failure.#{resource&.inactive_message}", default: I18n.t("devise.failure.invalid"))
-    end
+      # Handle specific failure reasons
+      if @resource
+        Rails.logger.debug "[Overrides::SessionsController] create called with inactive_message: #{@resource&.inactive_message.inspect}"
+        case @resource.inactive_message
+        when :locked
+          return render json: { error: I18n.t("devise.failure.locked"), reason: @resource.inactive_message }, status: :unauthorized
+        when :archived
+          return render json: { error: I18n.t("devise.failure.archived"), reason: @resource.inactive_message }, status: :unauthorized
+        end
+      end
 
-    def warden_message
-      request.env.dig("warden.options", :message)
+      if request.env["warden.options"] && request.env["warden.options"][:message] == :last_attempt
+        return render json: { error: I18n.t("devise.failure.last_attempt"), reason: "last-attempt" }, status: :unauthorized
+      end
+
+      render json: { error: I18n.t("devise.failure.invalid") }, status: :unauthorized
     end
   end
 end
