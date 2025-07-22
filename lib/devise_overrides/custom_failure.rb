@@ -1,5 +1,4 @@
 # lib/devise/custom_failure.rb
-puts "CustomFailure loaded"
 module DeviseOverrides
   class CustomFailure < Devise::FailureApp
     def respond
