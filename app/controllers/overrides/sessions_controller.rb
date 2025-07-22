@@ -6,10 +6,6 @@ module Overrides
       # Let Devise handle everything first
       begin
         super
-      rescue Devise::Lockable::LockedError => e
-        Rails.logger.debug "[SessionsController] Caught Devise::Lockable::LockedError"
-        return render json: { error: I18n.t("devise.failure.locked"), reason: "locked" }, status: :unauthorized
-      end
     end
 
     protected
