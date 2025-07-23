@@ -14,11 +14,7 @@ class SecurePasswordValidator < ActiveModel::EachValidator
 
     # password must include basic digits (0-9)
     unless value =~ /\d/
-<<<<<<< HEAD
       record.errors.add(attribute, "must include at least one number")
-=======
-      record.errors.add(attribute, "must include at least one digit")
->>>>>>> a7f94bdc387a92820283ff18e61256b22b6efcc5
     end
 
     # password must inlude non-alphanumeric characters (like !, $, #, -, &)
