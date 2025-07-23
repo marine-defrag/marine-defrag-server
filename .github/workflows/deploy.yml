@@ -107,7 +107,7 @@ jobs:
           CLIENT_URL: ${{ secrets.CLIENT_URL }}
 
       - name: Deploy command
-        run: bin/kamal deploy --skip-push --run-db-migrations
+        run: bin/kamal deploy --skip-push
         env:
           DEPLOY_LETSENCRYPT_EMAIL: ${{ secrets.DEPLOY_LETSENCRYPT_EMAIL }}
           DEPLOY_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
