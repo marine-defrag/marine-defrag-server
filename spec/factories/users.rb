@@ -4,8 +4,9 @@ FactoryBot.define do
   factory :user do
     email { Faker::Internet.email }
     name { Faker::Name.name }
-    password { "password" }
+    password { "1lj#hIKekU17" }
     password_confirmation { password }
+    password_changed_at { Time.current }
   end
 
   trait :admin do
