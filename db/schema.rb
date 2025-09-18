@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_22_211838) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_18_142407) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,7 +40,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_22_211838) do
     t.datetime "updated_at", null: false
     t.bigint "resource_id"
     t.bigint "relationshiptype_id"
-    t.index ["actor_id", "measure_id"], name: "index_actor_measures_on_actor_id_and_measure_id", unique: true
+    t.index ["actor_id", "measure_id", "date_start"], name: "index_actor_measures_on_actor_measure_date_start", unique: true
     t.index ["actor_id"], name: "index_actor_measures_on_actor_id"
     t.index ["created_by_id"], name: "index_actor_measures_on_created_by_id"
     t.index ["measure_id"], name: "index_actor_measures_on_measure_id"
