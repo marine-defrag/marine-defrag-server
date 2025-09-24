@@ -106,8 +106,6 @@ accessories:
 #     accesslog.format: json
 traefik:
   image: ghcr.io/<%= ENV.fetch('DEPLOY_USERNAME') %>/traefik-custom:latest
-  builder:
-    dockerfile: Dockerfile.traefik
   options:
     publish:
       - "443:443"

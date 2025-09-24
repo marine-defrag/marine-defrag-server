@@ -94,7 +94,7 @@ jobs:
           RAILS_SERVE_STATIC_FILES: true
           RUBY_YJIT_ENABLE: 1
           DEPLOY_LETSENCRYPT_EMAIL: ${{ secrets.DEPLOY_LETSENCRYPT_EMAIL }}
-          DEPLOY_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          DEPLOY_REGISTRY_PASSWORD: ${{ secrets.GHCR_PAT }}
           DEPLOY_REGISTRY: ${{ env.REGISTRY }}
           DEPLOY_SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
           DEPLOY_USERNAME: ${{ github.actor }}
