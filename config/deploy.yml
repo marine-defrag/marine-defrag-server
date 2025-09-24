@@ -133,6 +133,7 @@ traefik:
         - X25519
         - P-521
         - P-384
+    entryPoints.websecure.http.tls.options: default
 
 # Configure a custom healthcheck (default is /up on port 3000)
 # healthcheck:
