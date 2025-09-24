@@ -108,7 +108,6 @@ traefik:
       - "443:443"
     volume:
       - "/letsencrypt:/letsencrypt" # To save the configuration file.
-      - "/etc/traefik/tls.yml:/etc/traefik/tls.yml:ro"   # <-- Add this line
   args:
     entryPoints.web.address: ":80"
     entryPoints.websecure.address: ":443"
@@ -119,8 +118,13 @@ traefik:
     certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json" # Must match the path in `volume`
     certificatesResolvers.letsencrypt.acme.httpchallenge: true
     certificatesResolvers.letsencrypt.acme.httpchallenge.entrypoint: web # Must match the role in `servers`
-    providers.file.filename: "/etc/traefik/tls.yml"
-
+entryPoints.websecure.tls.minVersion: VersionTLS12
+    entryPoints.websecure.tls.cipherSuites[0]: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+    entryPoints.websecure.tls.cipherSuites[1]: TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+    entryPoints.websecure.tls.cipherSuites[2]: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+    entryPoints.websecure.tls.cipherSuites[3]: TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+    entryPoints.websecure.tls.cipherSuites[4]: TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+    entryPoints.websecure.tls.cipherSuites[5]: TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
 
 # Configure a custom healthcheck (default is /up on port 3000)
 # healthcheck:
