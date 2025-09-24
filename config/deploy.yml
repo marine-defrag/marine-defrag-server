@@ -109,7 +109,7 @@ traefik:
       - "443:443"
     volume:
       - "/letsencrypt:/letsencrypt" # To save the configuration file.
-      - "/etc/traefik/tls.yml:/etc/traefik/tls.yml:ro"   # <-- Add this line
+      - "/letsencrypt/tls.yml:/etc/traefik/tls.yml:ro" # Updated host path
   args:
     entryPoints.web.address: ":80"
     entryPoints.websecure.address: ":443"
