@@ -113,6 +113,7 @@ traefik:
   args:
     entryPoints.web.address: ":80"
     entryPoints.websecure.address: ":443"
+    entryPoints.websecure.tls.options: default
     entryPoints.web.http.redirections.entryPoint.to: websecure # We want to force https
     entryPoints.web.http.redirections.entryPoint.scheme: https
     entryPoints.web.http.redirections.entrypoint.permanent: true
