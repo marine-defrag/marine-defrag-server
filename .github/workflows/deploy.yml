@@ -106,17 +106,7 @@ jobs:
           S3_ASSET_FOLDER: ${{ secrets.S3_ASSET_FOLDER }}
           CLIENT_URL: ${{ secrets.CLIENT_URL }}
 
-      - name: Deploy Traefik
-        run: bin/kamal deploy --role traefik
-        env:
-          DEPLOY_LETSENCRYPT_EMAIL: ${{ secrets.DEPLOY_LETSENCRYPT_EMAIL }}
-          DEPLOY_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-          DEPLOY_REGISTRY: ${{ env.REGISTRY }}
-          DEPLOY_SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
-          DEPLOY_USERNAME: ${{ github.actor }}
-          DEPLOY_WEB_HOST: ${{ secrets.DEPLOY_WEB_HOST }}
-
-      - name: Deploy command
+      - name: Deploy all roles
         run: bin/kamal deploy --skip-push
         env:
           DEPLOY_LETSENCRYPT_EMAIL: ${{ secrets.DEPLOY_LETSENCRYPT_EMAIL }}
