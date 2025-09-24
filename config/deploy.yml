@@ -105,13 +105,15 @@ accessories:
 #     accesslog: true
 #     accesslog.format: json
 traefik:
+  image: ghcr.io/<%= ENV.fetch('DEPLOY_USERNAME') %>/traefik-custom:latest
+  builder:
+    dockerfile: Dockerfile.traefik
   options:
     publish:
       - "443:443"
       - "80:80"
     volume:
       - "/letsencrypt:/letsencrypt" # To save the configuration file.
-      - "./config/traefik.yml:/etc/traefik/traefik.yml:ro"
   args:
     providers.docker: ""
     log.level: DEBUG
