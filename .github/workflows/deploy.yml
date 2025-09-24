@@ -53,8 +53,8 @@ jobs:
       - name: Build and push Traefik image
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: Dockerfile.traefik
+          context: ${{ github.workspace }}
+          file: ${{ github.workspace }}/Dockerfile.traefik
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ github.actor }}/traefik-custom:latest
