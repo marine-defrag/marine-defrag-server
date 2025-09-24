@@ -12,9 +12,7 @@ servers:
     labels:
       traefik.http.routers.api.entrypoints: websecure
       traefik.http.routers.api.rule: Host(`<%= ENV.fetch("DEPLOY_WEB_HOST") %>`)
-      traefik.http.routers.api.tls: true
       traefik.http.routers.api.tls.certresolver: letsencrypt
-      traefik.http.routers.api.tls.options: default
 
 # Credentials for your image host.
 registry:
@@ -105,16 +103,22 @@ accessories:
 #     accesslog: true
 #     accesslog.format: json
 traefik:
-  image: ghcr.io/<%= ENV.fetch('DEPLOY_USERNAME') %>/traefik-custom:latest
   options:
     publish:
       - "443:443"
-      - "80:80"
     volume:
       - "/letsencrypt:/letsencrypt" # To save the configuration file.
   args:
-    providers.docker: ""
-    log.level: DEBUG
+    entryPoints.web.address: ":80"
+    entryPoints.websecure.address: ":443"
+    entryPoints.web.http.redirections.entryPoint.to: websecure # We want to force https
+    entryPoints.web.http.redirections.entryPoint.scheme: https
+    entryPoints.web.http.redirections.entrypoint.permanent: true
+    certificatesResolvers.letsencrypt.acme.email: '<%= ENV.fetch("DEPLOY_LETSENCRYPT_EMAIL") %>'
+    certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json" # Must match the path in `volume`
+    certificatesResolvers.letsencrypt.acme.httpchallenge: true
+    certificatesResolvers.letsencrypt.acme.httpchallenge.entrypoint: web # Must match the role in `servers`
+
 
 # Configure a custom healthcheck (default is /up on port 3000)
 # healthcheck:

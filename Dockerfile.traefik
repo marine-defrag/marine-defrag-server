@@ -1,3 +1,0 @@
-FROM traefik:v2.10
-RUN mkdir -p /etc/traefik
-COPY config/traefik.yml /etc/traefik/traefik.yml
