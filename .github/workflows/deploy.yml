@@ -50,6 +50,9 @@ jobs:
           labels: |
             "service=${{ env.SERVICE }}"
 
+      - name: Check repo contents
+        run: ls -R
+
       - name: Build and push Traefik image
         uses: docker/build-push-action@v5
         with:
