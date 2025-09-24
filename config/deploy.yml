@@ -13,7 +13,7 @@ servers:
       traefik.http.routers.api.entrypoints: websecure
       traefik.http.routers.api.rule: Host(`<%= ENV.fetch("DEPLOY_WEB_HOST") %>`)
       traefik.http.routers.api.tls.certresolver: letsencrypt
-      traefik.http.routers.api.tls.options: default@traefik
+      traefik.http.routers.api.tls.options: default@file
 
 # Credentials for your image host.
 registry:
