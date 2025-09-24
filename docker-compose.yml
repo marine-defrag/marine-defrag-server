@@ -1,4 +1,4 @@
-version: "2"
+version: "3.9"
 services:
   app:
     build: .
@@ -7,11 +7,33 @@ services:
     environment:
       PGHOST: "db"
       PGUSER: "postgres"
+      PGPASSWORD: "${POSTGRES_PASSWORD}"   # aus GitHub Secrets oder .env
+      RAILS_ENV: production
     volumes:
       - ".:/app/"
     ports:
       - "3000:3000"
     tty: true
     stdin_open: true
+    user: "1000:1000"   # non-root User im Container
+    networks:
+      - backend
   db:
-    image: postgres
+    image: postgres:15
+    environment:
+      POSTGRES_USER: "marine_defrag"
+      POSTGRES_DB: "marine_defrag_production"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"  # aus GitHub Secrets oder .env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    user: "999:999"   # postgres-User
+    networks:
+      - backend
+    # Optional: SSL aktivieren, siehe Kommentar unten
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  db_data:
