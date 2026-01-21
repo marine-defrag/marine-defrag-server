@@ -64,6 +64,7 @@ module HumanRightsNationalReporting
         config.hosts << client_domain
       end
       config.hosts << "api.marine-defrag.org"
+      config.hosts << "localhost"
     end
   end
 end
