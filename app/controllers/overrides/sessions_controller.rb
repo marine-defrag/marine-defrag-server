@@ -11,7 +11,7 @@ module Overrides
         return render json: { error: I18n.t("devise.failure.locked") }, status: :unauthorized
       end
 
-      if user&.password_expired?
+      if user&.password_changed_at && user&.password_expired?
         return render json: {
           error: I18n.t("devise.failure.password_expired"),
           reason: "password_expired"

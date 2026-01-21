@@ -56,6 +56,8 @@ module HumanRightsNationalReporting
 
     config.load_defaults 7.2
 
+    config.action_controller.forgery_protection_origin_check = false
+
     unless Rails.env.test?
       if ENV['CLIENT_URL'].present?
         client_domain = URI.parse(ENV['CLIENT_URL']).host
