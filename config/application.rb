@@ -32,7 +32,7 @@ module HumanRightsNationalReporting
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins ENV['CLIENT_URL'] || 'https://marine-defrag.org'
+        origins (ENV['CLIENT_URL'] || 'https://marine-defrag.org').chomp('/')
         resource "*",
           headers: :any,
           methods: :any,
