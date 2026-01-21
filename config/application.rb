@@ -56,11 +56,12 @@ module HumanRightsNationalReporting
 
     config.load_defaults 7.2
 
-    if ENV['CLIENT_URL'].present?
-      client_domain = URI.parse(ENV['CLIENT_URL']).host
-      config.hosts << client_domain
+    unless Rails.env.test?
+      if ENV['CLIENT_URL'].present?
+        client_domain = URI.parse(ENV['CLIENT_URL']).host
+        config.hosts << client_domain
+      end
+      config.hosts << "api.marine-defrag.org"
     end
-
-    config.hosts << "api.marine-defrag.org"
   end
 end
