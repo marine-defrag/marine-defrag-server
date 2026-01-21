@@ -32,8 +32,11 @@ module HumanRightsNationalReporting
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins "*"
-        resource "*", headers: :any, methods: :any, expose: ["access-token", "expiry", "token-type", "uid", "client"]
+        origins ENV['CLIENT_URL'] || 'https://marine-defrag.org'
+        resource "*",
+          headers: :any,
+          methods: :any,
+          expose: ["access-token", "expiry", "token-type", "uid", "client"]
       end
     end
 
@@ -52,5 +55,12 @@ module HumanRightsNationalReporting
     config.active_record.belongs_to_required_by_default = true
 
     config.load_defaults 7.2
+
+    if ENV['CLIENT_URL'].present?
+      client_domain = URI.parse(ENV['CLIENT_URL']).host
+      config.hosts << client_domain
+    end
+
+    config.hosts << "api.marine-defrag.org"
   end
 end
